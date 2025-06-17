@@ -222,6 +222,9 @@ GB_Emulator_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 GB_Emulator_SOURCE_DIR:STATIC=/Users/jas/GB Project/GB-Emulator
 
+//The directory containing a CMake configuration file for SDL3.
+SDL3_DIR:PATH=/opt/homebrew/lib/cmake/SDL3
+
 
 ########################
 # INTERNAL cache entries
