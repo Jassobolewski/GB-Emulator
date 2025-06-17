@@ -5,6 +5,8 @@ find_package(SDL3)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(GB_Emulator main.cpp)
+add_executable(GB_Emulator main.cpp
+        SM83.cpp
+        SM83.h)
 # Link to the actual SDL3 library.
 target_link_libraries(GB_Emulator PRIVATE SDL3::SDL3)

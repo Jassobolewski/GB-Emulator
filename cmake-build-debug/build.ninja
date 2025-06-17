@@ -56,6 +56,13 @@ build CMakeFiles/GB_Emulator.dir/main.cpp.o: CXX_COMPILER__GB_Emulator_unscanned
   OBJECT_DIR = CMakeFiles/GB_Emulator.dir
   OBJECT_FILE_DIR = CMakeFiles/GB_Emulator.dir
 
+build CMakeFiles/GB_Emulator.dir/SM83.cpp.o: CXX_COMPILER__GB_Emulator_unscanned_Debug /Users/jas/GB$ Project/GB-Emulator/SM83.cpp || cmake_object_order_depends_target_GB_Emulator
+  DEP_FILE = CMakeFiles/GB_Emulator.dir/SM83.cpp.o.d
+  FLAGS = -g -std=gnu++2b -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
+  INCLUDES = -I/opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/GB_Emulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/GB_Emulator.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target GB_Emulator
@@ -64,7 +71,7 @@ build CMakeFiles/GB_Emulator.dir/main.cpp.o: CXX_COMPILER__GB_Emulator_unscanned
 #############################################
 # Link the executable GB_Emulator
 
-build GB_Emulator: CXX_EXECUTABLE_LINKER__GB_Emulator_Debug CMakeFiles/GB_Emulator.dir/main.cpp.o | /opt/homebrew/lib/libSDL3.0.dylib
+build GB_Emulator: CXX_EXECUTABLE_LINKER__GB_Emulator_Debug CMakeFiles/GB_Emulator.dir/main.cpp.o CMakeFiles/GB_Emulator.dir/SM83.cpp.o | /opt/homebrew/lib/libSDL3.0.dylib
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/libSDL3.0.dylib
   OBJECT_DIR = CMakeFiles/GB_Emulator.dir
