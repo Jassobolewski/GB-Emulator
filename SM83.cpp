@@ -42,4 +42,19 @@ void SM83::set_HL(uint16_t value) {
     HL = this->combinedValue(H,L);
 }
 
+void SM83::setRegisterFlag(SM83::Flag flag, bool toggleBit) {
+    const auto bitmask = static_cast<uint8_t>(flag);
+
+    if (toggleBit) {
+        F = F | bitmask;//turns on
+    } else {
+        F = F & (~bitmask);//turns off
+    }
+}
+
+bool SM83::getRegisterFlag(SM83::Flag flag) const {
+    const auto bitmask = static_cast<uint8_t>(flag);
+    return (F & bitmask) != 0;//We check if the flag is on or off
+}
+
 

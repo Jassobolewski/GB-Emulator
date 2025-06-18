@@ -9,6 +9,8 @@
 #include <cstdint>
 
 class SM83 {
+
+public: //This is temporary
     //Accumulators
     uint8_t A,B,D,H;
     //Flags
@@ -19,6 +21,17 @@ class SM83 {
 
     //Combined 16 bit registers
     uint16_t AF, BC, DE,HL;
+
+    enum class Flag : uint8_t {
+        Z = 1 << 7,
+        N = 1 << 6,
+        H = 1 << 5,
+        C = 1 << 4
+    };
+
+    void setRegisterFlag(Flag flag, bool toggleBit);
+
+    bool getRegisterFlag(Flag flag) const;
 
     void setFlag(uint16_t value, uint8_t& flags);
 
