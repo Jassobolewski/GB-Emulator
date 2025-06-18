@@ -16,9 +16,12 @@ uint16_t SM83::combinedValue(uint8_t upper, uint8_t lower) {
     return ((upper << 8)|lower);
 }
 
+//#warning bugs maybe if F lower isn't always 0
 void SM83::set_AF(uint16_t value) {
     this->setAccumulator(value, A);
     this->setFlag(value, F);
+    //set lower half of F to 0
+    F &= 0xF0;
     AF = this->combinedValue(A,F);
 }
 
@@ -50,6 +53,7 @@ void SM83::setRegisterFlag(SM83::Flag flag, bool toggleBit) {
     } else {
         F = F & (~bitmask);//turns off
     }
+    F &= 0xF0;
 }
 
 bool SM83::getRegisterFlag(SM83::Flag flag) const {
