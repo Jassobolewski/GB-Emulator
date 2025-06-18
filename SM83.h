@@ -31,7 +31,7 @@ public: //This is temporary
 
     void setRegisterFlag(Flag flag, bool toggleBit);
 
-    bool getRegisterFlag(Flag flag) const;
+    [[nodiscard]] bool getRegisterFlag(Flag flag) const;
 
     void setFlag(uint16_t value, uint8_t& flags);
 
