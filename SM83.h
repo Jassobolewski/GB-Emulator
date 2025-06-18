@@ -20,9 +20,11 @@ class SM83 {
     //Combined 16 bit registers
     uint16_t AF, BC, DE,HL;
 
-    void SetFlag(uint16_t value, uint8_t& flags);
+    void setFlag(uint16_t value, uint8_t& flags);
 
-    void SetAccumulator(uint16_t value, uint8_t& accumulator);
+    void setAccumulator(uint16_t value, uint8_t& accumulator);
+
+    uint16_t combinedValue(uint8_t upper, uint8_t lower);
 
     void set_AF(uint16_t value);
 
@@ -31,10 +33,6 @@ class SM83 {
     void set_DE(uint16_t value);
 
     void set_HL(uint16_t value);
-
-
-
-
 
 };
 
