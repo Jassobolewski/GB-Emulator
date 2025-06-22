@@ -1,13 +1,15 @@
 # tests/CMakeLists.txt
 
 # Create the executable for our tests
-add_executable(run_tests test_cpu.cpp)
+add_executable(run_tests test_cpu.cpp
+        test_mmu.cpp)
 
 # Link our main CPU code to the tests so we can test it
 # Using target_sources() is a modern way to do this.
 # This assumes your CPU class is in SM83.h/cpp.
 target_sources(run_tests PRIVATE
         ../SM83.cpp
+        ../MMU.cpp
 )
 
 # --- THE FIX IS HERE ---
