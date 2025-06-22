@@ -19,7 +19,9 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(GB_Emulator main.cpp
         SM83.cpp
-        SM83.h)
+        SM83.h
+        MMU.h
+        MMU.cpp)
 # Link to the actual SDL3 library.
 target_link_libraries(GB_Emulator PRIVATE SDL3::SDL3)
 
