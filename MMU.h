@@ -8,7 +8,6 @@
 #include <vector>
 #include <print>
 #include <iostream>
-import std;
 
 class MMU {
 public:
