@@ -64,8 +64,9 @@ bool SM83::getRegisterFlag(SM83::Flag flag) const {
 
 void SM83::instructionExecution() {
     uint8_t opcode = memoryBus->returnAddress(PC++);
-   // AbstractInstruction instruction = instructionSet[opcode].get();
-
+    auto instruction = instructionSet[opcode].get();
+    int cycles_this_step = 0;
+    instruction->execute(*this, *memoryBus, cycles_this_step);
 }
 
 void SM83::connectMemory(MMU *memory) {

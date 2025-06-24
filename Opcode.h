@@ -9,19 +9,19 @@
 
 class AddA_B : public AbstractInstruction {
 public:
-    void execute(SM83& cpu, MMU& mmu, uint8_t& cyclesDuringInstruction) override {
+    void execute(SM83& cpu, MMU& mmu, int& cyclesDuringInstruction) override {
     }
 };
 
 class NOP : public AbstractInstruction {
 public:
-    void execute(SM83& cpu, MMU& mmu, uint8_t& cyclesDuringInstruction) override {
+    void execute(SM83& cpu, MMU& mmu, int& cyclesDuringInstruction) override {
     }
 };
 
 class LD_A_B : public AbstractInstruction {
 public:
-    void execute(SM83& cpu, MMU& mmu, uint8_t& cyclesDuringInstruction) override {
+    void execute(SM83& cpu, MMU& mmu, int& cyclesDuringInstruction) override {
         cpu.A = cpu.B; //load the value of B into A
     }
 };

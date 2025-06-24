@@ -13,20 +13,24 @@ class AbstractInstruction; //forward declaration
 
 class SM83 {
 
-    MMU* memoryBus;
+    MMU* memoryBus{};
     std::vector<std::unique_ptr<AbstractInstruction>> instructionSet;
 
 public: //This is temporary
-    //Accumulators
-    uint8_t A,B,D,H;
-    //Flags
-    uint8_t F, C, E, L;
 
-    uint16_t SP; //Stack Pointer
-    uint16_t PC; //Program Counter
+    SM83();
+    ~SM83(); // To handle the forward declaration of AbstractInstruction
+
+    //Accumulators
+    uint8_t A{},B{},D{},H{};
+    //Flags
+    uint8_t F{}, C{}, E{}, L{};
+
+    uint16_t SP{}; //Stack Pointer
+    uint16_t PC{}; //Program Counter
 
     //Combined 16 bit registers
-    uint16_t AF, BC, DE,HL;
+    uint16_t AF{}, BC{}, DE{},HL{};
 
     enum class Flag : uint8_t {
         Z = 1 << 7,
@@ -62,8 +66,6 @@ public: //This is temporary
     SM83(SM83&&) = delete;
     SM83& operator=(SM83&&) = delete;
 
-    SM83();
-    ~SM83(); // The presence of this declaration is key!
 };
 
 
