@@ -20,17 +20,16 @@ TEST_F(MMUTest, SimpleReadWrite) {
 
 TEST_F(MMUTest, ReadWrite16BitWord) {
     // Remember the Game Boy is little-endian!
-    // Writing 0x1234 means 0x34 is at the lower address.
 
     // Arrange
-    mmu.writeToAddress(0xC100, 0x12);
-    mmu.writeToAddress(0xC101, 0x34);
+    mmu.writeWord(0xC100, 0x1234);
+
     // Assert individual bytes
-    EXPECT_EQ(mmu.returnAddress(0xC100), 0x12); // Low byte first
-    EXPECT_EQ(mmu.returnAddress(0xC101), 0x34); // High byte second
+    EXPECT_EQ(mmu.returnAddress(0xC100), 0x34); // Low byte first
+    EXPECT_EQ(mmu.returnAddress(0xC101), 0x12); // High byte second
 
     // Assert the full word read
-  //  EXPECT_EQ(mmu.returnAddress(0xC100), 0x1234);
+    EXPECT_EQ(mmu.returnWord(0xC100), 0x1234);
 }
 
 TEST_F(MMUTest, CannotWriteToROM) {

@@ -15,9 +15,9 @@ public:
 
     void loadRom(const std::vector<uint8_t>& romData);
     uint8_t returnAddress(uint16_t address);//returns address from memory
-    void writeToAddress(uint16_t address, uint8_t value);//changes value at address TODO overload to support uint16 and endianness
-    void writeToAddress(uint16_t address, uint16_t value);
-
+    void writeToAddress(uint16_t address, uint8_t value);//Write to address
+    void writeWord(uint16_t address, uint16_t value);//Little endian support
+    uint16_t returnWord(uint16_t address);
 
 };
 
