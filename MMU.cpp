@@ -37,3 +37,18 @@ void MMU::writeToAddress(uint16_t address, uint8_t value) {
         std::println("Denied Access");
     }
 }
+
+void MMU::writeToAddress(uint16_t address, uint16_t value) {
+    if (address == 0xFF01) {//Serial port
+        std::cout << (value) << std::endl;
+    }
+
+    if(address > 0x7FFF)//write to address outside of rom area
+    {
+        memoryMap[address] = value;
+    }
+    else
+    {
+        std::println("Denied Access");
+    }
+}
