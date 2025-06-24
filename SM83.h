@@ -7,8 +7,14 @@
 
 
 #include <cstdint>
+#include "MMU.h"
+
+class AbstractInstruction; //forward declaration
 
 class SM83 {
+
+    MMU* memoryBus;
+    std::vector<std::unique_ptr<AbstractInstruction>> instructionSet;
 
 public: //This is temporary
     //Accumulators
@@ -47,6 +53,17 @@ public: //This is temporary
 
     void set_HL(uint16_t value);
 
+    void instructionExecution();
+
+    void connectMemory(MMU* memory);
+
+    SM83(const SM83&) = delete;
+    SM83& operator=(const SM83&) = delete;
+    SM83(SM83&&) = delete;
+    SM83& operator=(SM83&&) = delete;
+
+    SM83();
+    ~SM83(); // The presence of this declaration is key!
 };
 
 

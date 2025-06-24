@@ -5,14 +5,14 @@
 #ifndef GB_EMULATOR_ABSTRACTINSTRUCTION_H
 #define GB_EMULATOR_ABSTRACTINSTRUCTION_H
 
-
-#include "SM83.h"
 #include "MMU.h"
+#include "SM83.h"
+
 
 class AbstractInstruction {
 public:
     virtual ~AbstractInstruction() = default;
-    virtual void execute(SM83& cpu, MMU& mmu) = 0;
+    virtual void execute(SM83& cpu, MMU& mmu, uint8_t& cyclesDuringInstruction) = 0;
 };
 
 

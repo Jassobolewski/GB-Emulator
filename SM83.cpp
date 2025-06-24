@@ -3,6 +3,7 @@
 //
 
 #include "SM83.h"
+#include "AbstractInstruction.h"
 
 void SM83::setFlag(uint16_t value, uint8_t& flags) {
     flags = value & 0xFF;
@@ -60,5 +61,21 @@ bool SM83::getRegisterFlag(SM83::Flag flag) const {
     const auto bitmask = static_cast<uint8_t>(flag);
     return (F & bitmask) != 0;//We check if the flag is on or off
 }
+
+void SM83::instructionExecution() {
+    uint8_t opcode = memoryBus->returnAddress(PC++);
+   // AbstractInstruction instruction = instructionSet[opcode].get();
+
+}
+
+void SM83::connectMemory(MMU *memory) {
+    this->memoryBus = memory;
+}
+
+SM83::SM83() {
+    instructionSet.resize(256);
+}
+
+SM83::~SM83() = default;
 
 
