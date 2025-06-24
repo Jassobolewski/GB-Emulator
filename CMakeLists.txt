@@ -24,7 +24,9 @@ add_executable(GB_Emulator main.cpp
         MMU.cpp
         AbstractInstruction.h
         Opcode.cpp
-        Opcode.h)
+        Opcode.h
+        Unimplemented.cpp
+        Unimplemented.h)
 # Link to the actual SDL3 library.
 target_link_libraries(GB_Emulator PRIVATE SDL3::SDL3)
 

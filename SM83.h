@@ -57,7 +57,7 @@ public: //This is temporary
 
     void set_HL(uint16_t value);
 
-    void instructionExecution();
+    int instructionExecution();//returns cycle count
 
     void connectMemory(MMU* memory);
 

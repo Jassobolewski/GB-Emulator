@@ -25,7 +25,9 @@ uint8_t MMU::returnAddress(uint16_t address) {
 
 void MMU::writeToAddress(uint16_t address, uint8_t value) {
     if (address == 0xFF01) {//Serial port
-       std::cout << (value) << std::endl;
+        std::cout << (value) << std::endl;
+        serialTransferData = value;
+        return;
     }
 
     if(address > 0x7FFF)//write to address outside of rom area
@@ -41,6 +43,17 @@ void MMU::writeToAddress(uint16_t address, uint8_t value) {
 void MMU::writeWord(uint16_t address, uint16_t value) {
     if (address == 0xFF01) {//Serial port
         std::cout << (value) << std::endl;
+        serialTransferData = value;
+        return;
+    }
+
+    if(address == 0xFF02)
+    {
+        if (value == 0x81) {
+            // Append the buffered character to our stringstream.
+            serialOutput << static_cast<char>(serialTransferData);
+        }
+        return; // Return early
     }
 
     if(address > 0x7FFF)//write to address outside of rom area
@@ -63,3 +76,8 @@ uint16_t MMU::returnWord(uint16_t address) {
     return (high_byte << 8 | low_byte);
 
 }
+
+std::string MMU::getSerialOutput() const {
+        return serialOutput.str();
+}
+

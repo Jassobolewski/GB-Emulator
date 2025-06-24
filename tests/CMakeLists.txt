@@ -2,7 +2,8 @@
 
 # Create the executable for our tests
 add_executable(run_tests test_cpu.cpp
-        test_mmu.cpp)
+        test_mmu.cpp
+        BlarggTest.cpp)
 
 # Link our main CPU code to the tests so we can test it
 # Using target_sources() is a modern way to do this.
@@ -10,6 +11,7 @@ add_executable(run_tests test_cpu.cpp
 target_sources(run_tests PRIVATE
         ../SM83.cpp
         ../MMU.cpp
+        ../Unimplemented.cpp
 )
 
 # --- THE FIX IS HERE ---

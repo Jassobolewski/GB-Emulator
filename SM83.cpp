@@ -4,6 +4,8 @@
 
 #include "SM83.h"
 #include "AbstractInstruction.h"
+#include "Unimplemented.h"
+#include "Opcode.h"
 
 void SM83::setFlag(uint16_t value, uint8_t& flags) {
     flags = value & 0xFF;
@@ -62,11 +64,18 @@ bool SM83::getRegisterFlag(SM83::Flag flag) const {
     return (F & bitmask) != 0;//We check if the flag is on or off
 }
 
-void SM83::instructionExecution() {
+int SM83::instructionExecution() {
     uint8_t opcode = memoryBus->returnAddress(PC++);
     auto instruction = instructionSet[opcode].get();
     int cycles_this_step = 0;
-    instruction->execute(*this, *memoryBus, cycles_this_step);
+
+    if(instruction != nullptr)
+        instruction->execute(*this, *memoryBus, cycles_this_step);
+    else
+        std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x" << std::hex << static_cast<int>(opcode) << std::endl;
+
+
+    return cycles_this_step;
 }
 
 void SM83::connectMemory(MMU *memory) {
@@ -75,6 +84,12 @@ void SM83::connectMemory(MMU *memory) {
 
 SM83::SM83() {
     instructionSet.resize(256);
+
+    for (int i = 0; i < 256; ++i) {
+        instructionSet[i] = std::make_unique<Unimplemented>();
+    }
+    instructionSet[0x78] = std::make_unique<LD_A_B>();
+
 }
 
 SM83::~SM83() = default;
