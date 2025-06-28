@@ -67,7 +67,7 @@ TEST_F(BlarggTest, CpuInstrsRom) {
     // For debugging, print the complete serial output.
     // This will only show up if the test fails or if you run with --gtest_print_time
    // RecordProperty("SerialOutput", serial_output);
-    std::cout << (serial_output);
+    std::cout << "TEST STRING "<< (serial_output) << std::endl;
     // The assertion that matters: Did we find "Passed"?
     ASSERT_NE(serial_output.find("Passed"), std::string::npos)
                                 << "The test timed out or failed without printing 'Passed'.";

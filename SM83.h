@@ -21,6 +21,7 @@ public: //This is temporary
     SM83();
     ~SM83(); // To handle the forward declaration of AbstractInstruction
 
+
     //Accumulators
     uint8_t A{},B{},D{},H{};
     //Flags
@@ -29,8 +30,12 @@ public: //This is temporary
     uint16_t SP{}; //Stack Pointer
     uint16_t PC{}; //Program Counter
 
+    uint8_t low_byte = this->memoryBus.returnAddress((this->PC + 1));  // Gets 0x00
+    uint8_t high_byte =  this->memoryBus.returnAddress((this->PC + 1)); // Gets 0xC0
+    uint16_t immediate_value = (static_cast<uint16_t>(high_byte) << 8) | low_byte;
     //Combined 16 bit registers
     uint16_t AF{}, BC{}, DE{},HL{};
+
 
     enum class Flag : uint8_t {
         Z = 1 << 7,
@@ -43,11 +48,11 @@ public: //This is temporary
 
     [[nodiscard]] bool getRegisterFlag(Flag flag) const;
 
-    void setFlag(uint16_t value, uint8_t& flags);
+    static void setFlag(uint16_t value, uint8_t& flags);
 
-    void setAccumulator(uint16_t value, uint8_t& accumulator);
+    static void setAccumulator(uint16_t value, uint8_t& accumulator);
 
-    uint16_t combinedValue(uint8_t upper, uint8_t lower);
+    static uint16_t combinedValue(uint8_t upper, uint8_t lower);
 
     void set_AF(uint16_t value);
 
@@ -59,7 +64,6 @@ public: //This is temporary
 
     int instructionExecution();//returns cycle count
 
-    void connectMemory(MMU &memory);
 
     SM83(const SM83&) = delete;
     SM83& operator=(const SM83&) = delete;
