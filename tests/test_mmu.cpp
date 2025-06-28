@@ -3,7 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include "../MMU.h" // Include the MMU header
-
+#include <fstream> // For file loading
 class MMUTest : public ::testing::Test {
 protected:
     MMU mmu;
@@ -47,10 +47,23 @@ TEST_F(MMUTest, CannotWriteToROM) {
             0x70,                   // LD (HL), B           ; PC = 10
             0x76                    // HALT                 ; PC = 11
     };
+
+
+    std::ifstream rom_file("/Users/jas/GB Project/GB-Emulator/roms/cpu_instrs.gb", std::ios::binary);
+
+    // Check if the ROM was found. If not, fail the test immediately.
+    if (!rom_file.is_open()) {
+        FAIL() << "Could not open Blargg test ROM: ../roms/cpu_instrs.gb";
+    }
+
+    // Read the ROM into a vector
+    std::vector<uint8_t> rom_data((std::istreambuf_iterator<char>(rom_file)),std::istreambuf_iterator<char>());
+    rom_file.close();
+
     // Arrange: Write the initial value
-    mmu.loadRom(simple_rom);
+    mmu.loadRom(rom_data);
     // Assert: The original value should still be there
-    EXPECT_EQ(mmu.returnAddress(0x0), 0x3E);
-    EXPECT_EQ(mmu.returnAddress(0x1), 0x42);
-    EXPECT_EQ(mmu.returnAddress(0xA), 0x76);
+    EXPECT_EQ(mmu.returnAddress(0x0), 0x3C);
+    EXPECT_EQ(mmu.returnAddress(0x1), 0xC9);
+    EXPECT_EQ(mmu.returnAddress(0xA), '\0');
 }

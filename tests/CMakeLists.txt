@@ -11,7 +11,7 @@ add_executable(run_tests test_cpu.cpp
 target_sources(run_tests PRIVATE
         ../SM83.cpp
         ../MMU.cpp
-        ../Unimplemented.cpp
+       
 )
 
 # --- THE FIX IS HERE ---

@@ -26,6 +26,7 @@ public:
     uint16_t returnWord(uint16_t address);//Returns word from memory location
     std::string getSerialOutput() const;
 
+
 };
 
 

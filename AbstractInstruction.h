@@ -12,7 +12,7 @@
 class AbstractInstruction {
 public:
     virtual ~AbstractInstruction() = default;
-    virtual void execute(SM83& cpu, MMU& mmu, int& cyclesDuringInstruction) = 0;
+    virtual void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) = 0;
 };
 
 

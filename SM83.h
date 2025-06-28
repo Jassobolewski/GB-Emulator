@@ -13,11 +13,11 @@ class AbstractInstruction; //forward declaration
 
 class SM83 {
 
-    MMU* memoryBus{};
+
     std::vector<std::unique_ptr<AbstractInstruction>> instructionSet;
 
 public: //This is temporary
-
+    MMU memoryBus;
     SM83();
     ~SM83(); // To handle the forward declaration of AbstractInstruction
 
@@ -59,7 +59,7 @@ public: //This is temporary
 
     int instructionExecution();//returns cycle count
 
-    void connectMemory(MMU* memory);
+    void connectMemory(MMU &memory);
 
     SM83(const SM83&) = delete;
     SM83& operator=(const SM83&) = delete;

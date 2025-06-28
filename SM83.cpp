@@ -4,7 +4,6 @@
 
 #include "SM83.h"
 #include "AbstractInstruction.h"
-#include "Unimplemented.h"
 #include "Opcode.h"
 
 void SM83::setFlag(uint16_t value, uint8_t& flags) {
@@ -65,33 +64,39 @@ bool SM83::getRegisterFlag(SM83::Flag flag) const {
 }
 
 int SM83::instructionExecution() {
-    uint8_t opcode = memoryBus->returnAddress(PC++);
+    uint8_t opcode = memoryBus.returnAddress(PC);
     auto instruction = instructionSet[opcode].get();
     int cycles_this_step = 0;
+   if(instruction != nullptr) {
+       instruction->execute(*this, memoryBus, cycles_this_step, opcode);
+       if (typeid(*instruction) != typeid(Unimplemented)) {
+       //    std::cout << typeid(*instruction).name() << "executed" << std::endl;
 
-    if(instruction != nullptr)
-        instruction->execute(*this, *memoryBus, cycles_this_step);
-    else
+       }
+   }
+   else
         std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x" << std::hex << static_cast<int>(opcode) << std::endl;
 
 
     return cycles_this_step;
 }
 
-void SM83::connectMemory(MMU *memory) {
-    this->memoryBus = memory;
+void SM83::connectMemory(MMU &memory) {
+
 }
 
 SM83::SM83() {
-    instructionSet.resize(256);
 
     for (int i = 0; i < 256; ++i) {
-        instructionSet[i] = std::make_unique<Unimplemented>();
+        instructionSet.push_back(std::make_unique<Unimplemented>());
     }
+    instructionSet[0x00] = std::make_unique<NOP>();
+    instructionSet[0xc3] = std::make_unique<JP_NN>();
     instructionSet[0x78] = std::make_unique<LD_A_B>();
 
 }
 
 SM83::~SM83() = default;
+
 
 
