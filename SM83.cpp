@@ -68,7 +68,9 @@ int SM83::instructionExecution() {
     const auto instruction = instructionSet[opcode].get();
     int cycles_this_step = 0;
    if(instruction != nullptr) {
+       std::cout << "EXECUTING:" <<std::hex << static_cast<int>(opcode) << std::endl;
        instruction->execute(*this, memoryBus, cycles_this_step, opcode);
+
    }
    else
         std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x" << std::hex << static_cast<int>(opcode) <<
@@ -85,10 +87,21 @@ SM83::SM83() {
     }
     instructionSet[0x00] = std::make_unique<NOP>();
     instructionSet[0x01] = std::make_unique<LD_BC_n16>();
+    instructionSet[0x0E] = std::make_unique<LD_C_n8>();
+    instructionSet[0x10] =std::make_unique<STOP_n8>();
+    instructionSet[0x11] = std::make_unique<LD_DE_n16>();
+    instructionSet[0x12] = std::make_unique<INC_C>();
+    instructionSet[0x1c] = std::make_unique<INC_E>();
 
+    instructionSet[0x20] = std::make_unique<JR_NZ_e8>();
+    instructionSet[0x21] = std::make_unique<LD_HL_n16>();
+    instructionSet[0x2A] = std::make_unique<LD_A_HL>();
     instructionSet[0x3c] = std::make_unique<INC_A>();
+    instructionSet[0x47] = std::make_unique<LD_B_A>();
 
     instructionSet[0xc3] = std::make_unique<JP_NN>();
+    instructionSet[0x76] = std::make_unique<HALT>();
+
     instructionSet[0x78] = std::make_unique<LD_A_B>();
     instructionSet[0x80] = std::make_unique<AddA_B>();
     instructionSet[0x81] = std::make_unique<AddA_C>();

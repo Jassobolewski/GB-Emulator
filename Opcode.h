@@ -185,6 +185,61 @@ class LD_A_a16 final : public AbstractInstruction {
     };
 };
 
+class JR_NZ_e8 final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+
+        if(cpu.getRegisterFlag(SM83::Flag::Z) == 0) {//jump to flag
+            const auto e = mmu.returnWord(cpu.PC);
+            cpu.PC = (static_cast<int8_t>(e) + cpu.PC);
+        }
+
+    };
+};
+
+class STOP_n8 final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+       cpu.PC = cpu.PC + 2;
+    };
+};
+
+class LD_B_A final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cpu.B = cpu.A; //load the value of B into A
+        cyclesDuringInstruction = 4;
+        cpu.PC += 1;
+    }
+};
+
+class LD_C_n8 final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        const auto address = mmu.returnWord(cpu.PC + 1);
+        const auto value = mmu.returnAddress(address);
+        cpu.C = value; //load the value of n8 into C
+        cyclesDuringInstruction = 8;
+        cpu.PC += 2;
+    }
+};
+
+
+class LD_HL_n16 final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        const auto address = mmu.returnWord(cpu.PC + 1);
+        cpu.set_HL(address);
+        cpu.PC += 3;
+        cyclesDuringInstruction = 12;
+    };
+};
+
+class LD_DE_n16 final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        const auto address = mmu.returnWord(cpu.PC + 1);
+        cpu.set_DE(address);
+        cpu.PC += 3;
+        cyclesDuringInstruction = 12;
+    };
+};
+
 
 
 class SubA_B final : public AbstractInstruction {
@@ -236,6 +291,21 @@ public:
         cpu.A = cpu.B; //load the value of B into A
         cyclesDuringInstruction = 4;
         cpu.PC += 1;
+    }
+};
+
+class LD_A_HL final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cpu.A = cpu.HL;
+        cyclesDuringInstruction = 8;
+        cpu.PC += 1;
+    }
+};
+
+class HALT final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cpu.PC += 1;
+        cyclesDuringInstruction = 4;
     }
 };
 
