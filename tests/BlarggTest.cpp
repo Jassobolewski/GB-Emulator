@@ -31,7 +31,7 @@ TEST_F(BlarggTest, CpuInstrsRom) {
     }
 
     // Read the ROM into a vector
-    std::vector<uint8_t> rom_data((std::istreambuf_iterator<char>(rom_file)),std::istreambuf_iterator<char>());
+    const std::vector<uint8_t> rom_data((std::istreambuf_iterator<char>(rom_file)),std::istreambuf_iterator<char>());
     rom_file.close();
 
     cpu.memoryBus.loadRom(rom_data);

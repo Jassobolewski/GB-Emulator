@@ -86,8 +86,16 @@ SM83::SM83() {
     instructionSet[0x00] = std::make_unique<NOP>();
     instructionSet[0x01] = std::make_unique<LD_BC_n16>();
 
+    instructionSet[0x3c] = std::make_unique<INC_A>();
+
     instructionSet[0xc3] = std::make_unique<JP_NN>();
     instructionSet[0x78] = std::make_unique<LD_A_B>();
+    instructionSet[0x80] = std::make_unique<AddA_B>();
+    instructionSet[0x81] = std::make_unique<AddA_C>();
+    instructionSet[0x82] = std::make_unique<AddA_D>();
+    instructionSet[0x83] = std::make_unique<AddA_E>();
+
+    instructionSet[0xea] = std::make_unique<LD_A_a16>();
 
 }
 
