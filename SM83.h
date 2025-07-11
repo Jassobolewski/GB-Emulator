@@ -13,7 +13,7 @@ class AbstractInstruction; //forward declaration
 
 class SM83 {
 
-
+    int debugCounter = 0;
     std::vector<std::unique_ptr<AbstractInstruction>> instructionSet;
 
 public: //This is temporary

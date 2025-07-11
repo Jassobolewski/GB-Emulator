@@ -19,11 +19,11 @@ void MMU::loadRom(const std::vector<uint8_t>& romData) {
 
 }
 
-uint8_t MMU::returnAddress(uint16_t address) {
+uint8_t MMU::returnAddress(const uint16_t address) const {
     return memoryMap[address];
 }
 
-void MMU::writeToAddress(uint16_t address, uint8_t value) {
+void MMU::writeToAddress(const uint16_t address, const uint8_t value) {
     if (address == 0xFF01) {//Serial port
         std::cout << (value) << std::endl;
         serialTransferData = value;
@@ -36,7 +36,7 @@ void MMU::writeToAddress(uint16_t address, uint8_t value) {
     }
     else
     {
-        std::println("Denied Access");
+        std::println("Denied Access MMU");
     }
 }
 

@@ -68,7 +68,13 @@ int SM83::instructionExecution() {
     const auto instruction = instructionSet[opcode].get();
     int cycles_this_step = 0;
    if(instruction != nullptr) {
-       std::cout << "EXECUTING:" <<std::hex << static_cast<int>(opcode) << std::endl;
+       if(opcode != 0x0) {
+           std::cout << "EXECUTING:" <<std::hex << static_cast<int>(opcode) << std::endl;
+       }
+       else {
+           debugCounter++;
+       }
+
        instruction->execute(*this, memoryBus, cycles_this_step, opcode);
 
    }

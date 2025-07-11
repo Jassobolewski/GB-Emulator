@@ -191,7 +191,10 @@ public:
 
         if(cpu.getRegisterFlag(SM83::Flag::Z) == 0) {//jump to flag
             const auto e = mmu.returnWord(cpu.PC);
-            cpu.PC = (static_cast<int8_t>(e) + cpu.PC);
+            cpu.PC = (static_cast<int8_t>(e) + cpu.PC + 2);
+        }
+        else {
+            cpu.PC += 2;
         }
 
     };

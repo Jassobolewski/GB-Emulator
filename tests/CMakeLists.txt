@@ -2,8 +2,10 @@
 
 # Create the executable for our tests
 add_executable(run_tests test_cpu.cpp
+        json.hpp
         test_mmu.cpp
-        BlarggTest.cpp)
+        BlarggTest.cpp
+        test_cpu_json.cpp)
 
 # Link our main CPU code to the tests so we can test it
 # Using target_sources() is a modern way to do this.
@@ -27,7 +29,9 @@ target_include_directories(run_tests PRIVATE
 # Link GoogleTest to our test executable
 # GTest::gtest_main includes both gtest and a pre-written main() function.
 target_link_libraries(run_tests PRIVATE GTest::gtest_main)
-
 # Tell CTest (CMake's test runner) about our test executable
 include(GoogleTest)
 gtest_add_tests(TARGET run_tests)
+
+set(TEST_DATA_DIR ${CMAKE_SOURCE_DIR}/tests/json_tests)
+file(COPY ${TEST_DATA_DIR} DESTINATION ${CMAKE_BINARY_DIR}/cpu_tests)
