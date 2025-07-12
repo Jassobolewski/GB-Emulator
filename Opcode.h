@@ -236,9 +236,7 @@ class LD_HL_n16 final : public AbstractInstruction {
 
 class LD_DE_n16 final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        const auto address = mmu.returnWord(cpu.PC + 1);
-        cpu.set_DE(address);
-        cpu.PC += 3;
+        cpu.DE = cpu.immediate16BitValue(cpu.D, cpu.E);
         cyclesDuringInstruction = 12;
     };
 };
@@ -263,8 +261,8 @@ public:
 class LD_BC_n16 final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        cpu.set_BC(cpu.immediate_value);
-        cpu.PC += 3;
+        std::cout << "EXECUTING LD BC, n16 "<< std::endl;
+        cpu.BC = cpu.immediate16BitValue(cpu.B, cpu.C);
         cyclesDuringInstruction = 12;
     }
 };
@@ -320,6 +318,50 @@ class LD_HLI_A final : public AbstractInstruction{
     }
 };
 
+class DEC_SP final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cpu.SP -= 1;
+        cyclesDuringInstruction = 8;
+    }
+};
+
+class DEC_H final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        auto result = cpu.H - 1;
+        cpu.H = result;
+        cpu.setRegisterFlag(SM83::Flag::Z, result == 0);
+        cpu.setRegisterFlag(SM83::Flag::H, result & 0x0F);
+        cpu.setRegisterFlag(SM83::Flag::N, true);
+        cyclesDuringInstruction = 8;
+    }
+};
+
+class LD_D_B final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+       cpu.D = cpu.B;
+        cyclesDuringInstruction = 4;
+    }
+};
+
+
+class LD_D_H final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cpu.D = cpu.H;
+        cyclesDuringInstruction = 4;
+    }
+};
+
+class RET_NZ final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        if(!cpu.getRegisterFlag(SM83::Flag::Z))
+        {
+            cpu.PC = cpu.immediate16BitValueSP();
+            cyclesDuringInstruction = 2;
+        }
+        else
+            cyclesDuringInstruction = 5;
+    }
+};
 class Unimplemented final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {

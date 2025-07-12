@@ -14,51 +14,52 @@ using json = nlohmann::json;
 // Function to run a single JSON test case
 void run_json_test_case(const json& test_case) {
     // 1. ARRANGE: Set up the initial state
-    auto cpu = std::make_unique<SM83>();
+   SM83 cpu;
 
     const auto& initial_state = test_case["initial"];
 
     // Set all registers
-    cpu->A = initial_state["a"];
-    cpu->F = initial_state["f"];
-    cpu->B = initial_state["b"];
-    cpu->C = initial_state["c"];
-    cpu->D = initial_state["d"];
-    cpu->E = initial_state["e"];
-    cpu->H = initial_state["h"];
-    cpu->L = initial_state["l"];
-    cpu->PC = initial_state["pc"];
-    cpu->SP = initial_state["sp"];
+    cpu.A = initial_state["a"];
+    cpu.F = initial_state["f"];
+    cpu.B = initial_state["b"];
+    cpu.C = initial_state["c"];
+    cpu.D = initial_state["d"];
+    cpu.E = initial_state["e"];
+    cpu.H = initial_state["h"];
+    cpu.L = initial_state["l"];
+    cpu.PC = initial_state["pc"];
+    cpu.PC = cpu.PC - 1;
+    cpu.SP = initial_state["sp"];
 
     // Set initial RAM state
     for (const auto& ram_entry : initial_state["ram"]) {
         const uint16_t address = ram_entry[0];
         const uint8_t value = ram_entry[1];
-        cpu->memoryBus.writeToAddress(address,value);
+        cpu.memoryBus.writeToAddress(address,value);
     }
 
     // 2. ACT: Execute one single instruction
-    cpu->instructionExecution(); // Assuming step() executes one instruction
-
+    cpu.instructionExecution(); // Assuming step() executes one instruction
+    cpu.PC++;
     // 3. ASSERT: Compare the result to the final state
     const auto& final_state = test_case["final"];
 
-    EXPECT_EQ(cpu->A, final_state["a"]) << "Register A mismatch";
-    EXPECT_EQ(cpu->F, final_state["f"]) << "Register F mismatch";
-    EXPECT_EQ(cpu->B, final_state["b"]) << "Register B mismatch";
-    EXPECT_EQ(cpu->C, final_state["c"]) << "Register C mismatch";
-    EXPECT_EQ(cpu->D, final_state["d"]) << "Register D mismatch";
-    EXPECT_EQ(cpu->E, final_state["e"]) << "Register E mismatch";
-    EXPECT_EQ(cpu->H, final_state["h"]) << "Register H mismatch";
-    EXPECT_EQ(cpu->L, final_state["l"]) << "Register L mismatch";
-    EXPECT_EQ(cpu->PC, final_state["pc"]) << "Program Counter PC mismatch";
-    EXPECT_EQ(cpu->SP, final_state["sp"]) << "Stack Pointer SP mismatch";
+    EXPECT_EQ(cpu.A, final_state["a"]) << "Register A mismatch";
+    EXPECT_EQ(cpu.F, final_state["f"]) << "Register F mismatch";
+    EXPECT_EQ(cpu.B, final_state["b"]) << "Register B mismatch";
+    EXPECT_EQ(cpu.C, final_state["c"]) << "Register C mismatch";
+    EXPECT_EQ(cpu.D, final_state["d"]) << "Register D mismatch";
+    EXPECT_EQ(cpu.E, final_state["e"]) << "Register E mismatch";
+    EXPECT_EQ(cpu.H, final_state["h"]) << "Register H mismatch";
+    EXPECT_EQ(cpu.L, final_state["l"]) << "Register L mismatch";
+    EXPECT_EQ(cpu.PC, final_state["pc"]) << "Program Counter PC mismatch";
+    EXPECT_EQ(cpu.SP, final_state["sp"]) << "Stack Pointer SP mismatch";
 
     // Assert final RAM state
     for (const auto& ram_entry : final_state["ram"]) {
         uint16_t address = ram_entry[0];
         uint8_t expected_value = ram_entry[1];
-        EXPECT_EQ(cpu->memoryBus.returnAddress(address), expected_value)
+        EXPECT_EQ(cpu.memoryBus.returnAddress(address), expected_value)
             << "RAM mismatch at address 0x" << std::hex << address;
     }
 }
@@ -98,9 +99,9 @@ INSTANTIATE_TEST_SUITE_P(
     JsonOpcodeTest,
     ::testing::Values(
         "00.json", // NOP
-         "01.json" // LD BC, n16
-      //  "06.json", // LD B, n8
-      //  "c3.json"  // JP nn
+           "01.json", //
+        "11.json", //
+        "c0.json"  //
         // Add more files here as you implement them
     )
 );

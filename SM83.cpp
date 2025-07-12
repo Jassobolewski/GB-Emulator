@@ -6,6 +6,20 @@
 #include "AbstractInstruction.h"
 #include "Opcode.h"
 
+uint16_t SM83::immediate16BitValue(uint8_t& registerMSB, uint8_t& registerLSB)
+{
+    registerLSB = this->memoryBus.returnAddress(PC++);
+    registerMSB = this->memoryBus.returnAddress(PC++);
+    return combinedValue(registerMSB, registerLSB);
+}
+
+uint16_t SM83::immediate16BitValueSP() {
+    auto lsb = this->memoryBus.returnAddress(SP++);
+    auto msb = this->memoryBus.returnAddress(SP++);
+
+    return combinedValue(msb,lsb);
+}
+
 void SM83::setFlag(const uint16_t value, uint8_t& flags) {
     flags = value & 0xFF;
 }
@@ -64,8 +78,8 @@ bool SM83::getRegisterFlag(SM83::Flag flag) const {
 }
 
 int SM83::instructionExecution() {
-    const uint8_t opcode = memoryBus.returnAddress(this->PC);
-    this->PC = PC + 1;//increment the PC after instruction is fetched
+    const uint8_t opcode = memoryBus.returnAddress(this->PC++);
+   // this->PC = PC + 1;//increment the PC after instruction is fetched
     /*
      * !important if PC mismatch happens it's because we increment more than necessary
      * */
@@ -110,9 +124,14 @@ SM83::SM83() {
     instructionSet[0x20] = std::make_unique<JR_NZ_e8>();
     instructionSet[0x21] = std::make_unique<LD_HL_n16>();
     instructionSet[0x22] = std::make_unique<LD_HLI_A>();
+    instructionSet[0x25] = std::make_unique<DEC_H>();
     instructionSet[0x2A] = std::make_unique<LD_A_HL>();
     instructionSet[0x3c] = std::make_unique<INC_A>();
+    instructionSet[0x3b] = std::make_unique<DEC_SP>();
     instructionSet[0x47] = std::make_unique<LD_B_A>();
+    instructionSet[0x50]  = std::make_unique<LD_D_B>();
+
+    instructionSet[0x54]  = std::make_unique<LD_D_H>();
 
     instructionSet[0xc3] = std::make_unique<JP_NN>();
     instructionSet[0x76] = std::make_unique<HALT>();
@@ -123,9 +142,12 @@ SM83::SM83() {
     instructionSet[0x82] = std::make_unique<AddA_D>();
     instructionSet[0x83] = std::make_unique<AddA_E>();
 
+    instructionSet[0xC0] =  std::make_unique<RET_NZ>();
     instructionSet[0xea] = std::make_unique<LD_A_a16>();
 
 }
+
+
 
 SM83::~SM83() = default;
 

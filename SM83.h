@@ -70,6 +70,10 @@ public: //This is temporary
     SM83(SM83&&) = delete;
     SM83& operator=(SM83&&) = delete;
 
+
+    uint16_t immediate16BitValueSP();
+
+    uint16_t immediate16BitValue(uint8_t &registerLSB, uint8_t &registerMSB);
 };
 
 
