@@ -58,7 +58,7 @@ void run_json_test_case(const json& test_case) {
     for (const auto& ram_entry : final_state["ram"]) {
         uint16_t address = ram_entry[0];
         uint8_t expected_value = ram_entry[1];
-        EXPECT_EQ(cpu->memoryBus.returnWord(address), expected_value)
+        EXPECT_EQ(cpu->memoryBus.returnAddress(address), expected_value)
             << "RAM mismatch at address 0x" << std::hex << address;
     }
 }
@@ -97,8 +97,8 @@ INSTANTIATE_TEST_SUITE_P(
     CPU_JSON_Tests,
     JsonOpcodeTest,
     ::testing::Values(
-        "00.json" // NOP
-      //  "01.json", // LD BC, n16
+        "00.json", // NOP
+         "01.json" // LD BC, n16
       //  "06.json", // LD B, n8
       //  "c3.json"  // JP nn
         // Add more files here as you implement them

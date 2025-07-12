@@ -255,7 +255,7 @@ public:
 class NOP final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        cpu.PC += 1;
+        //cpu.PC += 1;
         cyclesDuringInstruction = 4;
     }
 };
@@ -308,6 +308,14 @@ class LD_A_HL final : public AbstractInstruction {
 class HALT final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
         cpu.PC += 1;
+        cyclesDuringInstruction = 4;
+    }
+};
+
+class LD_HLI_A final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cpu.memoryBus.writeToAddress(cpu.HL, cpu.A);
+        cpu.HL = cpu.HL + 1;
         cyclesDuringInstruction = 4;
     }
 };

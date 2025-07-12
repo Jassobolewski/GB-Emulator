@@ -64,15 +64,23 @@ bool SM83::getRegisterFlag(SM83::Flag flag) const {
 }
 
 int SM83::instructionExecution() {
-    const uint8_t opcode = memoryBus.returnAddress(PC);
+    const uint8_t opcode = memoryBus.returnAddress(this->PC);
+    this->PC = PC + 1;//increment the PC after instruction is fetched
+    /*
+     * !important if PC mismatch happens it's because we increment more than necessary
+     * */
     const auto instruction = instructionSet[opcode].get();
     int cycles_this_step = 0;
    if(instruction != nullptr) {
        if(opcode != 0x0) {
-           std::cout << "EXECUTING:" <<std::hex << static_cast<int>(opcode) << std::endl;
+           std::cout << "EXECUTING: 0x" <<std::hex << static_cast<int>(opcode) << std::endl;
        }
        else {
            debugCounter++;
+           if(debugCounter %2 == 0)
+           {
+               std::cout << "EXECUTING: 0x" <<std::hex << static_cast<int>(opcode) << std::endl;
+           }
        }
 
        instruction->execute(*this, memoryBus, cycles_this_step, opcode);
@@ -101,6 +109,7 @@ SM83::SM83() {
 
     instructionSet[0x20] = std::make_unique<JR_NZ_e8>();
     instructionSet[0x21] = std::make_unique<LD_HL_n16>();
+    instructionSet[0x22] = std::make_unique<LD_HLI_A>();
     instructionSet[0x2A] = std::make_unique<LD_A_HL>();
     instructionSet[0x3c] = std::make_unique<INC_A>();
     instructionSet[0x47] = std::make_unique<LD_B_A>();
