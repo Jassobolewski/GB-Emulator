@@ -100,7 +100,10 @@ INSTANTIATE_TEST_SUITE_P(
     ::testing::Values(
         "00.json", // NOP
            "01.json", //
-        "11.json", //
+        "03.json",
+        "04.json",
+        "11.json",
+        "14.json", //
         "c0.json"  //
         // Add more files here as you implement them
     )

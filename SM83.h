@@ -7,6 +7,7 @@
 
 
 #include <cstdint>
+#include <stack>
 #include "MMU.h"
 
 class AbstractInstruction; //forward declaration
@@ -14,6 +15,7 @@ class AbstractInstruction; //forward declaration
 class SM83 {
 
     int debugCounter = 0;
+    std::stack<uint8_t> debugStack;//Records instructions in the order they happen *for rewinding and debugging later*
     std::vector<std::unique_ptr<AbstractInstruction>> instructionSet;
 
 public: //This is temporary

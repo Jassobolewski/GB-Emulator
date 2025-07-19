@@ -108,14 +108,20 @@ class INC_B final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
         cyclesDuringInstruction = 4;
-        cpu.B = cpu.B + 1;
-
-        cpu.setRegisterFlag(SM83::Flag::H,cpu.B & 0x0F );
+        cpu.setRegisterFlag(SM83::Flag::H,(((cpu.B++ & 0xF) + (1 & 0xf)) & 0x10));
         cpu.setRegisterFlag(SM83::Flag::Z,cpu.B == 0 );
         cpu.setRegisterFlag(SM83::Flag::N, false );
-        cpu.PC += 1;
     };
 };
+
+class INC_BC final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cyclesDuringInstruction = 8;
+        cpu.C += 1;
+    };
+};
+
 
 class INC_C final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
@@ -132,12 +138,9 @@ class INC_C final : public AbstractInstruction {
 class INC_D final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
         cyclesDuringInstruction = 4;
-        cpu.D = cpu.D + 1;
-
-        cpu.setRegisterFlag(SM83::Flag::H,cpu.D & 0x0F );
+        cpu.setRegisterFlag(SM83::Flag::H,(((cpu.D++ & 0xF) + (1 & 0xf)) & 0x10));
         cpu.setRegisterFlag(SM83::Flag::Z,cpu.D == 0 );
         cpu.setRegisterFlag(SM83::Flag::N, false );
-        cpu.PC += 1;
     };
 };
 
@@ -261,7 +264,7 @@ public:
 class LD_BC_n16 final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        std::cout << "EXECUTING LD BC, n16 "<< std::endl;
+        //std::cout << "EXECUTING LD BC, n16 "<< std::endl;
         cpu.BC = cpu.immediate16BitValue(cpu.B, cpu.C);
         cyclesDuringInstruction = 12;
     }
