@@ -13,7 +13,6 @@ void NOP::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opc
 }
 
 void HALT::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.PC += 1;
     cyclesDuringInstruction = 4;
 }
 
