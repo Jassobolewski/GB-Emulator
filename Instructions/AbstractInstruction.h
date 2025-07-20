@@ -5,8 +5,8 @@
 #ifndef GB_EMULATOR_ABSTRACTINSTRUCTION_H
 #define GB_EMULATOR_ABSTRACTINSTRUCTION_H
 
-#include "MMU.h"
-#include "SM83.h"
+#include "../MMU.h"
+#include "../SM83.h"
 
 
 class AbstractInstruction {

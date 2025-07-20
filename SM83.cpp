@@ -3,8 +3,8 @@
 //
 
 #include "SM83.h"
-#include "AbstractInstruction.h"
-#include "Opcode.h"
+#include "Instructions/AbstractInstruction.h"
+#include "Instructions/Opcode.h"
 
 uint16_t SM83::immediate16BitValue(uint8_t& registerMSB, uint8_t& registerLSB)
 {
@@ -12,6 +12,13 @@ uint16_t SM83::immediate16BitValue(uint8_t& registerMSB, uint8_t& registerLSB)
     registerMSB = this->memoryBus.returnAddress(PC++);
     return combinedValue(registerMSB, registerLSB);
 }
+
+uint8_t SM83::immediate8BitValue(uint8_t& currentRegister)
+{
+    currentRegister = this->memoryBus.returnAddress(PC++);
+    return currentRegister;
+}
+
 
 uint16_t SM83::immediate16BitValueSP() {
     auto lsb = this->memoryBus.returnAddress(SP++);
@@ -105,10 +112,17 @@ SM83::SM83() {
     }
     instructionSet[0x00] = std::make_unique<NOP>();//Pass
     instructionSet[0x01] = std::make_unique<LD_BC_n16>();//Pass
-    instructionSet[0x3] = std::make_unique<INC_BC>();//Pass
-    instructionSet[0x4] = std::make_unique<INC_B>();//Pass
+    instructionSet[0x03] = std::make_unique<INC_BC>();//Pass
+    instructionSet[0x04] = std::make_unique<INC_B>();//Pass
+    instructionSet[0x05] = std::make_unique<DEC_B>();//Pass
+    instructionSet[0x06] = std::make_unique<LD_B_n8>();//pass
+    instructionSet[0x07] = std::make_unique<RLCA>();//
+    instructionSet[0x08] = std::make_unique<LD_SP_NN>();//
+    instructionSet[0x09] = std::make_unique<Add_HL_BC>();//
     instructionSet[0x14] = std::make_unique<INC_D>();//Pass
-
+    instructionSet[0x15] = std::make_unique<DEC_D>();//pass
+    instructionSet[0x24] = std::make_unique<INC_H>();//Pass
+    instructionSet[0x25] = std::make_unique<DEC_H>();//pass
 
     instructionSet[0xC0] =  std::make_unique<RET_NZ>();//Pass
 
@@ -143,6 +157,21 @@ SM83::SM83() {
 
 }
 
+uint16_t SM83::getAf() const {
+    return combinedValue(A,F);
+}
+
+uint16_t SM83::getBc() const {
+    return combinedValue(B,C);
+}
+
+uint16_t SM83::getDe() const {
+    return combinedValue(D,E);;
+}
+
+uint16_t SM83::getHl() const {
+    return combinedValue(H,L);
+}
 
 
 SM83::~SM83() = default;

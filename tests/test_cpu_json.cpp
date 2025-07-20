@@ -92,8 +92,6 @@ TEST_P(JsonOpcodeTest, PassesAllScenarios) {
     }
 }
 
-// Instantiate the test suite. Start with just one or two files for the
-// opcodes you have already implemented.
 INSTANTIATE_TEST_SUITE_P(
     CPU_JSON_Tests,
     JsonOpcodeTest,
@@ -102,9 +100,17 @@ INSTANTIATE_TEST_SUITE_P(
            "01.json", //
         "03.json",
         "04.json",
+        "05.json",
+        "06.json",
+        "07.json",
+        "08.json",
+        "09.json",
         "11.json",
         "14.json", //
+        "15.json",
+        "24.json", //
+        "25.json",
         "c0.json"  //
-        // Add more files here as you implement them
+
     )
 );

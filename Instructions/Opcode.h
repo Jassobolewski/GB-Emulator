@@ -7,6 +7,25 @@
 
 #include "AbstractInstruction.h"
 #include <iomanip>
+
+
+class Add_HL_BC final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cyclesDuringInstruction = 4;
+        const auto registerValueHL = cpu.getHl();
+        const auto registerValueBC = cpu.getBc();
+
+        cpu.setRegisterFlag(SM83::Flag::H, (((registerValueHL & 0xF) + (registerValueBC & 0xf)) & 0x10) );
+        const auto fullValue = cpu.getHl() + cpu.getBc();
+        cpu.setRegisterFlag(SM83::Flag::C, fullValue > 0xFF );
+        cpu.setRegisterFlag(SM83::Flag::N, false );
+        cpu.set_HL(fullValue);
+    };
+};
+
+
+
 class AddA_B final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
@@ -114,6 +133,27 @@ public:
     };
 };
 
+class DEC_B final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cyclesDuringInstruction = 4;
+        cpu.setRegisterFlag(SM83::Flag::H,(((cpu.B-- & 0xF) - (1 & 0xf)) & 0x10));
+        cpu.setRegisterFlag(SM83::Flag::Z,cpu.B == 0 );
+        cpu.setRegisterFlag(SM83::Flag::N, true );
+    };
+};
+
+class DEC_D final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cyclesDuringInstruction = 4;
+        cpu.setRegisterFlag(SM83::Flag::H,(((cpu.D-- & 0xF) - (1 & 0xf)) & 0x10));
+        cpu.setRegisterFlag(SM83::Flag::Z,cpu.D == 0 );
+        cpu.setRegisterFlag(SM83::Flag::N, true );
+    };
+};
+
+
 class INC_BC final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
@@ -140,6 +180,15 @@ class INC_D final : public AbstractInstruction {
         cyclesDuringInstruction = 4;
         cpu.setRegisterFlag(SM83::Flag::H,(((cpu.D++ & 0xF) + (1 & 0xf)) & 0x10));
         cpu.setRegisterFlag(SM83::Flag::Z,cpu.D == 0 );
+        cpu.setRegisterFlag(SM83::Flag::N, false );
+    };
+};
+
+class INC_H final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cyclesDuringInstruction = 4;
+        cpu.setRegisterFlag(SM83::Flag::H,(((cpu.H++ & 0xF) + (1 & 0xf)) & 0x10));
+        cpu.setRegisterFlag(SM83::Flag::Z,cpu.H == 0 );
         cpu.setRegisterFlag(SM83::Flag::N, false );
     };
 };
@@ -269,6 +318,16 @@ public:
         cyclesDuringInstruction = 12;
     }
 };
+
+
+class LD_B_n8 final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        cpu.B = cpu.immediate8BitValue(cpu.B);
+        cyclesDuringInstruction = 8;
+    }
+};
+
 //0x2
 class LD_BC_A final : public AbstractInstruction {
 public:
@@ -330,12 +389,10 @@ class DEC_SP final : public AbstractInstruction{
 
 class DEC_H final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        auto result = cpu.H - 1;
-        cpu.H = result;
-        cpu.setRegisterFlag(SM83::Flag::Z, result == 0);
-        cpu.setRegisterFlag(SM83::Flag::H, result & 0x0F);
-        cpu.setRegisterFlag(SM83::Flag::N, true);
-        cyclesDuringInstruction = 8;
+        cyclesDuringInstruction = 4;
+        cpu.setRegisterFlag(SM83::Flag::H,(((cpu.H-- & 0xF) - (1 & 0xf)) & 0x10));
+        cpu.setRegisterFlag(SM83::Flag::Z,cpu.H == 0 );
+        cpu.setRegisterFlag(SM83::Flag::N, true );
     }
 };
 
@@ -353,6 +410,34 @@ class LD_D_H final : public AbstractInstruction{
         cyclesDuringInstruction = 4;
     }
 };
+
+class RLCA final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+
+        auto toggleBit = cpu.A & (1 << 7);
+        cpu.setRegisterFlag(SM83::Flag::H,false);
+        cpu.setRegisterFlag(SM83::Flag::Z,false);
+        cpu.setRegisterFlag(SM83::Flag::N, false );
+        cpu.setRegisterFlag(SM83::Flag::C, toggleBit);
+        cpu.A = (cpu.A << 1) ^ (toggleBit ? 1 : 0);
+
+    }
+};
+
+class LD_SP_NN : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
+        auto nn = [](SM83 &cpu) {
+            uint8_t lsb = 0;
+            uint8_t msb = 0;
+            auto nn = cpu.immediate16BitValue(lsb, msb);
+            return nn;
+        }(cpu);
+        cpu.memoryBus.writeWord(nn,(cpu.SP));
+        cyclesDuringInstruction = 20;
+    }
+};
+
 
 class RET_NZ final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {

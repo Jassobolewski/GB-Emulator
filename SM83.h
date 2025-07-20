@@ -38,6 +38,14 @@ public: //This is temporary
     //Combined 16 bit registers
     uint16_t AF{}, BC{}, DE{},HL{};
 
+    uint16_t getAf() const;
+
+    uint16_t getBc() const;
+
+    uint16_t getDe() const;
+
+    uint16_t getHl() const;
+
 
     enum class Flag : uint8_t {
         Z = 1 << 7,
@@ -76,6 +84,8 @@ public: //This is temporary
     uint16_t immediate16BitValueSP();
 
     uint16_t immediate16BitValue(uint8_t &registerLSB, uint8_t &registerMSB);
+
+    uint8_t immediate8BitValue(uint8_t &currentRegister);
 };
 
 
