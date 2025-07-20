@@ -104,6 +104,12 @@ INSTANTIATE_TEST_SUITE_P(
         "07.json",
         "08.json",
         "09.json",
+        "0A.json",
+        "0B.json",
+        "0C.json",
+        "0D.json",
+        "0E.json",
+        "0F.json",
         "11.json",
         "14.json", //
         "15.json",

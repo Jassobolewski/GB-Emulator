@@ -117,9 +117,16 @@ SM83::SM83() {
     instructionSet[0x04] = std::make_unique<INC_B>();//Pass
     instructionSet[0x05] = std::make_unique<DEC_B>();//Pass
     instructionSet[0x06] = std::make_unique<LD_B_n8>();//pass
-    instructionSet[0x07] = std::make_unique<RLCA>();//
-    instructionSet[0x08] = std::make_unique<LD_SP_NN>();//
-    instructionSet[0x09] = std::make_unique<Add_HL_BC>();//
+    instructionSet[0x07] = std::make_unique<RLCA>();//pass
+    instructionSet[0x08] = std::make_unique<LD_SP_NN>();//pass
+    instructionSet[0x09] = std::make_unique<Add_HL_BC>();//pass
+    instructionSet[0x0A] = std::make_unique<LD_A_BC>();//pass
+    instructionSet[0x0B] = std::make_unique<DEC_BC>();//pass
+    instructionSet[0x0C] = std::make_unique<INC_C>();//pass
+    instructionSet[0x0D] = std::make_unique<DEC_C>();//pass
+    instructionSet[0x0E] = std::make_unique<LD_C_n8>();//pass
+    instructionSet[0x0F] = std::make_unique<RRCA>();//pass
+    instructionSet[0x11] = std::make_unique<LD_DE_n16>();//pass
     instructionSet[0x14] = std::make_unique<INC_D>();//Pass
     instructionSet[0x15] = std::make_unique<DEC_D>();//pass
     instructionSet[0x24] = std::make_unique<INC_H>();//Pass
@@ -127,34 +134,34 @@ SM83::SM83() {
 
     instructionSet[0xC0] =  std::make_unique<RET_NZ>();//Pass
 
-    instructionSet[0x0E] = std::make_unique<LD_C_n8>();
-    instructionSet[0x10] =std::make_unique<STOP_n8>();
-    instructionSet[0x11] = std::make_unique<LD_DE_n16>();
-    instructionSet[0x12] = std::make_unique<INC_C>();
-    instructionSet[0x1c] = std::make_unique<INC_E>();
-
-    instructionSet[0x20] = std::make_unique<JR_NZ_e8>();
-    instructionSet[0x21] = std::make_unique<LD_HL_n16>();
-    instructionSet[0x22] = std::make_unique<LD_HLI_A>();
-  //  instructionSet[0x25] = std::make_unique<DEC_H>();
-    instructionSet[0x2A] = std::make_unique<LD_A_HL>();
-    instructionSet[0x3c] = std::make_unique<INC_A>();
-   // instructionSet[0x3b] = std::make_unique<DEC_SP>();
-    instructionSet[0x47] = std::make_unique<LD_B_A>();
-    instructionSet[0x50]  = std::make_unique<LD_D_B>();
-
-    instructionSet[0x54]  = std::make_unique<LD_D_H>();
-
-    instructionSet[0xc3] = std::make_unique<JP_NN>();
-    instructionSet[0x76] = std::make_unique<HALT>();
-
-    instructionSet[0x78] = std::make_unique<LD_A_B>();
-    instructionSet[0x80] = std::make_unique<AddA_B>();
-    instructionSet[0x81] = std::make_unique<AddA_C>();
-    instructionSet[0x82] = std::make_unique<AddA_D>();
-    instructionSet[0x83] = std::make_unique<AddA_E>();
-
-    instructionSet[0xea] = std::make_unique<LD_A_a16>();
+//    instructionSet[0x0E] = std::make_unique<LD_C_n8>();
+//    instructionSet[0x10] =std::make_unique<STOP_n8>();
+//    instructionSet[0x11] = std::make_unique<LD_DE_n16>();
+//    instructionSet[0x12] = std::make_unique<INC_C>();
+//    instructionSet[0x1c] = std::make_unique<INC_E>();
+//
+//    instructionSet[0x20] = std::make_unique<JR_NZ_e8>();
+//    instructionSet[0x21] = std::make_unique<LD_HL_n16>();
+//    instructionSet[0x22] = std::make_unique<LD_HLI_A>();
+//  //  instructionSet[0x25] = std::make_unique<DEC_H>();
+//    instructionSet[0x2A] = std::make_unique<LD_A_HL>();
+//    instructionSet[0x3c] = std::make_unique<INC_A>();
+//   // instructionSet[0x3b] = std::make_unique<DEC_SP>();
+//    instructionSet[0x47] = std::make_unique<LD_B_A>();
+//    instructionSet[0x50]  = std::make_unique<LD_D_B>();
+//
+//    instructionSet[0x54]  = std::make_unique<LD_D_H>();
+//
+//    instructionSet[0xc3] = std::make_unique<JP_NN>();
+//    instructionSet[0x76] = std::make_unique<HALT>();
+//
+//    instructionSet[0x78] = std::make_unique<LD_A_B>();
+//    instructionSet[0x80] = std::make_unique<AddA_B>();
+//    instructionSet[0x81] = std::make_unique<AddA_C>();
+//    instructionSet[0x82] = std::make_unique<AddA_D>();
+//    instructionSet[0x83] = std::make_unique<AddA_E>();
+//
+//    instructionSet[0xea] = std::make_unique<LD_A_a16>();
 
 }
 

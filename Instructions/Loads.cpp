@@ -27,11 +27,8 @@ void LD_B_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 }
 
 void LD_C_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    const auto address = mmu.returnWord(cpu.PC + 1);
-    const auto value = mmu.returnAddress(address);
-    cpu.C = value; //load the value of n8 into C
+    cpu.immediate8BitValue(cpu.C);
     cyclesDuringInstruction = 8;
-    cpu.PC += 2;
 }
 
 void LD_HL_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -100,4 +97,9 @@ void LD_SP_NN::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
     }(cpu);
     cpu.memoryBus.writeWord(nn,(cpu.SP));
     cyclesDuringInstruction = 20;
+}
+
+void LD_A_BC::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.A = cpu.memoryBus.returnAddress(cpu.getBc());
+    cyclesDuringInstruction = 8;
 }

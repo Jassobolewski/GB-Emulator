@@ -43,12 +43,9 @@ void INC_BC::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 
 void INC_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
-    cpu.C = cpu.C + 1;
-
-    cpu.setRegisterFlag(SM83::Flag::H,cpu.C & 0x0F );
+    cpu.setRegisterFlag(SM83::Flag::H,(((cpu.C++ & 0xF) + (1 & 0xf)) & 0x10));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.C == 0 );
     cpu.setRegisterFlag(SM83::Flag::N, false );
-    cpu.PC += 1;
 }
 
 void INC_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -95,4 +92,16 @@ void INC_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
     cpu.setRegisterFlag(SM83::Flag::Z, cpu.L == 0);
     cpu.setRegisterFlag(SM83::Flag::N, false);
     cpu.PC += 1;
+}
+
+void DEC_BC::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.set_BC(cpu.getBc() - 1);
+    cyclesDuringInstruction = 8;
+}
+
+void DEC_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    cpu.setRegisterFlag(SM83::Flag::H,(((cpu.C-- & 0xF) - (1 & 0xf)) & 0x10));
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.C == 0 );
+    cpu.setRegisterFlag(SM83::Flag::N, true );
 }
