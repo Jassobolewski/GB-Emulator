@@ -63,6 +63,11 @@ void LD_B_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cyclesDuringInstruction = 8;
 }
 
+void LD_D_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.immediate8BitValue(cpu.D);
+    cyclesDuringInstruction = 8;
+}
+
 void LD_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.A = cpu.B; //load the value of B into A
     cyclesDuringInstruction = 4;

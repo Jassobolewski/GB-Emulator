@@ -38,8 +38,14 @@ void DEC_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
 
 void INC_BC::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 8;
-    cpu.C += 1;
+    cpu.set_BC(cpu.getBc() + 1);
 }
+
+void INC_DE::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 8;
+    cpu.set_DE(cpu.getDe() + 1);
+}
+
 
 void INC_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
