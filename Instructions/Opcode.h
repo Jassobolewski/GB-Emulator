@@ -13,64 +13,30 @@
 
 
 class STOP_n8 final : public AbstractInstruction {
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-       cpu.PC = cpu.PC + 2;
-    };
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
 };
 
 class NOP final : public AbstractInstruction {
 public:
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        //cpu.PC += 1;
-        cyclesDuringInstruction = 4;
-    }
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
 class HALT final : public AbstractInstruction {
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        cpu.PC += 1;
-        cyclesDuringInstruction = 4;
-    }
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
 
 class RLCA final : public AbstractInstruction{
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-
-        auto toggleBit = cpu.A & (1 << 7);
-        cpu.setRegisterFlag(SM83::Flag::H,false);
-        cpu.setRegisterFlag(SM83::Flag::Z,false);
-        cpu.setRegisterFlag(SM83::Flag::N, false );
-        cpu.setRegisterFlag(SM83::Flag::C, toggleBit);
-        cpu.A = (cpu.A << 1) ^ (toggleBit ? 1 : 0);
-
-    }
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
 class RET_NZ final : public AbstractInstruction{
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        if(!cpu.getRegisterFlag(SM83::Flag::Z))
-        {
-            cpu.PC = cpu.immediate16BitValueSP();
-            cyclesDuringInstruction = 2;
-        }
-        else
-            cyclesDuringInstruction = 5;
-    }
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
 class Unimplemented final : public AbstractInstruction {
 public:
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        uint16_t address = cpu.PC - 1;
-        std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x"
-                  << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(opcode)
-                  << " at address 0x"
-                  << std::hex << std::setw(4) << std::setfill('0') << address
-                  << std::endl;
-        cpu.PC += 1;
-        cyclesDuringInstruction = 4;
-    }
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
 

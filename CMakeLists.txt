@@ -32,6 +32,7 @@ add_executable(GB_Emulator main.cpp
         Instructions/Arithmetic.h
         Instructions/UnaryOperations.cpp
         Instructions/UnaryOperations.h
+        Instructions/Opcode.cpp
 )
 # Link to the actual SDL3 library.
 target_link_libraries(GB_Emulator PRIVATE SDL3::SDL3)

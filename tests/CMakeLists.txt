@@ -5,7 +5,8 @@ add_executable(run_tests test_cpu.cpp
         json.hpp
         test_mmu.cpp
         BlarggTest.cpp
-        test_cpu_json.cpp)
+        test_cpu_json.cpp
+        )
 
 # Link our main CPU code to the tests so we can test it
 # Using target_sources() is a modern way to do this.
@@ -15,6 +16,7 @@ target_sources(run_tests PRIVATE
         ../MMU.cpp
         ../Instructions/AbstractInstruction.h
         ../Instructions/Opcode.h
+        ../Instructions/Opcode.cpp
         ../Instructions/Loads.cpp
         ../Instructions/Loads.h
         ../Instructions/ControlFlow.cpp
