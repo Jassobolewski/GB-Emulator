@@ -10,13 +10,12 @@
 class Add_HL_BC final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        cyclesDuringInstruction = 4;
+        cyclesDuringInstruction = 8;
         const auto registerValueHL = cpu.getHl();
         const auto registerValueBC = cpu.getBc();
-
-        cpu.setRegisterFlag(SM83::Flag::H, (((registerValueHL & 0xF) + (registerValueBC & 0xf)) & 0x10) );
         const auto fullValue = cpu.getHl() + cpu.getBc();
-        cpu.setRegisterFlag(SM83::Flag::C, fullValue > 0xFF );
+        cpu.setRegisterFlag(SM83::Flag::H,   ((registerValueHL & 0x0FFF) + (registerValueBC & 0x0FFF)) > 0x0FFF);
+        cpu.setRegisterFlag(SM83::Flag::C, ((fullValue) > 0xFFFF));
         cpu.setRegisterFlag(SM83::Flag::N, false );
         cpu.set_HL(fullValue);
     };
@@ -108,22 +107,6 @@ public:
     };
 };
 
-
-class DEC_SP final : public AbstractInstruction{
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        cpu.SP -= 1;
-        cyclesDuringInstruction = 8;
-    }
-};
-
-class DEC_H final : public AbstractInstruction{
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override {
-        cyclesDuringInstruction = 4;
-        cpu.setRegisterFlag(SM83::Flag::H,(((cpu.H-- & 0xF) - (1 & 0xf)) & 0x10));
-        cpu.setRegisterFlag(SM83::Flag::Z,cpu.H == 0 );
-        cpu.setRegisterFlag(SM83::Flag::N, true );
-    }
-};
 
 
 

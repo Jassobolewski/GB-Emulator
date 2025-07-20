@@ -13,6 +13,16 @@ add_executable(run_tests test_cpu.cpp
 target_sources(run_tests PRIVATE
         ../SM83.cpp
         ../MMU.cpp
+        ../Instructions/AbstractInstruction.h
+        ../Instructions/Opcode.h
+        ../Instructions/Loads.cpp
+        ../Instructions/Loads.h
+        ../Instructions/ControlFlow.cpp
+        ../Instructions/ControlFlow.h
+        ../Instructions/Arithmetic.cpp
+        ../Instructions/Arithmetic.h
+        ../Instructions/UnaryOperations.cpp
+        ../Instructions/UnaryOperations.h
        
 )
 
