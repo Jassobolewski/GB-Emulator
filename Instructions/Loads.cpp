@@ -39,8 +39,17 @@ void LD_HL_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8
 }
 
 void LD_DE_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.DE = cpu.immediate16BitValue(cpu.D, cpu.E);
+    cpu.set_DE(cpu.immediate16BitValue(cpu.D, cpu.E));
     cyclesDuringInstruction = 12;
+}
+
+void LD_BC_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.memoryBus.writeToAddress(cpu.getBc(),cpu.A);
+    cyclesDuringInstruction = 8;
+}
+void LD_DE_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.memoryBus.writeToAddress(cpu.getDe(),cpu.A);
+    cyclesDuringInstruction = 8;
 }
 
 void LD_BC_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -51,12 +60,6 @@ void LD_BC_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8
 
 void LD_B_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.B = cpu.immediate8BitValue(cpu.B);
-    cyclesDuringInstruction = 8;
-}
-
-void LD_BC_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.set_BC(cpu.A);
-    cpu.PC += 1;
     cyclesDuringInstruction = 8;
 }
 
@@ -103,3 +106,5 @@ void LD_A_BC::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cpu.A = cpu.memoryBus.returnAddress(cpu.getBc());
     cyclesDuringInstruction = 8;
 }
+
+

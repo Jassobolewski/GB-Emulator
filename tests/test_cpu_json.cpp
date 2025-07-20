@@ -96,7 +96,8 @@ INSTANTIATE_TEST_SUITE_P(
     JsonOpcodeTest,
     ::testing::Values(
         "00.json", // NOP
-           "01.json", //
+        "01.json", //
+        "02.json", //
         "03.json",
         "04.json",
         "05.json",
@@ -111,6 +112,7 @@ INSTANTIATE_TEST_SUITE_P(
         "0E.json",
         "0F.json",
         "11.json",
+        "12.json",
         "14.json", //
         "15.json",
         "24.json", //

@@ -113,6 +113,7 @@ SM83::SM83() {
     }
     instructionSet[0x00] = std::make_unique<NOP>();//Pass
     instructionSet[0x01] = std::make_unique<LD_BC_n16>();//Pass
+    instructionSet[0x02] = std::make_unique<LD_BC_A>();//Pass
     instructionSet[0x03] = std::make_unique<INC_BC>();//Pass
     instructionSet[0x04] = std::make_unique<INC_B>();//Pass
     instructionSet[0x05] = std::make_unique<DEC_B>();//Pass
@@ -127,6 +128,7 @@ SM83::SM83() {
     instructionSet[0x0E] = std::make_unique<LD_C_n8>();//pass
     instructionSet[0x0F] = std::make_unique<RRCA>();//pass
     instructionSet[0x11] = std::make_unique<LD_DE_n16>();//pass
+    instructionSet[0x12] = std::make_unique<LD_DE_A>();
     instructionSet[0x14] = std::make_unique<INC_D>();//Pass
     instructionSet[0x15] = std::make_unique<DEC_D>();//pass
     instructionSet[0x24] = std::make_unique<INC_H>();//Pass
