@@ -3,8 +3,9 @@
 //
 
 #include "SM83.h"
-#include "Instructions/AbstractInstruction.h"
 #include "Instructions/Opcode.h"
+#include "Instructions/ControlFlow.h"
+
 
 uint16_t SM83::immediate16BitValue(uint8_t& registerMSB, uint8_t& registerLSB)
 {
@@ -135,10 +136,10 @@ SM83::SM83() {
     instructionSet[0x20] = std::make_unique<JR_NZ_e8>();
     instructionSet[0x21] = std::make_unique<LD_HL_n16>();
     instructionSet[0x22] = std::make_unique<LD_HLI_A>();
-    instructionSet[0x25] = std::make_unique<DEC_H>();
+  //  instructionSet[0x25] = std::make_unique<DEC_H>();
     instructionSet[0x2A] = std::make_unique<LD_A_HL>();
     instructionSet[0x3c] = std::make_unique<INC_A>();
-    instructionSet[0x3b] = std::make_unique<DEC_SP>();
+   // instructionSet[0x3b] = std::make_unique<DEC_SP>();
     instructionSet[0x47] = std::make_unique<LD_B_A>();
     instructionSet[0x50]  = std::make_unique<LD_D_B>();
 
