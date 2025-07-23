@@ -8,10 +8,10 @@ void JR_NZ_e8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
 
     if(cpu.getRegisterFlag(SM83::Flag::Z) == 0) {//jump to flag
         const auto e = mmu.returnWord(cpu.PC);
-        cpu.PC = (static_cast<int8_t>(e) + cpu.PC + 2);
+        cpu.PC = (static_cast<int8_t>(e) + cpu.PC + 1);
     }
     else {
-        cpu.PC += 2;
+        cpu.PC++;
     }
 
 }
@@ -32,4 +32,14 @@ void JP_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t op
     cpu.PC =  cpu.PC + signed_offset;
 
     cyclesDuringInstruction = 12;
+}
+
+void JR_NC_e8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    if(cpu.getRegisterFlag(SM83::Flag::C) == 0) {//jump to flag
+        const auto e = mmu.returnWord(cpu.PC);
+        cpu.PC = (static_cast<int8_t>(e) + cpu.PC + 1);
+    }
+    else {
+        cpu.PC++;
+    }
 }

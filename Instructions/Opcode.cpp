@@ -32,7 +32,7 @@ void RLA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opc
     cpu.setRegisterFlag(SM83::Flag::H,false);
     cpu.setRegisterFlag(SM83::Flag::Z,false);
     cpu.setRegisterFlag(SM83::Flag::N, false );
-    cpu.A = (cpu.A << 1) ^ (cpu.getRegisterFlag(SM83::Flag::C) ? 1 : 0);
+    cpu.A = (cpu.A << 1) ^ (cpu.getRegisterFlag(SM83::Flag::C));
     cpu.setRegisterFlag(SM83::Flag::C, toggleBit);
 
 }
@@ -47,6 +47,18 @@ void RRCA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t op
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cpu.setRegisterFlag(SM83::Flag::C, toggleBit);
     toggleBit ? cpu.A |= (1 << 7) : cpu.A &= ~(1 << 7);
+
+}
+
+void RRA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto toggleBit = cpu.A & (1);
+    cpu.A = cpu.A >> 1;
+    cpu.getRegisterFlag(SM83::Flag::C) ? cpu.A |= (1 << 7) : cpu.A &= ~(1 << 7);
+    cpu.setRegisterFlag(SM83::Flag::H,false);
+    cpu.setRegisterFlag(SM83::Flag::Z,false);
+    cpu.setRegisterFlag(SM83::Flag::N, false );
+    cpu.setRegisterFlag(SM83::Flag::C, toggleBit);
+
 
 }
 
@@ -70,4 +82,5 @@ void Unimplemented::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, u
     cpu.PC += 1;
     cyclesDuringInstruction = 4;
 }
+
 
