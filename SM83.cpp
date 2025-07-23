@@ -134,6 +134,7 @@ SM83::SM83() {
     instructionSet[0x15] = std::make_unique<DEC_D>();//pass
     instructionSet[0x16] = std::make_unique<LD_D_n8>();//pass
     instructionSet[0x17] = std::make_unique<RLA>();//
+    instructionSet[0x18] = std::make_unique<JP_E>();//
     instructionSet[0x24] = std::make_unique<INC_H>();//Pass
     instructionSet[0x25] = std::make_unique<DEC_H>();//pass
 

@@ -16,6 +16,11 @@ public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
+class JP_E final : public AbstractInstruction{
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
 
 
 #endif //GB_EMULATOR_CONTROLFLOW_H

@@ -22,3 +22,14 @@ void JP_NN::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
     cpu.PC = new_address;
     cyclesDuringInstruction = 4;
 }
+
+void JP_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+
+    uint8_t operand = mmu.returnAddress(cpu.PC++);
+
+    auto signed_offset = static_cast<int8_t>(operand);
+
+    cpu.PC =  cpu.PC + signed_offset;
+
+    cyclesDuringInstruction = 12;
+}
