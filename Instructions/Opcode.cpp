@@ -62,15 +62,7 @@ void RRA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opc
 
 }
 
-void RET_NZ::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    if(!cpu.getRegisterFlag(SM83::Flag::Z))
-    {
-        cpu.PC = cpu.immediate16BitValueSP();
-        cyclesDuringInstruction = 2;
-    }
-    else
-        cyclesDuringInstruction = 5;
-}
+
 
 void Unimplemented::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     uint16_t address = cpu.PC - 1;

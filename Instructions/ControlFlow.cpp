@@ -43,3 +43,18 @@ void JR_NC_e8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
         cpu.PC++;
     }
 }
+
+void RET_NZ::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    if(!cpu.getRegisterFlag(SM83::Flag::Z))
+    {
+        cpu.PC = cpu.immediate16BitValueSP();
+        cyclesDuringInstruction = 2;
+    }
+    else
+        cyclesDuringInstruction = 5;
+}
+
+void RET::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.PC = cpu.immediate16BitValueSP();
+    cyclesDuringInstruction = 2;
+}
