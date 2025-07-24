@@ -31,6 +31,9 @@ class RET_NZ final : public AbstractInstruction{
 class RET final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
+class RETInterrupt final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
 
 
 #endif //GB_EMULATOR_CONTROLFLOW_H

@@ -58,3 +58,8 @@ void RET::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opc
     cpu.PC = cpu.immediate16BitValueSP();
     cyclesDuringInstruction = 2;
 }
+
+void RETInterrupt::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.PC = cpu.immediate16BitValueSP();
+    cpu.interruptEnabled = true;
+}

@@ -157,6 +157,7 @@ SM83::SM83() {
     instructionSet[0xC0] =  std::make_unique<RET_NZ>();//Pass
     instructionSet[0xC1] =  std::make_unique<POP_BC>();//Pass
     instructionSet[0xC5] =  std::make_unique<Push_BC>();//Pass
+    instructionSet[0xC9] =  std::make_unique<RET>();//Pass
     instructionSet[0xD1] =  std::make_unique<POP_DE>();//
     instructionSet[0xD5] =  std::make_unique<Push_DE>();//Pass
     instructionSet[0xE1] =  std::make_unique<POP_HL>();//
