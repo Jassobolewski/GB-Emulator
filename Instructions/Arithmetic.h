@@ -40,6 +40,12 @@ public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
 };
 
+class SubA_B final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
 
 
 

@@ -34,7 +34,7 @@ void AddA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     cpu.A = cpu.A + cpu.B;
     cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (registerValueB & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
-    cpu.setRegisterFlag(SM83::Flag::C,((static_cast<uint16_t>(registerValueA) + static_cast<uint16_t>(registerValueB)) > 0xFF) );
+    cpu.setRegisterFlag(SM83::Flag::C,(0xFF < static_cast<uint16_t>(registerValueA) + static_cast<uint16_t>(registerValueB)) );
     cpu.setRegisterFlag(SM83::Flag::N, false );
 }
 
@@ -42,54 +42,43 @@ void AddA_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
     const auto registerValueC = cpu.C;
-
-    const auto half_carry_check = (registerValueA & 0x0F) + (registerValueC & 0x0F);
-    cpu.setRegisterFlag(SM83::Flag::H, half_carry_check );
-
+    cpu.A = cpu.A + cpu.C;
+    cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (registerValueC & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
-
-    const auto fullValue = cpu.A + cpu.C;
-    cpu.setRegisterFlag(SM83::Flag::C, fullValue > 0xFF );
+    cpu.setRegisterFlag(SM83::Flag::C,(0xFF < static_cast<uint16_t>(registerValueA) + static_cast<uint16_t>(registerValueC)) );
     cpu.setRegisterFlag(SM83::Flag::N, false );
-
-    cpu.A = fullValue & 0xFF;
-    cpu.PC += 1;
 }
 
 void AddA_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto registerValueC = cpu.D;
-
-    const auto half_carry_check = (registerValueA & 0x0F) + (registerValueC & 0x0F);
-    cpu.setRegisterFlag(SM83::Flag::H, half_carry_check );
-
+    const auto registerValueD = cpu.D;
+    cpu.A = cpu.A + cpu.D;
+    cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (registerValueD & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
-
-    const auto fullValue = cpu.A + cpu.D;
-    cpu.setRegisterFlag(SM83::Flag::C, fullValue > 0xFF );
+    cpu.setRegisterFlag(SM83::Flag::C,(0xFF < static_cast<uint16_t>(registerValueA) + static_cast<uint16_t>(registerValueD)) );
     cpu.setRegisterFlag(SM83::Flag::N, false );
-
-    cpu.A = fullValue & 0xFF;
-    cpu.PC += 1;
 }
 
 void AddA_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto registerValueC = cpu.E;
-
-    const auto half_carry_check = (registerValueA & 0x0F) + (registerValueC & 0x0F);
-    cpu.setRegisterFlag(SM83::Flag::H, half_carry_check );
-
+    const auto registerValueE = cpu.E;
+    cpu.A = cpu.A + cpu.E;
+    cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (registerValueE & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
-
-    const auto fullValue = cpu.A + cpu.E;
-    cpu.setRegisterFlag(SM83::Flag::C, fullValue > 0xFF );
+    cpu.setRegisterFlag(SM83::Flag::C,(0xFF < static_cast<uint16_t>(registerValueA) + static_cast<uint16_t>(registerValueE)) );
     cpu.setRegisterFlag(SM83::Flag::N, false );
-
-    cpu.A = fullValue & 0xFF;
-    cpu.PC += 1;
 }
 
 
+void SubA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    const auto registerValueA = cpu.A;
+    const auto registerValueB = cpu.B;
+    cpu.A = cpu.A - cpu.B;
+    cpu.setRegisterFlag(SM83::Flag::H, (registerValueB & 0x0F) > (registerValueA & 0x0F));
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, registerValueB > registerValueA);
+    cpu.setRegisterFlag(SM83::Flag::N, true );
+}
