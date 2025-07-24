@@ -86,6 +86,8 @@ public: //This is temporary
     uint16_t immediate16BitValue(uint8_t &registerLSB, uint8_t &registerMSB);
 
     uint8_t immediate8BitValue(uint8_t &currentRegister);
+
+    void immediate16BitValuePushSP(uint8_t &registerMSB, uint8_t &registerLSB);
 };
 
 

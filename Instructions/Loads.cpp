@@ -122,3 +122,41 @@ void LD_A_DE::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cpu.A = cpu.memoryBus.returnAddress(cpu.getDe());
     cyclesDuringInstruction = 8;
 }
+
+void POP_BC::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto nn = cpu.immediate16BitValueSP();
+    cpu.set_BC(nn);
+}
+void POP_DE::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto nn = cpu.immediate16BitValueSP();
+    cpu.set_DE(nn);
+}
+void POP_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto nn = cpu.immediate16BitValueSP();
+    cpu.set_HL(nn);
+}
+void POP_AF::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto nn = cpu.immediate16BitValueSP();
+    cpu.set_AF(nn);
+    cyclesDuringInstruction = 12;
+}
+
+void Push_BC::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.immediate16BitValuePushSP(cpu.B,cpu.C);
+    cyclesDuringInstruction = 16;
+}
+
+void Push_DE::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.immediate16BitValuePushSP(cpu.D,cpu.E);
+    cyclesDuringInstruction = 16;
+}
+
+void Push_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.immediate16BitValuePushSP(cpu.H,cpu.L);
+    cyclesDuringInstruction = 16;
+}
+
+void Push_AF::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.immediate16BitValuePushSP(cpu.A,cpu.F);
+    cyclesDuringInstruction = 16;
+}

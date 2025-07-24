@@ -129,7 +129,16 @@ INSTANTIATE_TEST_SUITE_P(
         "24.json", //
         "25.json",
         "30.json",
-        "c0.json"  //
+        "80.json",
+        "c0.json",
+        "C1.json",//
+        "C5.json",
+        "D1.json",
+        "D5.json",
+        "E1.json",
+        "E5.json",
+        "F1.json",
+        "F5.json"
 
     )
 );

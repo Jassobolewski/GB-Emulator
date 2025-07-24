@@ -31,18 +31,11 @@ void AddA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
     const auto registerValueB = cpu.B;
-
-    const auto half_carry_check = (registerValueA & 0x0F) + (registerValueB & 0x0F);
-    cpu.setRegisterFlag(SM83::Flag::H, half_carry_check );
-
+    cpu.A = cpu.A + cpu.B;
+    cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (registerValueB & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
-
-    const auto fullValue = cpu.A + cpu.B;
-    cpu.setRegisterFlag(SM83::Flag::C, fullValue > 0xFF );
+    cpu.setRegisterFlag(SM83::Flag::C,((static_cast<uint16_t>(registerValueA) + static_cast<uint16_t>(registerValueB)) > 0xFF) );
     cpu.setRegisterFlag(SM83::Flag::N, false );
-
-    cpu.A = fullValue & 0xFF;
-    cpu.PC += 1;
 }
 
 void AddA_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {

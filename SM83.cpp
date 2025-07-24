@@ -28,6 +28,11 @@ uint16_t SM83::immediate16BitValueSP() {
     return combinedValue(msb,lsb);
 }
 
+void SM83::immediate16BitValuePushSP(uint8_t& registerMSB, uint8_t& registerLSB) {
+    this->memoryBus.writeToAddress(--SP,registerMSB);
+    this->memoryBus.writeToAddress(--SP,registerLSB);
+}
+
 void SM83::setFlag(const uint16_t value, uint8_t& flags) {
     flags = value & 0xFF;
 }
@@ -146,8 +151,16 @@ SM83::SM83() {
     instructionSet[0x24] = std::make_unique<INC_H>();//Pass
     instructionSet[0x25] = std::make_unique<DEC_H>();//pass
     instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
+    instructionSet[0x80] =  std::make_unique<AddA_B>();//
     instructionSet[0xC0] =  std::make_unique<RET_NZ>();//Pass
-
+    instructionSet[0xC1] =  std::make_unique<POP_BC>();//Pass
+    instructionSet[0xC5] =  std::make_unique<Push_BC>();//Pass
+    instructionSet[0xD1] =  std::make_unique<POP_DE>();//
+    instructionSet[0xD5] =  std::make_unique<Push_DE>();//Pass
+    instructionSet[0xE1] =  std::make_unique<POP_HL>();//
+    instructionSet[0xE5] =  std::make_unique<Push_HL>();//Pass
+    instructionSet[0xF1] =  std::make_unique<POP_AF>();//
+    instructionSet[0xF5] =  std::make_unique<Push_AF>();//Pass
 //    instructionSet[0x0E] = std::make_unique<LD_C_n8>();
 //    instructionSet[0x10] =std::make_unique<STOP_n8>();
 //    instructionSet[0x11] = std::make_unique<LD_DE_n16>();
