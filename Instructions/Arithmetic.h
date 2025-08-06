@@ -40,6 +40,29 @@ public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
 };
 
+class AddA_H final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
+};
+
+class AddA_L final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
+};
+
+class AddA_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
+};
+
+class AddA_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
+};
+
+
+
+
 class SubA_B final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
@@ -49,6 +72,43 @@ class AdcA_B final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
+
+class AdcA_C final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class AdcA_D final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class AdcA_E final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class AdcA_H final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class AdcA_L final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class AdcA_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class AdcA_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
 
 
 

@@ -152,7 +152,24 @@ SM83::SM83() {
     instructionSet[0x25] = std::make_unique<DEC_H>();//pass
     instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
     instructionSet[0x80] =  std::make_unique<AddA_B>();//
+
+    instructionSet[0x81] =  std::make_unique<AddA_C>();//pass
+    instructionSet[0x82] =  std::make_unique<AddA_D>();//pass
+    instructionSet[0x83] =  std::make_unique<AddA_E>();////pass
+    instructionSet[0x84] =  std::make_unique<AddA_H>();////pass
+    instructionSet[0x85] =  std::make_unique<AddA_L>();////pass
+    instructionSet[0x86] =  std::make_unique<AddA_HL>();////pass
+    instructionSet[0x87] =  std::make_unique<AddA_A>();////pass
+
     instructionSet[0x88] =  std::make_unique<AdcA_B>();//
+    instructionSet[0x89] =  std::make_unique<AdcA_C>();//
+    instructionSet[0x8A] =  std::make_unique<AdcA_D>();//
+    instructionSet[0x8B] =  std::make_unique<AdcA_E>();//
+    instructionSet[0x8C] =  std::make_unique<AdcA_H>();//
+    instructionSet[0x8D] =  std::make_unique<AdcA_L>();//
+    instructionSet[0x8E] =  std::make_unique<AdcA_HL>();//
+    instructionSet[0x8F] =  std::make_unique<AdcA_A>();//
+
     instructionSet[0x90] =  std::make_unique<SubA_B>();//
     instructionSet[0xC0] =  std::make_unique<RET_NZ>();//Pass
     instructionSet[0xC1] =  std::make_unique<POP_BC>();//Pass
