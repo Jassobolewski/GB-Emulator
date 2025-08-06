@@ -115,20 +115,6 @@ void AddA_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     cpu.setRegisterFlag(SM83::Flag::N, false );
 }
 
-
-
-
-void SubA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cyclesDuringInstruction = 4;
-    const auto registerValueA = cpu.A;
-    const auto registerValueB = cpu.B;
-    cpu.A = cpu.A - cpu.B;
-    cpu.setRegisterFlag(SM83::Flag::H, (registerValueB & 0x0F) > (registerValueA & 0x0F));
-    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
-    cpu.setRegisterFlag(SM83::Flag::C, registerValueB > registerValueA);
-    cpu.setRegisterFlag(SM83::Flag::N, true );
-}
-
 void AdcA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
@@ -214,4 +200,26 @@ void AdcA_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
     cpu.setRegisterFlag(SM83::Flag::C,(0xFF < static_cast<uint16_t>(registerValueA) + static_cast<uint16_t>(registerValueA) + static_cast<uint16_t> (cpu.getRegisterFlag(SM83::Flag::C))));
     cpu.setRegisterFlag(SM83::Flag::N, false );
+}
+
+void SubA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    const auto registerValueA = cpu.A;
+    const auto registerValueB = cpu.B;
+    cpu.A = cpu.A - cpu.B;
+    cpu.setRegisterFlag(SM83::Flag::H, (registerValueB & 0x0F) > (registerValueA & 0x0F));
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, registerValueB > registerValueA);
+    cpu.setRegisterFlag(SM83::Flag::N, true );
+}
+
+void SbcA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    const auto registerValueA = cpu.A;
+    const auto registerValueB = cpu.B;
+    cpu.A = cpu.A - cpu.B - cpu.getRegisterFlag(SM83::Flag::C);
+    cpu.setRegisterFlag(SM83::Flag::H, ((registerValueB & 0x0F) + cpu.getRegisterFlag(SM83::Flag::C)) > (registerValueA & 0x0F));
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, (registerValueB + cpu.getRegisterFlag(SM83::Flag::C)) > registerValueA);
+    cpu.setRegisterFlag(SM83::Flag::N, true );
 }
