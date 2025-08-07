@@ -223,3 +223,31 @@ void SbcA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     cpu.setRegisterFlag(SM83::Flag::C, (registerValueB + cpu.getRegisterFlag(SM83::Flag::C)) > registerValueA);
     cpu.setRegisterFlag(SM83::Flag::N, true );
 }
+
+void AND_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    cpu.A = cpu.A & cpu.B;
+    cpu.setRegisterFlag(SM83::Flag::H, true);
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, false);
+    cpu.setRegisterFlag(SM83::Flag::N, false );
+}
+
+
+void OR_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    cpu.A = cpu.A | cpu.B;
+    cpu.setRegisterFlag(SM83::Flag::H, false);
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, false);
+    cpu.setRegisterFlag(SM83::Flag::N, false );
+}
+
+void XOR_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    cpu.A = cpu.A ^ cpu.B;
+    cpu.setRegisterFlag(SM83::Flag::H, false);
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, false);
+    cpu.setRegisterFlag(SM83::Flag::N, false );
+}

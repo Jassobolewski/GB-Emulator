@@ -147,6 +147,9 @@ INSTANTIATE_TEST_SUITE_P(
         "8F.json",
         "90.json",
         "98.json",
+        "A0.json",
+        "A8.json",
+        "B0.json",
         "c0.json",
         "C1.json",//
         "C5.json",

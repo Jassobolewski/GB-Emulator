@@ -172,7 +172,9 @@ SM83::SM83() {
 
     instructionSet[0x90] =  std::make_unique<SubA_B>();//
     instructionSet[0x98] =  std::make_unique<SbcA_B>();//
-
+    instructionSet[0xA0] =  std::make_unique<AND_A_B>();//
+    instructionSet[0xA8] =  std::make_unique<XOR_A_B>();//
+    instructionSet[0xB0] =  std::make_unique<OR_A_B>();//
     instructionSet[0xC0] =  std::make_unique<RET_NZ>();//Pass
     instructionSet[0xC1] =  std::make_unique<POP_BC>();//Pass
     instructionSet[0xC5] =  std::make_unique<Push_BC>();//Pass
