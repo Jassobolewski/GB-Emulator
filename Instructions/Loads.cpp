@@ -76,8 +76,43 @@ void LD_D_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 void LD_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.A = cpu.B; //load the value of B into A
     cyclesDuringInstruction = 4;
-    cpu.PC += 1;
 }
+void LD_B_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.B = cpu.B; //load the value of B into B
+    cyclesDuringInstruction = 4;
+}
+
+void LD_B_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.B = cpu.C; //load the value of B into B
+    cyclesDuringInstruction = 4;
+}
+
+void LD_B_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.B = cpu.D; //load the value of B into B
+    cyclesDuringInstruction = 4;
+}
+
+void LD_B_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.B = cpu.E; //load the value of B into B
+    cyclesDuringInstruction = 4;
+}
+
+void LD_B_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.B = cpu.H; //load the value of B into B
+    cyclesDuringInstruction = 4;
+}
+
+void LD_B_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.B = cpu.L; //load the value of B into B
+    cyclesDuringInstruction = 4;
+}
+
+void LD_B_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.B = cpu.memoryBus.returnAddress(cpu.getHl());
+    cyclesDuringInstruction = 4;
+}
+
+
 
 void LD_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.A = cpu.HL;
@@ -160,3 +195,5 @@ void Push_AF::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cpu.immediate16BitValuePushSP(cpu.A,cpu.F);
     cyclesDuringInstruction = 16;
 }
+
+

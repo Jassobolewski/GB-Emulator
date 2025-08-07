@@ -251,3 +251,14 @@ void XOR_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cpu.setRegisterFlag(SM83::Flag::C, false);
     cpu.setRegisterFlag(SM83::Flag::N, false );
 }
+
+void CP_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    const auto registerValueA = cpu.A;
+    const auto registerValueB = cpu.B;
+    const auto  result = registerValueA - registerValueB;
+    cpu.setRegisterFlag(SM83::Flag::H, (registerValueB & 0x0F) > (registerValueA & 0x0F));
+    cpu.setRegisterFlag(SM83::Flag::Z,result == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, registerValueB > registerValueA);
+    cpu.setRegisterFlag(SM83::Flag::N, true );
+}

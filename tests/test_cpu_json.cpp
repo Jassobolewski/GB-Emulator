@@ -129,6 +129,13 @@ INSTANTIATE_TEST_SUITE_P(
         "24.json", //
         "25.json",
         "30.json",
+        "40.json",
+        "41.json",
+        "42.json",
+        "43.json",
+        "44.json",
+        "45.json",
+        "46.json",
         "80.json",
         "81.json",
         "82.json",
@@ -150,6 +157,7 @@ INSTANTIATE_TEST_SUITE_P(
         "A0.json",
         "A8.json",
         "B0.json",
+        "B8.json",
         "c0.json",
         "C1.json",//
         "C5.json",

@@ -150,9 +150,18 @@ SM83::SM83() {
     instructionSet[0x20] = std::make_unique<JR_NZ_e8>();//
     instructionSet[0x24] = std::make_unique<INC_H>();//Pass
     instructionSet[0x25] = std::make_unique<DEC_H>();//pass
-    instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
-    instructionSet[0x80] =  std::make_unique<AddA_B>();//
 
+    instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
+
+    instructionSet[0x40] = std::make_unique<LD_B_B>();//pass
+    instructionSet[0x41] = std::make_unique<LD_B_C>();//pass
+    instructionSet[0x42] = std::make_unique<LD_B_D>();//pass
+    instructionSet[0x43] = std::make_unique<LD_B_E>();//pass
+    instructionSet[0x44] = std::make_unique<LD_B_H>();//pass
+    instructionSet[0x45] = std::make_unique<LD_B_L>();//
+    instructionSet[0x46] = std::make_unique<LD_B_HL>();//
+
+    instructionSet[0x80] =  std::make_unique<AddA_B>();//
     instructionSet[0x81] =  std::make_unique<AddA_C>();//pass
     instructionSet[0x82] =  std::make_unique<AddA_D>();//pass
     instructionSet[0x83] =  std::make_unique<AddA_E>();////pass
@@ -175,6 +184,7 @@ SM83::SM83() {
     instructionSet[0xA0] =  std::make_unique<AND_A_B>();//
     instructionSet[0xA8] =  std::make_unique<XOR_A_B>();//
     instructionSet[0xB0] =  std::make_unique<OR_A_B>();//
+    instructionSet[0xB8] =  std::make_unique<CP_A_B>();//
     instructionSet[0xC0] =  std::make_unique<RET_NZ>();//Pass
     instructionSet[0xC1] =  std::make_unique<POP_BC>();//Pass
     instructionSet[0xC5] =  std::make_unique<Push_BC>();//Pass
