@@ -77,7 +77,7 @@ void Unimplemented::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, u
 
 
 void DAA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-
+//https://blog.ollien.com/posts/gb-daa/ thanks source for logic
     uint8_t a = cpu.A;
     uint8_t offset = 0;
     auto carry = cpu.getRegisterFlag(SM83::Flag::C);
