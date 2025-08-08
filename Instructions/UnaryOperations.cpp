@@ -120,3 +120,9 @@ void DEC_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.E == 0 );
     cpu.setRegisterFlag(SM83::Flag::N, true );
 }
+
+void INC_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 8;
+    cpu.set_HL(cpu.getHl() + 1);
+
+}

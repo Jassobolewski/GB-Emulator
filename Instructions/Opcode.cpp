@@ -99,10 +99,25 @@ void DAA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opc
         }
     }
 
-    !subtract ? cpu.A += offset : cpu.A -= offset;
+    subtract ? cpu.A -= offset : cpu.A += offset;
     // Set the flags based on the result
     cpu.setRegisterFlag(SM83::Flag::Z, cpu.A == 0);
     cpu.setRegisterFlag(SM83::Flag::H, false);
     cpu.setRegisterFlag(SM83::Flag::C, carry);
+    cyclesDuringInstruction = 4;
 
+}
+
+void SCF::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.setRegisterFlag(SM83::Flag::N, false);
+    cpu.setRegisterFlag(SM83::Flag::H, false);
+    cpu.setRegisterFlag(SM83::Flag::C, true);
+    cyclesDuringInstruction = 4;
+}
+
+void CCF::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.setRegisterFlag(SM83::Flag::N, false);
+    cpu.setRegisterFlag(SM83::Flag::H, false);
+    cpu.setRegisterFlag(SM83::Flag::C, !cpu.getRegisterFlag(SM83::Flag::C));
+    cyclesDuringInstruction = 4;
 }

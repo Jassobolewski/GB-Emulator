@@ -44,6 +44,29 @@ void JR_NC_e8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
     }
 }
 
+void JR_Z_e8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    if(cpu.getRegisterFlag(SM83::Flag::Z)) {//jump to flag
+        const auto e = mmu.returnWord(cpu.PC);
+        cpu.PC = (static_cast<int8_t>(e) + cpu.PC + 1);
+    }
+    else {
+        cpu.PC++;
+    }
+}
+
+void JR_C_e8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    if(cpu.getRegisterFlag(SM83::Flag::C)) {//jump to flag
+        const auto e = mmu.returnWord(cpu.PC);
+        cpu.PC = (static_cast<int8_t>(e) + cpu.PC + 1);
+    }
+    else {
+        cpu.PC++;
+    }
+}
+
+
+
+
 void RET_NZ::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     if(!cpu.getRegisterFlag(SM83::Flag::Z))
     {

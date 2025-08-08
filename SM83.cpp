@@ -100,8 +100,10 @@ int SM83::instructionExecution() {
     int cycles_this_step = 0;
    if(instruction != nullptr) {
        debugStack.push(opcode);
-
-       instruction->execute(*this, memoryBus, cycles_this_step, opcode);
+        if(opcode != 0xCB)
+            instruction->execute(*this, memoryBus, cycles_this_step, opcode);
+        else
+            instruction->execute(*this, memoryBus, cycles_this_step, this->memoryBus.returnAddress(PC) + 256);
    }
    else
         std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x" << std::hex << static_cast<int>(opcode) <<
@@ -147,12 +149,21 @@ SM83::SM83() {
     instructionSet[0x1D] = std::make_unique<DEC_E>();//pass
     instructionSet[0x1E] = std::make_unique<LD_E_n8>();//pass
     instructionSet[0x1F] = std::make_unique<RRA>();//
+
     instructionSet[0x20] = std::make_unique<JR_NZ_e8>();//
+    instructionSet[0x21] = std::make_unique<LD_HL_n16>();//pass
+    instructionSet[0x22] = std::make_unique<LD_HLPlus_A>();//pass
+    instructionSet[0x23] = std::make_unique<INC_HL>();//Pass
     instructionSet[0x24] = std::make_unique<INC_H>();//Pass
     instructionSet[0x25] = std::make_unique<DEC_H>();//pass
+    instructionSet[0x26] = std::make_unique<LD_H_n8>();//pass
     instructionSet[0x27] = std::make_unique<DAA>();//hard
+    instructionSet[0x28] = std::make_unique<JR_Z_e8>();//hard
+
     instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
-    instructionSet[0x3F] = std::make_unique<DAA>();//pass
+    instructionSet[0x37] = std::make_unique<SCF>();//pass
+    instructionSet[0x38] = std::make_unique<JR_C_e8>();//pass
+    instructionSet[0x3F] = std::make_unique<CCF>();//pass
 
     instructionSet[0x40] = std::make_unique<LD_B_B>();//pass
     instructionSet[0x41] = std::make_unique<LD_B_C>();//pass

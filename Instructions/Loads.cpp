@@ -37,9 +37,7 @@ void LD_E_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void LD_HL_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    const auto address = mmu.returnWord(cpu.PC + 1);
-    cpu.set_HL(address);
-    cpu.PC += 3;
+    cpu.HL = cpu.immediate16BitValue(cpu.H, cpu.L);
     cyclesDuringInstruction = 12;
 }
 
@@ -70,6 +68,12 @@ void LD_B_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 
 void LD_D_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.D = cpu.immediate8BitValue(cpu.D);
+    cyclesDuringInstruction = 8;
+}
+
+
+void LD_H_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.immediate8BitValue(cpu.H);
     cyclesDuringInstruction = 8;
 }
 
@@ -197,3 +201,8 @@ void Push_AF::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 
+void LD_HLPlus_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.memoryBus.writeToAddress(cpu.getHl(), cpu.A);
+    cpu.set_HL(cpu.getHl() + 1);
+    cyclesDuringInstruction = 4;
+}
