@@ -78,29 +78,31 @@ void Unimplemented::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, u
 
 void DAA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
 
-    int offset = 0;
+    uint8_t a = cpu.A;
+    uint8_t offset = 0;
+    auto carry = cpu.getRegisterFlag(SM83::Flag::C);
+    auto subtract = cpu.getRegisterFlag(SM83::Flag::N);
+    auto halfCarry = cpu.getRegisterFlag(SM83::Flag::H);
 
-    if(cpu.getRegisterFlag(SM83::Flag::N) == 0 && (cpu.A & 0xF) > 0x09 || cpu.getRegisterFlag(SM83::Flag::H))
-    {
-        offset = 0x06;
+    if (subtract) {
+        if (halfCarry)
+            offset |= 0x06;
+        if (carry)
+            offset |= 0x60;
+    } else {
+        if ((a & 0x0F) > 0x09 || halfCarry)
+            offset |= 0x06;
+
+        if (carry || a > 0x99) {
+            offset |= 0x60;
+            carry = true;
+        }
     }
 
-    if(cpu.getRegisterFlag(SM83::Flag::N) == 0 && (cpu.A) > 0x99 || cpu.getRegisterFlag(SM83::Flag::C))
-    {
-        offset = 0x60;
-    }
-
-    if(!cpu.getRegisterFlag(SM83::Flag::N))
-    {
-        cpu.A += offset;
-    }
-    else
-    {
-        cpu.A -= offset;
-    }
-
-    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0);
-    cpu.setRegisterFlag(SM83::Flag::H,false);
-    cpu.setRegisterFlag(SM83::Flag::C,cpu.A > 0x99);
+    !subtract ? cpu.A += offset : cpu.A -= offset;
+    // Set the flags based on the result
+    cpu.setRegisterFlag(SM83::Flag::Z, cpu.A == 0);
+    cpu.setRegisterFlag(SM83::Flag::H, false);
+    cpu.setRegisterFlag(SM83::Flag::C, carry);
 
 }
