@@ -42,6 +42,13 @@ class RRA final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
+class DAA final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
+
+
 
 class Unimplemented final : public AbstractInstruction {
 public:

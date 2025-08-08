@@ -150,8 +150,9 @@ SM83::SM83() {
     instructionSet[0x20] = std::make_unique<JR_NZ_e8>();//
     instructionSet[0x24] = std::make_unique<INC_H>();//Pass
     instructionSet[0x25] = std::make_unique<DEC_H>();//pass
-
+    instructionSet[0x27] = std::make_unique<DAA>();//hard
     instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
+    instructionSet[0x3F] = std::make_unique<DAA>();//pass
 
     instructionSet[0x40] = std::make_unique<LD_B_B>();//pass
     instructionSet[0x41] = std::make_unique<LD_B_C>();//pass

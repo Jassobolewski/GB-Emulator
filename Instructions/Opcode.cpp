@@ -76,3 +76,31 @@ void Unimplemented::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, u
 }
 
 
+void DAA::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+
+    int offset = 0;
+
+    if(cpu.getRegisterFlag(SM83::Flag::N) == 0 && (cpu.A & 0xF) > 0x09 || cpu.getRegisterFlag(SM83::Flag::H))
+    {
+        offset = 0x06;
+    }
+
+    if(cpu.getRegisterFlag(SM83::Flag::N) == 0 && (cpu.A) > 0x99 || cpu.getRegisterFlag(SM83::Flag::C))
+    {
+        offset = 0x60;
+    }
+
+    if(!cpu.getRegisterFlag(SM83::Flag::N))
+    {
+        cpu.A += offset;
+    }
+    else
+    {
+        cpu.A -= offset;
+    }
+
+    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0);
+    cpu.setRegisterFlag(SM83::Flag::H,false);
+    cpu.setRegisterFlag(SM83::Flag::C,cpu.A > 0x99);
+
+}
