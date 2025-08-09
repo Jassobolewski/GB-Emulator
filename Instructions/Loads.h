@@ -53,6 +53,11 @@ class LD_DE_n16 final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
 };
 
+class LD_SP_n16 final : public AbstractInstruction {
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
+};
+
+
 class LD_DE_A final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;;
 };
@@ -134,6 +139,11 @@ class LD_A_HLPlus final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
+class LD_A_HLMinus final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
 
 class LD_D_B final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
@@ -191,8 +201,10 @@ public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
-
-
+class INC_HL_Indirect: public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
 
 
 

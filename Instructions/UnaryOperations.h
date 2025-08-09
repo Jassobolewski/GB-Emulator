@@ -91,6 +91,10 @@ class DEC_L final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
+class INC_SP final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
 class DEC_SP final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };

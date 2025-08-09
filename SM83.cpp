@@ -169,6 +169,12 @@ SM83::SM83() {
     instructionSet[0x2F] = std::make_unique<CPL>();//
 
     instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
+    instructionSet[0x31] = std::make_unique<LD_SP_n16>();//pass
+    instructionSet[0x32] = std::make_unique<LD_A_HLMinus>();//pass
+    instructionSet[0x33] = std::make_unique<INC_SP>();//pass
+
+    instructionSet[0x34] = std::make_unique<INC_HL_Indirect>();
+
     instructionSet[0x37] = std::make_unique<SCF>();//pass
     instructionSet[0x38] = std::make_unique<JR_C_e8>();//pass
     instructionSet[0x3C] = std::make_unique<INC_A>();//
@@ -217,35 +223,6 @@ SM83::SM83() {
     instructionSet[0xE5] =  std::make_unique<Push_HL>();//Pass
     instructionSet[0xF1] =  std::make_unique<POP_AF>();//
     instructionSet[0xF5] =  std::make_unique<Push_AF>();//Pass
-//    instructionSet[0x0E] = std::make_unique<LD_C_n8>();
-//    instructionSet[0x10] =std::make_unique<STOP_n8>();
-//    instructionSet[0x11] = std::make_unique<LD_DE_n16>();
-//    instructionSet[0x12] = std::make_unique<INC_C>();
-//    instructionSet[0x1c] = std::make_unique<INC_E>();
-//
-//    instructionSet[0x20] = std::make_unique<JR_NZ_e8>();
-//    instructionSet[0x21] = std::make_unique<LD_HL_n16>();
-//    instructionSet[0x22] = std::make_unique<LD_HLI_A>();
-//  //  instructionSet[0x25] = std::make_unique<DEC_H>();
-//    instructionSet[0x2A] = std::make_unique<LD_A_HL>();
-//    instructionSet[0x3c] = std::make_unique<INC_A>();
-//   // instructionSet[0x3b] = std::make_unique<DEC_SP>();
-//    instructionSet[0x47] = std::make_unique<LD_B_A>();
-//    instructionSet[0x50]  = std::make_unique<LD_D_B>();
-//
-//    instructionSet[0x54]  = std::make_unique<LD_D_H>();
-//
-//    instructionSet[0xc3] = std::make_unique<JP_NN>();
-//    instructionSet[0x76] = std::make_unique<HALT>();
-//
-//    instructionSet[0x78] = std::make_unique<LD_A_B>();
-//    instructionSet[0x80] = std::make_unique<AddA_B>();
-//    instructionSet[0x81] = std::make_unique<AddA_C>();
-//    instructionSet[0x82] = std::make_unique<AddA_D>();
-//    instructionSet[0x83] = std::make_unique<AddA_E>();
-//
-//    instructionSet[0xea] = std::make_unique<LD_A_a16>();
-
 }
 
 uint16_t SM83::getAf() const {

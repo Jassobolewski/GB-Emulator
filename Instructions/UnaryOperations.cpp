@@ -138,5 +138,9 @@ void DEC_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
 void INC_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 8;
     cpu.set_HL(cpu.getHl() + 1);
+}
 
+void INC_SP::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 8;
+    cpu.SP = cpu.SP + 1;
 }
