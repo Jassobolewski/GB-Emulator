@@ -134,6 +134,7 @@ SM83::SM83() {
     instructionSet[0x0D] = std::make_unique<DEC_C>();//pass
     instructionSet[0x0E] = std::make_unique<LD_C_n8>();//pass
     instructionSet[0x0F] = std::make_unique<RRCA>();//pass
+
     instructionSet[0x11] = std::make_unique<LD_DE_n16>();//pass
     instructionSet[0x12] = std::make_unique<LD_DE_A>();
     instructionSet[0x13] = std::make_unique<INC_DE>();//Pass
@@ -159,10 +160,19 @@ SM83::SM83() {
     instructionSet[0x26] = std::make_unique<LD_H_n8>();//pass
     instructionSet[0x27] = std::make_unique<DAA>();//hard
     instructionSet[0x28] = std::make_unique<JR_Z_e8>();//hard
+    instructionSet[0x29] = std::make_unique<Add_HL_HL>();//
+    instructionSet[0x2A] = std::make_unique<LD_A_HLPlus>();//
+    instructionSet[0x2B] = std::make_unique<DEC_HL>();//
+    instructionSet[0x2C] = std::make_unique<INC_L>();//
+    instructionSet[0x2D] = std::make_unique<DEC_L>();//
+    instructionSet[0x2E] = std::make_unique<LD_L_n8>();//
+    instructionSet[0x2F] = std::make_unique<CPL>();//
 
     instructionSet[0x30] = std::make_unique<JR_NC_e8>();//pass
     instructionSet[0x37] = std::make_unique<SCF>();//pass
     instructionSet[0x38] = std::make_unique<JR_C_e8>();//pass
+    instructionSet[0x3C] = std::make_unique<INC_A>();//
+    instructionSet[0x3D] = std::make_unique<DEC_A>();//
     instructionSet[0x3F] = std::make_unique<CCF>();//pass
 
     instructionSet[0x40] = std::make_unique<LD_B_B>();//pass

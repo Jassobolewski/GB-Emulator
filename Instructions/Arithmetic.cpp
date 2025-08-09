@@ -26,6 +26,17 @@ void Add_HL_DE::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8
     cpu.set_HL(fullValue);
 }
 
+void Add_HL_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 8;
+    const auto registerValueHL = cpu.getHl();
+    const auto fullValue = cpu.getHl() + cpu.getHl();
+    cpu.setRegisterFlag(SM83::Flag::H,   ((registerValueHL & 0x0FFF) + (registerValueHL & 0x0FFF)) > 0x0FFF);
+    cpu.setRegisterFlag(SM83::Flag::C, ((fullValue) > 0xFFFF));
+    cpu.setRegisterFlag(SM83::Flag::N, false );
+    cpu.set_HL(fullValue);
+}
+
+
 
 void AddA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
@@ -262,3 +273,5 @@ void CP_A_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     cpu.setRegisterFlag(SM83::Flag::C, registerValueB > registerValueA);
     cpu.setRegisterFlag(SM83::Flag::N, true );
 }
+
+

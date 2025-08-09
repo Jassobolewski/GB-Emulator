@@ -121,3 +121,10 @@ void CCF::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opc
     cpu.setRegisterFlag(SM83::Flag::C, !cpu.getRegisterFlag(SM83::Flag::C));
     cyclesDuringInstruction = 4;
 }
+
+void CPL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.A = ~cpu.A;
+    cpu.setRegisterFlag(SM83::Flag::N, true);
+    cpu.setRegisterFlag(SM83::Flag::H, true);
+    cyclesDuringInstruction = 4;
+}

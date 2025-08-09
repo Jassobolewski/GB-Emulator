@@ -36,6 +36,11 @@ void LD_E_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cyclesDuringInstruction = 8;
 }
 
+void LD_L_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.immediate8BitValue(cpu.L);
+    cyclesDuringInstruction = 8;
+}
+
 void LD_HL_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.HL = cpu.immediate16BitValue(cpu.H, cpu.L);
     cyclesDuringInstruction = 12;
@@ -124,9 +129,9 @@ void LD_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cpu.PC += 1;
 }
 
-void LD_HLI_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.memoryBus.writeToAddress(cpu.HL, cpu.A);
-    cpu.HL = cpu.HL + 1;
+void LD_A_HLPlus::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.A = cpu.memoryBus.returnAddress(cpu.getHl());
+    cpu.set_HL(cpu.getHl() + 1);
     cyclesDuringInstruction = 4;
 }
 
