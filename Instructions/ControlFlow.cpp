@@ -86,3 +86,17 @@ void RETInterrupt::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, ui
     cpu.PC = cpu.immediate16BitValueSP();
     cpu.interruptEnabled = true;
 }
+
+void JP_NZ_a16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    uint8_t lsb = 0;
+    uint8_t msb = 0;
+    auto value = cpu.immediate16BitValue(lsb,msb);
+    if(!cpu.getRegisterFlag(SM83::Flag::Z))
+        cpu.PC = value;
+}
+
+void JP_a16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    uint8_t lsb = 0;
+    uint8_t msb = 0;
+    cpu.PC  = cpu.immediate16BitValue(lsb,msb);
+}
