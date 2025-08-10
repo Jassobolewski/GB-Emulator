@@ -23,7 +23,6 @@ void LD_A_a16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
 void LD_B_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.B = cpu.A; //load the value of B into A
     cyclesDuringInstruction = 4;
-    cpu.PC += 1;
 }
 
 void LD_C_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -134,15 +133,230 @@ void LD_B_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 
 void LD_B_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.B = cpu.memoryBus.returnAddress(cpu.getHl());
+    cyclesDuringInstruction = 8;
+}
+
+void LD_C_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.A;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_C_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.B;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_C_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.C;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_C_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.D;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_C_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.E;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_C_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.L;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_C_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.H;
+    cyclesDuringInstruction = 4;
+}
+// D loads
+void LD_D_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.A;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_D_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.B;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_D_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.C;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_D_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.D;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_D_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.E;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_D_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.L;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_D_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.H;
+    cyclesDuringInstruction = 4;
+}
+
+//end of D loads
+
+
+//E loads
+
+
+void LD_E_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.A;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_E_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.B;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_E_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.C;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_E_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.D;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_E_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.E;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_E_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.L;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_E_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.H;
+    cyclesDuringInstruction = 4;
+}
+
+//end of E loads
+
+// H loads
+
+void LD_H_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.A;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_H_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.B;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_H_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.C;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_H_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.D;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_H_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.E;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_H_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.L;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_H_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.H;
     cyclesDuringInstruction = 4;
 }
 
 
+//End of H loads
+
+//L loads
+void LD_L_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.A;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_L_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.B;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_L_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.C;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_L_D::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.D;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_L_E::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.E;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_L_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.L;
+    cyclesDuringInstruction = 4;
+}
+
+void LD_L_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.H;
+    cyclesDuringInstruction = 4;
+}
+//end of L loads
+
+
+
+void LD_C_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.memoryBus.returnAddress(cpu.getHl());
+    cyclesDuringInstruction = 8;
+}
+
+
+void LD_D_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.D = cpu.memoryBus.returnAddress(cpu.getHl());
+    cyclesDuringInstruction = 8;
+}
+
+void LD_H_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.H = cpu.memoryBus.returnAddress(cpu.getHl());
+    cyclesDuringInstruction = 8;
+}
+
+void LD_E_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.E = cpu.memoryBus.returnAddress(cpu.getHl());
+    cyclesDuringInstruction = 8;
+}
+
+void LD_L_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.L = cpu.memoryBus.returnAddress(cpu.getHl());
+    cyclesDuringInstruction = 8;
+}
 
 void LD_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.A = cpu.HL;
+    cpu.A = cpu.memoryBus.returnAddress(cpu.getHl());
     cyclesDuringInstruction = 8;
-    cpu.PC += 1;
 }
 
 void LD_A_HLPlus::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -167,17 +381,6 @@ void LD_HLIndirect_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction
    auto data = cpu.memoryBus.returnAddress(cpu.PC++);
    cpu.memoryBus.writeToAddress(cpu.getHl(), data);
     cyclesDuringInstruction = 12;
-}
-
-
-void LD_D_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.D = cpu.B;
-    cyclesDuringInstruction = 4;
-}
-
-void LD_D_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.D = cpu.H;
-    cyclesDuringInstruction = 4;
 }
 
 void LD_SP_NN::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -263,4 +466,5 @@ void DEC_HL_Indirect::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction,
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0 );
     cpu.setRegisterFlag(SM83::Flag::N, true );
 }
+
 

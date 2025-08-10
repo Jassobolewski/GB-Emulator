@@ -128,15 +128,224 @@ public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
-class LD_B_HL final : public AbstractInstruction {
+
+class LD_C_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_C_B final : public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
 
+class LD_C_C final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_C_D final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_C_E final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_C_H final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_C_L final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_B final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_C final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_D final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_E final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_H final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_L final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
+class LD_E_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_E_B final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_E_C final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_E_D final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_E_E final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_E_H final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_E_L final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
+class LD_H_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_H_B final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_H_C final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_H_D final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_H_E final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_H_H final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_H_L final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
+class LD_L_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_L_B final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_L_C final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_L_D final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_L_E final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_L_H final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_L_L final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
+
 class LD_A_HL final : public AbstractInstruction {
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
+
+class LD_B_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_C_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_D_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_E_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_H_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LD_L_HL final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
+
 
 
 class LD_A_HLPlus final : public AbstractInstruction{
@@ -152,18 +361,6 @@ class LD_HLMinus_A final : public AbstractInstruction{
 };
 
 class LD_HLIndirect_n8 final : public AbstractInstruction{
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
-};
-
-
-
-
-class LD_D_B final : public AbstractInstruction{
-    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
-};
-
-
-class LD_D_H final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 

@@ -192,6 +192,54 @@ SM83::SM83() {
     instructionSet[0x44] = std::make_unique<LD_B_H>();//pass
     instructionSet[0x45] = std::make_unique<LD_B_L>();//
     instructionSet[0x46] = std::make_unique<LD_B_HL>();//
+    instructionSet[0x47] = std::make_unique<LD_B_A>();//
+    instructionSet[0x48] = std::make_unique<LD_C_B>();//
+    instructionSet[0x49] = std::make_unique<LD_C_C>();//
+    instructionSet[0x4A] = std::make_unique<LD_C_D>();//
+    instructionSet[0x4B] = std::make_unique<LD_C_E>();//
+    instructionSet[0x4C] = std::make_unique<LD_C_H>();//
+    instructionSet[0x4D] = std::make_unique<LD_C_L>();//
+    instructionSet[0x4E] = std::make_unique<LD_C_HL>();//
+    instructionSet[0x4F] = std::make_unique<LD_C_A>();//
+
+    instructionSet[0x50] = std::make_unique<LD_D_B>();//pass
+    instructionSet[0x51] = std::make_unique<LD_D_C>();//pass
+    instructionSet[0x52] = std::make_unique<LD_D_D>();//pass
+    instructionSet[0x53] = std::make_unique<LD_D_E>();//pass
+    instructionSet[0x54] = std::make_unique<LD_D_H>();//pass
+    instructionSet[0x55] = std::make_unique<LD_D_L>();//
+    instructionSet[0x56] = std::make_unique<LD_D_HL>();//
+    instructionSet[0x57] = std::make_unique<LD_D_A>();//
+    instructionSet[0x58] = std::make_unique<LD_E_B>();//
+    instructionSet[0x59] = std::make_unique<LD_E_C>();//
+    instructionSet[0x5A] = std::make_unique<LD_E_D>();//
+    instructionSet[0x5B] = std::make_unique<LD_E_E>();//
+    instructionSet[0x5C] = std::make_unique<LD_E_H>();//
+    instructionSet[0x5D] = std::make_unique<LD_E_L>();//
+    instructionSet[0x5E] = std::make_unique<LD_E_HL>();//
+    instructionSet[0x5F] = std::make_unique<LD_E_A>();//
+
+
+    instructionSet[0x60] = std::make_unique<LD_H_B>();//pass
+    instructionSet[0x61] = std::make_unique<LD_H_C>();//pass
+    instructionSet[0x62] = std::make_unique<LD_H_D>();//pass
+    instructionSet[0x63] = std::make_unique<LD_H_E>();//pass
+    instructionSet[0x64] = std::make_unique<LD_H_H>();//pass
+    instructionSet[0x65] = std::make_unique<LD_H_L>();//
+    instructionSet[0x66] = std::make_unique<LD_H_HL>();//
+    instructionSet[0x67] = std::make_unique<LD_H_A>();//
+    instructionSet[0x68] = std::make_unique<LD_L_B>();//
+    instructionSet[0x69] = std::make_unique<LD_L_C>();//
+    instructionSet[0x6A] = std::make_unique<LD_L_D>();//
+    instructionSet[0x6B] = std::make_unique<LD_L_E>();//
+    instructionSet[0x6C] = std::make_unique<LD_L_H>();//
+    instructionSet[0x6D] = std::make_unique<LD_L_L>();//
+    instructionSet[0x6E] = std::make_unique<LD_L_HL>();//
+    instructionSet[0x6F] = std::make_unique<LD_L_A>();//
+
+
+
+
 
     instructionSet[0x80] =  std::make_unique<AddA_B>();//
     instructionSet[0x81] =  std::make_unique<AddA_C>();//pass
@@ -201,7 +249,6 @@ SM83::SM83() {
     instructionSet[0x85] =  std::make_unique<AddA_L>();////pass
     instructionSet[0x86] =  std::make_unique<AddA_HL>();////pass
     instructionSet[0x87] =  std::make_unique<AddA_A>();////pass
-
     instructionSet[0x88] =  std::make_unique<AdcA_B>();//
     instructionSet[0x89] =  std::make_unique<AdcA_C>();//
     instructionSet[0x8A] =  std::make_unique<AdcA_D>();//
