@@ -133,6 +133,10 @@ class RST_38 final : public AbstractInstruction{
 };
 
 
+class JP_HL final : public AbstractInstruction{
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
 class RETInterrupt final : public AbstractInstruction{
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };

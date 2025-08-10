@@ -356,9 +356,21 @@ SM83::SM83() {
     instructionSet[0xDE] =  std::make_unique<SbcA_n8>();
     instructionSet[0xDF] =  std::make_unique<RST_18>();
 
+    instructionSet[0xE0] =  std::make_unique<LDH_a8_A>();//
     instructionSet[0xE1] =  std::make_unique<POP_HL>();//
+    instructionSet[0xE2] =  std::make_unique<LDH_C_A>();//
     instructionSet[0xE5] =  std::make_unique<Push_HL>();//Pass
+    instructionSet[0xE6] =  std::make_unique<AddA_n8>();//Pass
+    instructionSet[0xE7] =  std::make_unique<RST_20>();//Pass
+    instructionSet[0xE8] =  std::make_unique<AddSP_n8>();
+    instructionSet[0xE9] =  std::make_unique<JP_HL>();
+    instructionSet[0xEA] =  std::make_unique<LD_a16_A>();
+    instructionSet[0xEE] =  std::make_unique<XOR_A_n8>();
+    instructionSet[0xEF] =  std::make_unique<RST_28>();
+
+    instructionSet[0xF0] =  std::make_unique<LDH_A_a8>();//
     instructionSet[0xF1] =  std::make_unique<POP_AF>();//
+    instructionSet[0xF2] =  std::make_unique<LDH_A_C>();//
     instructionSet[0xF5] =  std::make_unique<Push_AF>();//Pass
 }
 

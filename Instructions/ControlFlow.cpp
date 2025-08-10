@@ -289,4 +289,6 @@ void RST_38::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 }
 
 
-
+void JP_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.PC = cpu.getHl();
+}

@@ -487,6 +487,33 @@ public:
 };
 
 
+class LDH_a8_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LDH_C_A final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LDH_A_a8 final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class LDH_A_C final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+
+
+
+
+
+
+
 
 
 

@@ -32,6 +32,11 @@ public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };
 
+class AddSP_n8 final : public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
 
 class AddA_B final : public AbstractInstruction {
 public:
@@ -297,6 +302,11 @@ public:
 };
 
 class OR_A_HL final :public AbstractInstruction {
+public:
+    void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
+};
+
+class XOR_A_n8 final :public AbstractInstruction {
 public:
     void execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) override;
 };

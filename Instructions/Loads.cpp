@@ -535,3 +535,26 @@ void LD_HL_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cyclesDuringInstruction = 8;
 }
 
+void LDH_a8_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto value = cpu.memoryBus.returnAddress(cpu.PC++);
+    uint8_t lsb = value & 0xFF;
+    cpu.memoryBus.writeToAddress(SM83::combinedValue(0xFF,lsb),cpu.A);
+    cyclesDuringInstruction = 12;
+}
+
+void LDH_C_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.memoryBus.writeToAddress(SM83::combinedValue(0xFF,cpu.C),cpu.A);
+    cyclesDuringInstruction = 8;
+}
+
+void LDH_A_a8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto value = cpu.memoryBus.returnAddress(cpu.PC++);
+    uint8_t lsb = value & 0xFF;
+    cpu.A = cpu.memoryBus.returnAddress(SM83::combinedValue(0xFF,lsb));
+    cyclesDuringInstruction = 12;
+}
+
+void LDH_A_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.C = cpu.memoryBus.returnAddress(SM83::combinedValue(0xFF,cpu.C));
+    cyclesDuringInstruction = 8;
+}
