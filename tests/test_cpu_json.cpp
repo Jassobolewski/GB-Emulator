@@ -299,10 +299,32 @@ INSTANTIATE_TEST_SUITE_P(
         "C1.json",//
         "C2.json",//
         "C3.json",//
+        "C4.json",//
         "C5.json",
+        "C6.json",
+        "C7.json",
+        "C8.json",
         "C9.json",//
+        "CA.json",//skip CB for now
+        "CC.json",
+        "CD.json",
+        "CE.json",
+        "CF.json",
+
+
         "D1.json",
+        "D2.json",
+        "D4.json",
         "D5.json",
+        "D6.json",
+        "D7.json",
+        "D8.json",
+        "D9.json",
+        "DA.json",
+        "DC.json",
+        "DE.json",
+        "DF.json",
+
         "E1.json",
         "E5.json",
         "F1.json",

@@ -328,11 +328,34 @@ SM83::SM83() {
     instructionSet[0xC1] =  std::make_unique<POP_BC>();//Pass
     instructionSet[0xC2] =  std::make_unique<JP_NZ_a16>();
     instructionSet[0xC3] =  std::make_unique<JP_a16>();
-
+    instructionSet[0xC4] =  std::make_unique<CALL_NZ_a16>();
     instructionSet[0xC5] =  std::make_unique<Push_BC>();//Pass
+    instructionSet[0xC6] =  std::make_unique<AddA_n8>();//Pass
+    instructionSet[0xC7] =  std::make_unique<RST_00>();
+    instructionSet[0xC8] =  std::make_unique<RET_Z>();//Pass
     instructionSet[0xC9] =  std::make_unique<RET>();//Pass
+    instructionSet[0xCA] =  std::make_unique<JP_Z_a16>();//Pass
+    instructionSet[0xCC] =  std::make_unique<CALL_Z_a16>();
+    instructionSet[0xCD] =  std::make_unique<CALL_a16>();
+    instructionSet[0xCE] =  std::make_unique<AdcA_n8>();
+    instructionSet[0xCF] =  std::make_unique<RST_08>();
+
+    instructionSet[0xD0] =  std::make_unique<RET_NC>();//
     instructionSet[0xD1] =  std::make_unique<POP_DE>();//
+    instructionSet[0xD2] =  std::make_unique<JP_NC_a16>();//
+    instructionSet[0xD4] =  std::make_unique<CALL_NC_a16>();//
     instructionSet[0xD5] =  std::make_unique<Push_DE>();//Pass
+    instructionSet[0xD6] =  std::make_unique<SubA_n8>();
+    instructionSet[0xD7] =  std::make_unique<RST_10>();
+    instructionSet[0xD8] =  std::make_unique<RET_C>();
+    instructionSet[0xD9] =  std::make_unique<RETInterrupt>();//Cant be tested currently
+    instructionSet[0xDA] =  std::make_unique<JP_C_a16>();
+    //empty
+    instructionSet[0xDC] =  std::make_unique<CALL_C_a16>();
+    //empty
+    instructionSet[0xDE] =  std::make_unique<SbcA_n8>();
+    instructionSet[0xDF] =  std::make_unique<RST_18>();
+
     instructionSet[0xE1] =  std::make_unique<POP_HL>();//
     instructionSet[0xE5] =  std::make_unique<Push_HL>();//Pass
     instructionSet[0xF1] =  std::make_unique<POP_AF>();//
