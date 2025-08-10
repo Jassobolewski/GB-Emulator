@@ -41,6 +41,11 @@ void LD_L_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cyclesDuringInstruction = 8;
 }
 
+void LD_A_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.immediate8BitValue(cpu.A);
+    cyclesDuringInstruction = 8;
+}
+
 void LD_HL_n16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.HL = cpu.immediate16BitValue(cpu.H, cpu.L);
     cyclesDuringInstruction = 12;
@@ -143,14 +148,27 @@ void LD_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 void LD_A_HLPlus::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.A = cpu.memoryBus.returnAddress(cpu.getHl());
     cpu.set_HL(cpu.getHl() + 1);
-    cyclesDuringInstruction = 4;
+    cyclesDuringInstruction = 12;
 }
 
 void LD_A_HLMinus::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cpu.A = cpu.memoryBus.returnAddress(cpu.getHl());
+    cpu.set_HL(cpu.getHl() - 1);
+    cyclesDuringInstruction = 12;
+}
+
+void LD_HLMinus_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
    cpu.memoryBus.writeToAddress(cpu.getHl(),cpu.A);
     cpu.set_HL(cpu.getHl() - 1);
-    cyclesDuringInstruction = 4;
+    cyclesDuringInstruction = 12;
 }
+
+void LD_HLIndirect_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+   auto data = cpu.memoryBus.returnAddress(cpu.PC++);
+   cpu.memoryBus.writeToAddress(cpu.getHl(), data);
+    cyclesDuringInstruction = 12;
+}
+
 
 void LD_D_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.D = cpu.B;
@@ -236,3 +254,13 @@ void INC_HL_Indirect::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction,
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0 );
     cpu.setRegisterFlag(SM83::Flag::N, false );
 }
+
+
+void DEC_HL_Indirect::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    cpu.setRegisterFlag(SM83::Flag::H,(((data & 0xF) - (1 & 0xf)) & 0x10));
+    cpu.memoryBus.writeToAddress(cpu.getHl(), --data);
+    cpu.setRegisterFlag(SM83::Flag::Z,data == 0 );
+    cpu.setRegisterFlag(SM83::Flag::N, true );
+}
+
