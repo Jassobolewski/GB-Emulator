@@ -49,13 +49,14 @@ void Add_HL_SP::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8
 
 
 void AddSP_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cyclesDuringInstruction = 4;
-    const auto address = cpu.memoryBus.returnAddress(cpu.PC++);
-    const auto sp = cpu.SP;
-    cpu.SP = address + sp;
-    cpu.setRegisterFlag(SM83::Flag::H, (((address & 0x0F) + (sp & 0x0F)) > 0x0F));
-    cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
-    cpu.setRegisterFlag(SM83::Flag::C,(0xFF < static_cast<uint16_t>(address) + static_cast<uint16_t>(sp)) );
+    cyclesDuringInstruction = 16;
+    const auto address = static_cast<uint8_t>(cpu.memoryBus.returnAddress(cpu.PC++));
+    const auto signedAddress = static_cast<int8_t>(address);
+    const auto lowerSP = cpu.SP & 0xFF;
+    cpu.SP = cpu.SP + signedAddress;
+    cpu.setRegisterFlag(SM83::Flag::H, ((address & 0x0F) + (lowerSP & 0x0F)) > 0x0F);
+    cpu.setRegisterFlag(SM83::Flag::Z, false );
+    cpu.setRegisterFlag(SM83::Flag::C,((static_cast<uint16_t>(address) + static_cast<uint16_t>(lowerSP)) > 0xFF));
     cpu.setRegisterFlag(SM83::Flag::N, false );
 }
 

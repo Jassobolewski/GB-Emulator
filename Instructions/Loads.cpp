@@ -5,10 +5,10 @@
 #include "Loads.h"
 
 void LD_a16_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    const auto address = mmu.returnWord(cpu.PC + 1);
-    const auto write = cpu.A;
-    mmu.writeWord(address, write);
-    cpu.PC += 3;
+    uint8_t lsb = 0;
+    uint8_t msb = 0;
+    auto nn = cpu.immediate16BitValue(lsb, msb);
+    cpu.memoryBus.writeToAddress(nn, cpu.A);
     cyclesDuringInstruction = 16;
 }
 

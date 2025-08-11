@@ -325,8 +325,17 @@ INSTANTIATE_TEST_SUITE_P(
         "DE.json",
         "DF.json",
 
+        "E0.json",
         "E1.json",
+        "E2.json",
         "E5.json",
+        "E6.json",
+        "E7.json",
+        "E8.json",
+        "E9.json",
+        "EA.json",
+        "EE.json",
+        "EF.json",
         "F1.json",
         "F5.json"
 
