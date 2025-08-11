@@ -111,6 +111,7 @@ INSTANTIATE_TEST_SUITE_P(
         "0D.json",
         "0E.json",
         "0F.json",
+
         "11.json",
         "12.json",
         "14.json", //
@@ -125,6 +126,7 @@ INSTANTIATE_TEST_SUITE_P(
         "1D.json",
         "1E.json",
         "1F.json",
+
         "20.json",
         "21.json",
         "22.json",
@@ -140,6 +142,7 @@ INSTANTIATE_TEST_SUITE_P(
         "2D.json",
         "2E.json",
         "2F.json",
+
         "30.json",
         "31.json",
         "32.json",
@@ -223,9 +226,6 @@ INSTANTIATE_TEST_SUITE_P(
         "7D.json",
         "7E.json",
         "7F.json",
-
-
-
 
         "80.json",
         "81.json",
@@ -336,8 +336,17 @@ INSTANTIATE_TEST_SUITE_P(
         "EA.json",
         "EE.json",
         "EF.json",
+
+        "F0.json",
         "F1.json",
-        "F5.json"
+        "F5.json",
+        "F6.json",
+        "F7.json",
+        "F8.json",
+        "F9.json",
+        "FA.json",
+        "FE.json",
+        "FF.json"
 
     )
 );

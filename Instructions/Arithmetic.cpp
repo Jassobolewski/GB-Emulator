@@ -706,6 +706,19 @@ void XOR_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
     cpu.setRegisterFlag(SM83::Flag::N, false );
 }
 
+
+void CP_A_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    cyclesDuringInstruction = 4;
+    const auto registerValueA = cpu.A;
+    const auto address = cpu.memoryBus.returnAddress(cpu.PC++);
+    const auto  result = registerValueA - address;
+    cpu.setRegisterFlag(SM83::Flag::H, (address & 0x0F) > (registerValueA & 0x0F));
+    cpu.setRegisterFlag(SM83::Flag::Z,result == 0 );
+    cpu.setRegisterFlag(SM83::Flag::C, address > registerValueA);
+    cpu.setRegisterFlag(SM83::Flag::N, true );
+}
+
+
 void CP_A_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;

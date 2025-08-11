@@ -13,10 +13,10 @@ void LD_a16_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
 }
 
 void LD_A_a16::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    const auto address = mmu.returnWord(cpu.PC + 1);
-    const auto value = mmu.returnAddress(address);
-    cpu.A = value;
-    cpu.PC += 3;
+    uint8_t lsb = 0;
+    uint8_t msb = 0;
+    auto nn = cpu.immediate16BitValue(lsb, msb);
+    cpu.A = cpu.memoryBus.returnAddress(nn);
     cyclesDuringInstruction = 16;
 }
 
@@ -556,5 +556,21 @@ void LDH_A_a8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
 
 void LDH_A_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cpu.C = cpu.memoryBus.returnAddress(SM83::combinedValue(0xFF,cpu.C));
+    cyclesDuringInstruction = 8;
+}
+
+void LD_HL_SPe8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+    auto const nn = static_cast<uint8_t>(cpu.memoryBus.returnAddress(cpu.PC++));
+    const auto signedAddress = static_cast<int8_t>(nn);
+    cpu.set_HL(  (cpu.SP) + signedAddress);
+    cpu.setRegisterFlag(SM83::Flag::H, ((nn & 0x0F) + ((cpu.SP & 0xFF) & 0x0F)) > 0x0F);
+    cpu.setRegisterFlag(SM83::Flag::Z,false );
+    cpu.setRegisterFlag(SM83::Flag::C, ((static_cast<uint16_t>(nn) + static_cast<uint16_t>(cpu.SP & 0xFF)) > 0xFF));
+    cpu.setRegisterFlag(SM83::Flag::N, false );
+    cyclesDuringInstruction = 12;
+}
+
+void LD_SP_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
+   cpu.SP = cpu.getHl();
     cyclesDuringInstruction = 8;
 }
