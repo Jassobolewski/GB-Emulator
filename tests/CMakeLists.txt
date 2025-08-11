@@ -25,6 +25,8 @@ target_sources(run_tests PRIVATE
         ../Instructions/Arithmetic.h
         ../Instructions/UnaryOperations.cpp
         ../Instructions/UnaryOperations.h
+        ../Instructions/CBBitwiseOperations.cpp
+        ../Instructions/CBBitwiseOperations.h
        
 )
 
