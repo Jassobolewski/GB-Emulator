@@ -349,6 +349,7 @@ INSTANTIATE_TEST_SUITE_P(
 //        "FF.json"
             "part_0.json",
             "part_1.json",
-            "part_2.json"
+            "part_2.json",
+            "part_3.json"
     )
 );

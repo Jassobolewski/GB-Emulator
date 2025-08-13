@@ -442,7 +442,22 @@ SM83::SM83() {
     instructionSetCB[0x2E] = std::make_unique<SRA_HL>();//pass
     instructionSetCB[0x2F] = std::make_unique<SRA_A>();//pass
 
-
+    instructionSetCB[0x30] = std::make_unique<SWAP_B>();//Pass
+    instructionSetCB[0x31] = std::make_unique<SWAP_C>();//Pass
+    instructionSetCB[0x32] = std::make_unique<SWAP_D>();//Pass
+    instructionSetCB[0x33] = std::make_unique<SWAP_E>();//Pass
+    instructionSetCB[0x34] = std::make_unique<SWAP_H>();//Pass
+    instructionSetCB[0x35] = std::make_unique<SWAP_L>();//Pass
+    instructionSetCB[0x36] = std::make_unique<SWAP_HL>();//pass
+    instructionSetCB[0x37] = std::make_unique<SWAP_A>();//pass
+    instructionSetCB[0x38] = std::make_unique<SRL_B>();//pass
+    instructionSetCB[0x39] = std::make_unique<SRL_C>();//pass
+    instructionSetCB[0x3A] = std::make_unique<SRL_D>();//pass
+    instructionSetCB[0x3B] = std::make_unique<SRL_E>();//pass
+    instructionSetCB[0x3C] = std::make_unique<SRL_H>();//pass
+    instructionSetCB[0x3D] = std::make_unique<SRL_L>();//pass
+    instructionSetCB[0x3E] = std::make_unique<SRL_HL>();//pass
+    instructionSetCB[0x3F] = std::make_unique<SRL_A>();//pass
 
 
 
