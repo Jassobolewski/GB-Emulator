@@ -5,6 +5,7 @@
 #include "SM83.h"
 #include "Instructions/Opcode.h"
 #include "Instructions/ControlFlow.h"
+#include "Instructions/CBBitwiseOperations.h"
 
 
 uint16_t SM83::immediate16BitValue(uint8_t& registerMSB, uint8_t& registerLSB)
@@ -99,11 +100,15 @@ int SM83::instructionExecution() {
     const auto instruction = instructionSet[opcode].get();
     int cycles_this_step = 0;
    if(instruction != nullptr) {
-       debugStack.push(opcode);
         if(opcode != 0xCB)
             instruction->execute(*this, memoryBus, cycles_this_step, opcode);
-        else
-            instruction->execute(*this, memoryBus, cycles_this_step, this->memoryBus.returnAddress(PC) + 256);
+        else {
+
+            const uint8_t opcodeCB = memoryBus.returnAddress(this->PC++);
+            const auto CBinstruction = instructionSetCB[opcodeCB].get();
+            CBinstruction->execute(*this, memoryBus, cycles_this_step, opcode);
+
+        }
    }
    else
         std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x" << std::hex << static_cast<int>(opcode) <<
@@ -380,6 +385,67 @@ SM83::SM83() {
     instructionSet[0xFA] =  std::make_unique<LD_A_a16>();//
     instructionSet[0xFE] =  std::make_unique<CP_A_n8>();//
     instructionSet[0xFF] =  std::make_unique<RST_38>();//
+
+
+    for (int i = 0; i < 256; ++i) {
+        instructionSetCB.push_back(std::make_unique<Unimplemented>());
+    }
+
+    instructionSetCB[0x00] = std::make_unique<RLC_B>();//Pass
+    instructionSetCB[0x01] = std::make_unique<RLC_C>();//Pass
+    instructionSetCB[0x02] = std::make_unique<RLC_D>();//Pass
+    instructionSetCB[0x03] = std::make_unique<RLC_E>();//Pass
+    instructionSetCB[0x04] = std::make_unique<RLC_H>();//Pass
+    instructionSetCB[0x05] = std::make_unique<RLC_L>();//Pass
+    instructionSetCB[0x06] = std::make_unique<RLC_HL>();//pass
+    instructionSetCB[0x07] = std::make_unique<RLC_A>();//pass
+    instructionSetCB[0x08] = std::make_unique<RRC_B>();//pass
+    instructionSetCB[0x09] = std::make_unique<RRC_C>();//pass
+    instructionSetCB[0x0A] = std::make_unique<RRC_D>();//pass
+    instructionSetCB[0x0B] = std::make_unique<RRC_E>();//pass
+    instructionSetCB[0x0C] = std::make_unique<RRC_H>();//pass
+    instructionSetCB[0x0D] = std::make_unique<RRC_L>();//pass
+    instructionSetCB[0x0E] = std::make_unique<RRC_HL>();//pass
+    instructionSetCB[0x0F] = std::make_unique<RRC_A>();//pass
+
+    instructionSetCB[0x10] = std::make_unique<RL_B>();//Pass
+    instructionSetCB[0x11] = std::make_unique<RL_C>();//Pass
+    instructionSetCB[0x12] = std::make_unique<RL_D>();//Pass
+    instructionSetCB[0x13] = std::make_unique<RL_E>();//Pass
+    instructionSetCB[0x14] = std::make_unique<RL_H>();//Pass
+    instructionSetCB[0x15] = std::make_unique<RL_L>();//Pass
+    instructionSetCB[0x16] = std::make_unique<RL_HL>();//pass
+    instructionSetCB[0x17] = std::make_unique<RL_A>();//pass
+    instructionSetCB[0x18] = std::make_unique<RR_B>();//pass
+    instructionSetCB[0x19] = std::make_unique<RR_C>();//pass
+    instructionSetCB[0x1A] = std::make_unique<RR_D>();//pass
+    instructionSetCB[0x1B] = std::make_unique<RR_E>();//pass
+    instructionSetCB[0x1C] = std::make_unique<RR_H>();//pass
+    instructionSetCB[0x1D] = std::make_unique<RR_L>();//pass
+    instructionSetCB[0x1E] = std::make_unique<RR_HL>();//pass
+    instructionSetCB[0x1F] = std::make_unique<RR_A>();//pass
+
+    instructionSetCB[0x20] = std::make_unique<SLA_B>();//Pass
+    instructionSetCB[0x21] = std::make_unique<SLA_C>();//Pass
+    instructionSetCB[0x22] = std::make_unique<SLA_D>();//Pass
+    instructionSetCB[0x23] = std::make_unique<SLA_E>();//Pass
+    instructionSetCB[0x24] = std::make_unique<SLA_H>();//Pass
+    instructionSetCB[0x25] = std::make_unique<SLA_L>();//Pass
+    instructionSetCB[0x26] = std::make_unique<SLA_HL>();//pass
+    instructionSetCB[0x27] = std::make_unique<SLA_A>();//pass
+    instructionSetCB[0x28] = std::make_unique<SRA_B>();//pass
+    instructionSetCB[0x29] = std::make_unique<SRA_C>();//pass
+    instructionSetCB[0x2A] = std::make_unique<SRA_D>();//pass
+    instructionSetCB[0x2B] = std::make_unique<SRA_E>();//pass
+    instructionSetCB[0x2C] = std::make_unique<SRA_H>();//pass
+    instructionSetCB[0x2D] = std::make_unique<SRA_L>();//pass
+    instructionSetCB[0x2E] = std::make_unique<SRA_HL>();//pass
+    instructionSetCB[0x2F] = std::make_unique<SRA_A>();//pass
+
+
+
+
+
 }
 
 uint16_t SM83::getAf() const {
