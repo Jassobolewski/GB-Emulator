@@ -460,6 +460,215 @@ SM83::SM83() {
     instructionSetCB[0x3F] = std::make_unique<SRL_A>();//pass
 
 
+    instructionSetCB[0x40] = std::make_unique<BIT_0_B>();
+    instructionSetCB[0x41] = std::make_unique<BIT_0_C>();
+    instructionSetCB[0x42] = std::make_unique<BIT_0_D>();
+    instructionSetCB[0x43] = std::make_unique<BIT_0_E>();
+    instructionSetCB[0x44] = std::make_unique<BIT_0_H>();
+    instructionSetCB[0x45] = std::make_unique<BIT_0_L>();
+    instructionSetCB[0x46] = std::make_unique<BIT_0_HL>();
+    instructionSetCB[0x47] = std::make_unique<BIT_0_A>();
+    instructionSetCB[0x48] = std::make_unique<BIT_1_B>();
+    instructionSetCB[0x49] = std::make_unique<BIT_1_C>();
+    instructionSetCB[0x4A] = std::make_unique<BIT_1_D>();
+    instructionSetCB[0x4B] = std::make_unique<BIT_1_E>();
+    instructionSetCB[0x4C] = std::make_unique<BIT_1_H>();
+    instructionSetCB[0x4D] = std::make_unique<BIT_1_L>();
+    instructionSetCB[0x4E] = std::make_unique<BIT_1_HL>();
+    instructionSetCB[0x4F] = std::make_unique<BIT_1_A>();
+
+    instructionSetCB[0x50] = std::make_unique<BIT_2_B>();
+    instructionSetCB[0x51] = std::make_unique<BIT_2_C>();
+    instructionSetCB[0x52] = std::make_unique<BIT_2_D>();
+    instructionSetCB[0x53] = std::make_unique<BIT_2_E>();
+    instructionSetCB[0x54] = std::make_unique<BIT_2_H>();
+    instructionSetCB[0x55] = std::make_unique<BIT_2_L>();
+    instructionSetCB[0x56] = std::make_unique<BIT_2_HL>();
+    instructionSetCB[0x57] = std::make_unique<BIT_2_A>();
+    instructionSetCB[0x58] = std::make_unique<BIT_3_B>();
+    instructionSetCB[0x59] = std::make_unique<BIT_3_C>();
+    instructionSetCB[0x5A] = std::make_unique<BIT_3_D>();
+    instructionSetCB[0x5B] = std::make_unique<BIT_3_E>();
+    instructionSetCB[0x5C] = std::make_unique<BIT_3_H>();
+    instructionSetCB[0x5D] = std::make_unique<BIT_3_L>();
+    instructionSetCB[0x5E] = std::make_unique<BIT_3_HL>();
+    instructionSetCB[0x5F] = std::make_unique<BIT_3_A>();
+
+
+    instructionSetCB[0x60] = std::make_unique<BIT_4_B>();
+    instructionSetCB[0x61] = std::make_unique<BIT_4_C>();
+    instructionSetCB[0x62] = std::make_unique<BIT_4_D>();
+    instructionSetCB[0x63] = std::make_unique<BIT_4_E>();
+    instructionSetCB[0x64] = std::make_unique<BIT_4_H>();
+    instructionSetCB[0x65] = std::make_unique<BIT_4_L>();
+    instructionSetCB[0x66] = std::make_unique<BIT_4_HL>();
+    instructionSetCB[0x67] = std::make_unique<BIT_4_A>();
+    instructionSetCB[0x68] = std::make_unique<BIT_5_B>();
+    instructionSetCB[0x69] = std::make_unique<BIT_5_C>();
+    instructionSetCB[0x6A] = std::make_unique<BIT_5_D>();
+    instructionSetCB[0x6B] = std::make_unique<BIT_5_E>();
+    instructionSetCB[0x6C] = std::make_unique<BIT_5_H>();
+    instructionSetCB[0x6D] = std::make_unique<BIT_5_L>();
+    instructionSetCB[0x6E] = std::make_unique<BIT_5_HL>();
+    instructionSetCB[0x6F] = std::make_unique<BIT_5_A>();
+
+    instructionSetCB[0x70] = std::make_unique<BIT_6_B>();
+    instructionSetCB[0x71] = std::make_unique<BIT_6_C>();
+    instructionSetCB[0x72] = std::make_unique<BIT_6_D>();
+    instructionSetCB[0x73] = std::make_unique<BIT_6_E>();
+    instructionSetCB[0x74] = std::make_unique<BIT_6_H>();
+    instructionSetCB[0x75] = std::make_unique<BIT_6_L>();
+    instructionSetCB[0x76] = std::make_unique<BIT_6_HL>();
+    instructionSetCB[0x77] = std::make_unique<BIT_6_A>();
+    instructionSetCB[0x78] = std::make_unique<BIT_7_B>();
+    instructionSetCB[0x79] = std::make_unique<BIT_7_C>();
+    instructionSetCB[0x7A] = std::make_unique<BIT_7_D>();
+    instructionSetCB[0x7B] = std::make_unique<BIT_7_E>();
+    instructionSetCB[0x7C] = std::make_unique<BIT_7_H>();
+    instructionSetCB[0x7D] = std::make_unique<BIT_7_L>();
+    instructionSetCB[0x7E] = std::make_unique<BIT_7_HL>();
+    instructionSetCB[0x7F] = std::make_unique<BIT_7_A>();
+
+    instructionSetCB[0x80] = std::make_unique<RES_0_B>();
+    instructionSetCB[0x81] = std::make_unique<RES_0_C>();
+    instructionSetCB[0x82] = std::make_unique<RES_0_D>();
+    instructionSetCB[0x83] = std::make_unique<RES_0_E>();
+    instructionSetCB[0x84] = std::make_unique<RES_0_H>();
+    instructionSetCB[0x85] = std::make_unique<RES_0_L>();
+    instructionSetCB[0x86] = std::make_unique<RES_0_HL>();
+    instructionSetCB[0x87] = std::make_unique<RES_0_A>();
+    instructionSetCB[0x88] = std::make_unique<RES_1_B>();
+    instructionSetCB[0x89] = std::make_unique<RES_1_C>();
+    instructionSetCB[0x8A] = std::make_unique<RES_1_D>();
+    instructionSetCB[0x8B] = std::make_unique<RES_1_E>();
+    instructionSetCB[0x8C] = std::make_unique<RES_1_H>();
+    instructionSetCB[0x8D] = std::make_unique<RES_1_L>();
+    instructionSetCB[0x8E] = std::make_unique<RES_1_HL>();
+    instructionSetCB[0x8F] = std::make_unique<RES_1_A>();
+
+    instructionSetCB[0x90] = std::make_unique<RES_2_B>();
+    instructionSetCB[0x91] = std::make_unique<RES_2_C>();
+    instructionSetCB[0x92] = std::make_unique<RES_2_D>();
+    instructionSetCB[0x93] = std::make_unique<RES_2_E>();
+    instructionSetCB[0x94] = std::make_unique<RES_2_H>();
+    instructionSetCB[0x95] = std::make_unique<RES_2_L>();
+    instructionSetCB[0x96] = std::make_unique<RES_2_HL>();
+    instructionSetCB[0x97] = std::make_unique<RES_2_A>();
+    instructionSetCB[0x98] = std::make_unique<RES_3_B>();
+    instructionSetCB[0x99] = std::make_unique<RES_3_C>();
+    instructionSetCB[0x9A] = std::make_unique<RES_3_D>();
+    instructionSetCB[0x9B] = std::make_unique<RES_3_E>();
+    instructionSetCB[0x9C] = std::make_unique<RES_3_H>();
+    instructionSetCB[0x9D] = std::make_unique<RES_3_L>();
+    instructionSetCB[0x9E] = std::make_unique<RES_3_HL>();
+    instructionSetCB[0x9F] = std::make_unique<RES_3_A>();
+
+    instructionSetCB[0xA0] = std::make_unique<RES_4_B>();
+    instructionSetCB[0xA1] = std::make_unique<RES_4_C>();
+    instructionSetCB[0xA2] = std::make_unique<RES_4_D>();
+    instructionSetCB[0xA3] = std::make_unique<RES_4_E>();
+    instructionSetCB[0xA4] = std::make_unique<RES_4_H>();
+    instructionSetCB[0xA5] = std::make_unique<RES_4_L>();
+    instructionSetCB[0xA6] = std::make_unique<RES_4_HL>();
+    instructionSetCB[0xA7] = std::make_unique<RES_4_A>();
+    instructionSetCB[0xA8] = std::make_unique<RES_5_B>();
+    instructionSetCB[0xA9] = std::make_unique<RES_5_C>();
+    instructionSetCB[0xAA] = std::make_unique<RES_5_D>();
+    instructionSetCB[0xAB] = std::make_unique<RES_5_E>();
+    instructionSetCB[0xAC] = std::make_unique<RES_5_H>();
+    instructionSetCB[0xAD] = std::make_unique<RES_5_L>();
+    instructionSetCB[0xAE] = std::make_unique<RES_5_HL>();
+    instructionSetCB[0xAF] = std::make_unique<RES_5_A>();
+
+    instructionSetCB[0xB0] = std::make_unique<RES_6_B>();
+    instructionSetCB[0xB1] = std::make_unique<RES_6_C>();
+    instructionSetCB[0xB2] = std::make_unique<RES_6_D>();
+    instructionSetCB[0xB3] = std::make_unique<RES_6_E>();
+    instructionSetCB[0xB4] = std::make_unique<RES_6_H>();
+    instructionSetCB[0xB5] = std::make_unique<RES_6_L>();
+    instructionSetCB[0xB6] = std::make_unique<RES_6_HL>();
+    instructionSetCB[0xB7] = std::make_unique<RES_6_A>();
+    instructionSetCB[0xB8] = std::make_unique<RES_7_B>();
+    instructionSetCB[0xB9] = std::make_unique<RES_7_C>();
+    instructionSetCB[0xBA] = std::make_unique<RES_7_D>();
+    instructionSetCB[0xBB] = std::make_unique<RES_7_E>();
+    instructionSetCB[0xBC] = std::make_unique<RES_7_H>();
+    instructionSetCB[0xBD] = std::make_unique<RES_7_L>();
+    instructionSetCB[0xBE] = std::make_unique<RES_7_HL>();
+    instructionSetCB[0xBF] = std::make_unique<RES_7_A>();
+
+    instructionSetCB[0xC0] = std::make_unique<SET_0_B>();
+    instructionSetCB[0xC1] = std::make_unique<SET_0_C>();
+    instructionSetCB[0xC2] = std::make_unique<SET_0_D>();
+    instructionSetCB[0xC3] = std::make_unique<SET_0_E>();
+    instructionSetCB[0xC4] = std::make_unique<SET_0_H>();
+    instructionSetCB[0xC5] = std::make_unique<SET_0_L>();
+    instructionSetCB[0xC6] = std::make_unique<SET_0_HL>();
+    instructionSetCB[0xC7] = std::make_unique<SET_0_A>();
+    instructionSetCB[0xC8] = std::make_unique<SET_1_B>();
+    instructionSetCB[0xC9] = std::make_unique<SET_1_C>();
+    instructionSetCB[0xCA] = std::make_unique<SET_1_D>();
+    instructionSetCB[0xCB] = std::make_unique<SET_1_E>();
+    instructionSetCB[0xCC] = std::make_unique<SET_1_H>();
+    instructionSetCB[0xCD] = std::make_unique<SET_1_L>();
+    instructionSetCB[0xCE] = std::make_unique<SET_1_HL>();
+    instructionSetCB[0xCF] = std::make_unique<SET_1_A>();
+
+    instructionSetCB[0xD0] = std::make_unique<SET_2_B>();
+    instructionSetCB[0xD1] = std::make_unique<SET_2_C>();
+    instructionSetCB[0xD2] = std::make_unique<SET_2_D>();
+    instructionSetCB[0xD3] = std::make_unique<SET_2_E>();
+    instructionSetCB[0xD4] = std::make_unique<SET_2_H>();
+    instructionSetCB[0xD5] = std::make_unique<SET_2_L>();
+    instructionSetCB[0xD6] = std::make_unique<SET_2_HL>();
+    instructionSetCB[0xD7] = std::make_unique<SET_2_A>();
+    instructionSetCB[0xD8] = std::make_unique<SET_3_B>();
+    instructionSetCB[0xD9] = std::make_unique<SET_3_C>();
+    instructionSetCB[0xDA] = std::make_unique<SET_3_D>();
+    instructionSetCB[0xDB] = std::make_unique<SET_3_E>();
+    instructionSetCB[0xDC] = std::make_unique<SET_3_H>();
+    instructionSetCB[0xDD] = std::make_unique<SET_3_L>();
+    instructionSetCB[0xDE] = std::make_unique<SET_3_HL>();
+    instructionSetCB[0xDF] = std::make_unique<SET_3_A>();
+
+    instructionSetCB[0xE0] = std::make_unique<SET_4_B>();
+    instructionSetCB[0xE1] = std::make_unique<SET_4_C>();
+    instructionSetCB[0xE2] = std::make_unique<SET_4_D>();
+    instructionSetCB[0xE3] = std::make_unique<SET_4_E>();
+    instructionSetCB[0xE4] = std::make_unique<SET_4_H>();
+    instructionSetCB[0xE5] = std::make_unique<SET_4_L>();
+    instructionSetCB[0xE6] = std::make_unique<SET_4_HL>();
+    instructionSetCB[0xE7] = std::make_unique<SET_4_A>();
+    instructionSetCB[0xE8] = std::make_unique<SET_5_B>();
+    instructionSetCB[0xE9] = std::make_unique<SET_5_C>();
+    instructionSetCB[0xEA] = std::make_unique<SET_5_D>();
+    instructionSetCB[0xEB] = std::make_unique<SET_5_E>();
+    instructionSetCB[0xEC] = std::make_unique<SET_5_H>();
+    instructionSetCB[0xED] = std::make_unique<SET_5_L>();
+    instructionSetCB[0xEE] = std::make_unique<SET_5_HL>();
+    instructionSetCB[0xEF] = std::make_unique<SET_5_A>();
+
+    instructionSetCB[0xF0] = std::make_unique<SET_6_B>();
+    instructionSetCB[0xF1] = std::make_unique<SET_6_C>();
+    instructionSetCB[0xF2] = std::make_unique<SET_6_D>();
+    instructionSetCB[0xF3] = std::make_unique<SET_6_E>();
+    instructionSetCB[0xF4] = std::make_unique<SET_6_H>();
+    instructionSetCB[0xF5] = std::make_unique<SET_6_L>();
+    instructionSetCB[0xF6] = std::make_unique<SET_6_HL>();
+    instructionSetCB[0xF7] = std::make_unique<SET_6_A>();
+    instructionSetCB[0xF8] = std::make_unique<SET_7_B>();
+    instructionSetCB[0xF9] = std::make_unique<SET_7_C>();
+    instructionSetCB[0xFA] = std::make_unique<SET_7_D>();
+    instructionSetCB[0xFB] = std::make_unique<SET_7_E>();
+    instructionSetCB[0xFC] = std::make_unique<SET_7_H>();
+    instructionSetCB[0xFD] = std::make_unique<SET_7_L>();
+    instructionSetCB[0xFE] = std::make_unique<SET_7_HL>();
+    instructionSetCB[0xFF] = std::make_unique<SET_7_A>();
+
+
+
+
+
 
 }
 
