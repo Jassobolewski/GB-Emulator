@@ -1,24 +1,23 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <vector>
+#include "PPU.h"
 
 // --- Emulator State and Constants ---
 const int GB_SCREEN_WIDTH = 160;
 const int GB_SCREEN_HEIGHT = 144;
 
 struct EmuState {
-    uint8_t framebuffer[GB_SCREEN_HEIGHT][GB_SCREEN_WIDTH][4]{}; // RGBA format
+    Uint32 framebuffer[GB_SCREEN_HEIGHT][GB_SCREEN_WIDTH]{};
     SDL_Texture* screenTexture = nullptr;
-    // You would also add your CPU state, memory, etc., here
-    // GameBoyCPU cpu;
-    // GameBoyMemory memory;
+    const SDL_PixelFormatDetails* screenFormatDetails = nullptr; // Let's rename for clarity
 };
 
 // --- SDL Globals ---
 static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
 
-// A placeholder for your actual PPU rendering logic
 void render_ppu_frame(EmuState* state);
 
 
@@ -42,7 +41,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
         // --- Create the texture for the Game Boy screen ---
         state->screenTexture = SDL_CreateTexture(renderer,
-                                                 SDL_PIXELFORMAT_RGBA32,
+                                                 SDL_PIXELFORMAT_UNKNOWN,
                                                  SDL_TEXTUREACCESS_STREAMING,
                                                  GB_SCREEN_WIDTH,
                                                  GB_SCREEN_HEIGHT);
@@ -51,6 +50,21 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
             SDL_Log("Couldn't create screen texture: %s", SDL_GetError());
             return SDL_APP_FAILURE;
         }
+
+        SDL_PropertiesID props = SDL_GetTextureProperties(state->screenTexture);
+
+        // 2. Get the pixel format from the properties. It's stored as a number.
+        auto format = (SDL_PixelFormat)SDL_GetNumberProperty(props, SDL_PROP_TEXTURE_FORMAT_NUMBER, SDL_PIXELFORMAT_UNKNOWN);
+
+
+        state->screenFormatDetails = SDL_GetPixelFormatDetails(format);
+        if (state->screenFormatDetails == nullptr) {
+            SDL_Log("Couldn't get pixel format details for format %s: %s", SDL_GetPixelFormatName(format), SDL_GetError());
+            return SDL_APP_FAILURE;
+        }
+
+        SDL_Log("Texture created with format: %s", SDL_GetPixelFormatName(format));
+
 
         SDL_SetTextureScaleMode(state->screenTexture, SDL_SCALEMODE_NEAREST);
 
@@ -68,7 +82,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         return SDL_APP_SUCCESS;
     }
     if (event->type == SDL_EVENT_KEY_DOWN) {
-        if (event->key.which == SDLK_ESCAPE) {
+        if (event->key.key == SDLK_ESCAPE) {
             return SDL_APP_SUCCESS;
         }
         // TODO: Handle Game Boy joypad input here
@@ -81,10 +95,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 {
     auto *state = (EmuState*)appstate; // Get our emulator state
 
-    // 1. RUN EMULATOR FOR ONE FRAME
-    // This is where you'd call your CPU::Execute() in a loop until the PPU
-    // signals that a full frame has been rendered (VBlank).
-    // For this example, we'll just call a placeholder PPU function.
+
     render_ppu_frame(state);
 
     // 2. UPDATE THE SDL TEXTURE
@@ -105,41 +116,73 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
     auto *state = (EmuState*)appstate;
     if (state) {
-        // We MUST destroy the texture we created.
         SDL_DestroyTexture(state->screenTexture);
-        // And free the memory for our state struct.
         delete state;
     }
     // SDL will automatically handle the window and renderer.
 }
 
+const std::vector<uint8_t> SMILEY_TILE1 = {
+        0x7C, 0x7C, 0x00, 0xC6, 0xC6, 0x00, 0x00, 0xFE, 0xC6, 0xC6, 0x00, 0xC6, 0xC6, 0x00,  0x00,  0x00
+};
 
-// --- YOUR PPU LOGIC GOES HERE ---
-// This is a placeholder that demonstrates how to fill the framebuffer.
-// Replace this with your actual PPU rendering logic.
+const std::vector<uint8_t> SMILEY_TILE = {
+        0x3C, 0x7E, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42,
+        0x7E, 0x5E, 0x7E, 0x0A, 0x7E, 0x42, 0x7E, 0x3C
+};
+
+const std::vector<uint8_t> KNOWN_GOOD_SMILEY = {
+        0x3C, 0x7E, 0x42, 0x42, 0x42, 0x42, 0x7E, 0x3C,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+
 void render_ppu_frame(EmuState* state)
 {
-    // The classic Game Boy green-ish color palette (RGBA)
+    PPU ppu;
+    std::array<uint8_t, 64> smiley_pixels = ppu.tileDecoder(SMILEY_TILE1);
+
     uint8_t colors[4][4] = {
-            { 0x9B, 0xBC, 0x0F, 0xFF }, // Lightest Green
-            { 0x8A, 0xAC, 0x0F, 0xFF }, // Light Green
-            { 0x30, 0x62, 0x30, 0xFF }, // Dark Green
-            { 0x0F, 0x38, 0x0F, 0xFF }  // Darkest Green
+            {0x9D, 0xD8, 0xD9, 0xFF}, // Lightest
+            {0x69, 0x98, 0xA5, 0xFF},
+            {0x3F, 0x63, 0x71, 0xFF},
+            {0x21, 0x30, 0x3B, 0xFF}  // Darkest
     };
 
+    // Pre-calculate the packed Uint32 colors once using the format details
+    Uint32 mapped_colors[4];
+    for(int i = 0; i < 4;i++) {
+        mapped_colors[i] = SDL_MapRGBA(state->screenFormatDetails, nullptr,
+                                       colors[i][0], colors[i][1], colors[i][2], colors[i][3]);
+    }
 
-    // Example: Fill the screen with a pattern
-    for (int y = 0; y < GB_SCREEN_HEIGHT; ++y) {
-        for (int x = 0; x < GB_SCREEN_WIDTH; ++x) {
-            // Your PPU logic would determine which of the 4 colors a pixel is.
-            // For example: uint8_t color_index = ppu_get_pixel_color(x, y);
-            uint8_t color_index = (x / 40 + y / 40) % 4; // Simple pattern
+    const int TILE_WIDTH = 8;
+    const int TILE_HEIGHT = 8;
 
-            // Copy the RGBA values for that color into the framebuffer
-            state->framebuffer[y][x][0] = colors[color_index][0]; // R
-            state->framebuffer[y][x][1] = colors[color_index][1]; // G
-            state->framebuffer[y][x][2] = colors[color_index][2]; // B
-            state->framebuffer[y][x][3] = colors[color_index][3]; // A
+    for (int y = 0; y < TILE_HEIGHT; ++y) {
+        for(int x = 0; x < TILE_WIDTH; ++x) {
+            // The correct formula to get the pixel from the 1D array
+            int index = y * TILE_WIDTH + x;
+
+            // Make sure we don't read past the end of the array
+            if (index < smiley_pixels.size()) {
+                uint8_t color_id = smiley_pixels[index];
+                state->framebuffer[y][x] = mapped_colors[color_id];
+            }
         }
     }
+
+    for (int y = 0; y < TILE_HEIGHT; ++y) {
+        for(int x = 0; x < TILE_WIDTH; ++x) {
+            // The correct formula to get the pixel from the 1D array
+            int index = y * TILE_WIDTH + x;
+
+            // Make sure we don't read past the end of the array
+            if (index < smiley_pixels.size()) {
+                uint8_t color_id = smiley_pixels[index];
+                state->framebuffer[y + 64][x + 64] = mapped_colors[color_id];
+            }
+        }
+    }
+
 }
