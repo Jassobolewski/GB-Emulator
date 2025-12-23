@@ -46,7 +46,7 @@ public:
 
     void setLCDCbit(lcd_bit bit, toggle_on_off state);
 
-    std::string getSerialOutput() const;
+    std::string getSerialOutput() const;//help
 
 
 };
