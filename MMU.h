@@ -24,6 +24,28 @@ public:
     void writeToAddress(uint16_t address, uint8_t value);//Write to address
     void writeWord(uint16_t address, uint16_t value);//Little endian support
     uint16_t returnWord(uint16_t address) const;//Returns word from memory location
+
+    uint8_t LCDC() const;
+
+    enum class lcd_bit : uint8_t {
+        LDCD_Enable = 1 << 7,
+        Window_tile_view = 1 << 6,
+        Window_display = 1 << 5,
+        Background_tile_data = 1 << 4,
+        Background_tile_view = 1 << 3,
+        Sprite_size = 1 << 2,
+        Sprite_Display = 1 << 1,
+        Background_Display = 1 << 0,
+    };
+
+    enum class toggle_on_off : uint {
+        on = 1,
+        off = 2,
+        toggle = 3,
+    };
+
+    void setLCDCbit(lcd_bit bit, toggle_on_off state);
+
     std::string getSerialOutput() const;
 
 
