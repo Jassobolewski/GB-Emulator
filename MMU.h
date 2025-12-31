@@ -9,8 +9,12 @@
 #include <print>
 #include <iostream>
 #include <sstream>
+#include "PPU.h"
+
 class MMU {
 public:
+
+    PPU *ppu;
     // Buffer for serial data transfer
     uint8_t serialTransferData = 0;
 
@@ -44,7 +48,9 @@ public:
         toggle = 3,
     };
 
-    void setLCDCbit(lcd_bit bit, toggle_on_off state);//TODO
+    void setLCDCbit(lcd_bit bit, toggle_on_off state);
+
+    void connectPPU(PPU *ppu1);
 
     std::string getSerialOutput() const;//help
 

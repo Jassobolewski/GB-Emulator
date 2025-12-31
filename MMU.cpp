@@ -39,6 +39,8 @@ void MMU::writeToAddress(const uint16_t address, const uint8_t value) {
 //        std::println("Denied Access MMU");
 //    }
 
+
+
     memoryMap[address] = value;
 
 }
@@ -80,6 +82,21 @@ void MMU::writeWord(uint16_t address, uint16_t value) {
 }
 
 uint16_t MMU::returnWord(uint16_t address) const {
+
+    if(address >= 0x8000 && address <= 0x9FFF)
+    {
+        return ppu->readVram(address);
+    }
+    else if(address >= 0xFE00 && address <= 0xFE9F)
+    {
+        return ppu->readOAM(address);
+    }
+    else if(address >= 0xFF40 && address <= 0xFF4B)
+    {
+        return LCDC();
+    }
+
+
     auto low_byte = returnAddress(address);
     auto high_byte = returnAddress(address + 1);
 
@@ -105,5 +122,11 @@ void MMU::setLCDCbit(lcd_bit bit, toggle_on_off state) {
     else if (state == toggle_on_off::toggle)
         value ^= real;
     writeToAddress(0xFF40, value);
+}
+
+
+
+void MMU::connectPPU(PPU *ppu1) {
+    ppu = ppu1;
 }
 
