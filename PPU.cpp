@@ -33,3 +33,27 @@ std::array<uint8_t, 64> PPU::tileDecoder(const std::vector<uint8_t> &tile_data) 
     }
     return pixels;
 }
+
+uint8_t PPU::writeVram(uint16_t address, uint8_t value) {
+    return 0;
+}
+
+uint8_t PPU::writeOAM(uint16_t address, uint8_t value) {
+    return 0;
+}
+
+uint8_t PPU::writeRegister(uint16_t address, uint8_t value) {
+    return 0;
+}
+
+uint8_t PPU::readVram(uint16_t address) {
+    return 0;
+}
+
+uint8_t PPU::readOAM(uint16_t address) {
+    return 0;
+}
+
+uint8_t PPU::readRegister(uint16_t address) {
+    return 0;
+}

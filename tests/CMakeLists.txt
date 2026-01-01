@@ -14,6 +14,7 @@ add_executable(run_tests test_cpu.cpp
 target_sources(run_tests PRIVATE
         ../SM83.cpp
         ../MMU.cpp
+        ../PPU.cpp
         ../Instructions/AbstractInstruction.h
         ../Instructions/Opcode.h
         ../Instructions/Opcode.cpp

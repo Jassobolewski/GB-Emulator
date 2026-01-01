@@ -14,7 +14,7 @@
 class MMU {
 public:
 
-    PPU *ppu;
+    PPU *ppu{};
     // Buffer for serial data transfer
     uint8_t serialTransferData = 0;
 

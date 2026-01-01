@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <stack>
 #include "MMU.h"
+#include "PPU.h"
 
 class AbstractInstruction; //forward declaration
 
@@ -20,6 +21,7 @@ class SM83 {
     std::vector<std::unique_ptr<AbstractInstruction>> instructionSetCB;
 public: //This is temporary
     MMU memoryBus;
+    PPU ppu;
     SM83();
     ~SM83(); // To handle the forward declaration of AbstractInstruction
 

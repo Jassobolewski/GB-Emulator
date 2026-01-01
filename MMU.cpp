@@ -20,6 +20,16 @@ void MMU::loadRom(const std::vector<uint8_t>& romData) {
 }
 
 uint8_t MMU::returnAddress(const uint16_t address) const {
+
+//    if(address >= 0x8000 && address <= 0x9FFF)
+//    {
+//        return ppu->readVram(address);
+//    }
+//    else if(address >= 0xFE00 && address <= 0xFE9F)
+//    {
+//        return ppu->readOAM(address);
+//    }
+
     return memoryMap[address];
 }
 
@@ -38,6 +48,7 @@ void MMU::writeToAddress(const uint16_t address, const uint8_t value) {
 //    {
 //        std::println("Denied Access MMU");
 //    }
+
 
 
 
@@ -75,6 +86,18 @@ void MMU::writeWord(uint16_t address, uint16_t value) {
 
     uint8_t low_byte = value & 0xFF;
     uint8_t high_byte = (value >> 8) & 0xFF;
+
+//    if(address >= 0x8000 && address <= 0x9FFF)
+//    {
+//        ppu->writeVram(address,low_byte);
+//        ppu->writeVram(address + 1,high_byte);
+//    }
+//    else if(address >= 0xFE00 && address <= 0xFE9F)
+//    {
+//        ppu->writeOAM(address,low_byte);
+//        ppu->writeOAM(address + 1,high_byte);
+//    }
+
     writeToAddress(address,low_byte);
     writeToAddress(address + 1, high_byte);
 
@@ -83,25 +106,23 @@ void MMU::writeWord(uint16_t address, uint16_t value) {
 
 uint16_t MMU::returnWord(uint16_t address) const {
 
-    if(address >= 0x8000 && address <= 0x9FFF)
-    {
-        return ppu->readVram(address);
-    }
-    else if(address >= 0xFE00 && address <= 0xFE9F)
-    {
-        return ppu->readOAM(address);
-    }
-    else if(address >= 0xFF40 && address <= 0xFF4B)
-    {
-        return LCDC();
-    }
-
+//    if(address >= 0x8000 && address <= 0x9FFF)
+//    {
+//        auto low_byte =  ppu->readVram(address);
+//        auto high_byte =  ppu->readVram(address + 1);//potential overflow bug if address too big too lazy to fix
+//        return (high_byte << 8 | low_byte);
+//    }
+//    else if(address >= 0xFE00 && address <= 0xFE9F)
+//    {
+//        auto low_byte = ppu->readOAM(address);
+//        auto high_byte = ppu->readOAM(address + 1);//potential overflow bug if address too big too lazy to fix
+//        return (high_byte << 8 | low_byte);
+//    }
 
     auto low_byte = returnAddress(address);
     auto high_byte = returnAddress(address + 1);
 
     return (high_byte << 8 | low_byte);
-
 }
 
 std::string MMU::getSerialOutput() const {
@@ -129,4 +150,7 @@ void MMU::setLCDCbit(lcd_bit bit, toggle_on_off state) {
 void MMU::connectPPU(PPU *ppu1) {
     ppu = ppu1;
 }
+
+
+
 

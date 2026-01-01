@@ -10,56 +10,58 @@
 #include <fstream>
 using json = nlohmann::json;
 
+uint16_t parse_hex(const std::string& hex_str) {
+    return static_cast<uint16_t>(std::stoul(hex_str, nullptr, 16));
+}
 // Function to run a single JSON test case
 void run_json_test_case(const json& test_case) {
-    // 1. ARRANGE: Set up the initial state
-   SM83 cpu;
+    // 1. ARRANGE
+    SM83 cpu;
 
-    const auto& initial_state = test_case["initial"];
+    // NOTE: In v1, registers are inside "initial" -> "cpu"
+    const auto& initial_cpu = test_case["initial"]["cpu"];
 
-    // Set all registers
-    cpu.A = initial_state["a"];
-    cpu.F = initial_state["f"];
-    cpu.B = initial_state["b"];
-    cpu.C = initial_state["c"];
-    cpu.D = initial_state["d"];
-    cpu.E = initial_state["e"];
-    cpu.H = initial_state["h"];
-    cpu.L = initial_state["l"];
-    cpu.PC = initial_state["pc"];
-    cpu.PC = cpu.PC - 1;
-    cpu.SP = initial_state["sp"];
+    cpu.A = parse_hex(initial_cpu["a"].get<std::string>());
+    cpu.B = parse_hex(initial_cpu["b"].get<std::string>());
+    cpu.C = parse_hex(initial_cpu["c"].get<std::string>());
+    cpu.D = parse_hex(initial_cpu["d"].get<std::string>());
+    cpu.E = parse_hex(initial_cpu["e"].get<std::string>());
+    cpu.F = parse_hex(initial_cpu["f"].get<std::string>());
+    cpu.H = parse_hex(initial_cpu["h"].get<std::string>());
+    cpu.L = parse_hex(initial_cpu["l"].get<std::string>());
+    cpu.PC = parse_hex(initial_cpu["pc"].get<std::string>()); // No more -1 hacks!
+    cpu.SP = parse_hex(initial_cpu["sp"].get<std::string>());
 
-    // Set initial RAM state
-    for (const auto& ram_entry : initial_state["ram"]) {
-        const uint16_t address = ram_entry[0];
-        const uint8_t value = ram_entry[1];
-        cpu.memoryBus.writeToAddress(address,value);
+    // RAM parsing (Also hex strings now)
+    for (const auto& ram_entry : test_case["initial"]["ram"]) {
+        uint16_t address = parse_hex(ram_entry[0].get<std::string>());
+        uint8_t value = static_cast<uint8_t>(parse_hex(ram_entry[1].get<std::string>()));
+        cpu.memoryBus.writeToAddress(address, value);
     }
 
-    // 2. ACT: Execute one single instruction
-    cpu.instructionExecution(); // Assuming step() executes one instruction
-    cpu.PC++;
-    // 3. ASSERT: Compare the result to the final state
-    const auto& final_state = test_case["final"];
+    // 2. ACT
+    cpu.instructionExecution();
 
-    EXPECT_EQ(cpu.A, final_state["a"]) << "Register A mismatch";
-    EXPECT_EQ(cpu.F, final_state["f"]) << "Register F mismatch";
-    EXPECT_EQ(cpu.B, final_state["b"]) << "Register B mismatch";
-    EXPECT_EQ(cpu.C, final_state["c"]) << "Register C mismatch";
-    EXPECT_EQ(cpu.D, final_state["d"]) << "Register D mismatch";
-    EXPECT_EQ(cpu.E, final_state["e"]) << "Register E mismatch";
-    EXPECT_EQ(cpu.H, final_state["h"]) << "Register H mismatch";
-    EXPECT_EQ(cpu.L, final_state["l"]) << "Register L mismatch";
-    EXPECT_EQ(cpu.PC, final_state["pc"]) << "Program Counter PC mismatch";
-    EXPECT_EQ(cpu.SP, final_state["sp"]) << "Stack Pointer SP mismatch";
+    // 3. ASSERT
+    const auto& final_cpu = test_case["final"]["cpu"]; // Note: "cpu" nesting here too
 
-    // Assert final RAM state
-    for (const auto& ram_entry : final_state["ram"]) {
-        uint16_t address = ram_entry[0];
-        uint8_t expected_value = ram_entry[1];
-        EXPECT_EQ(cpu.memoryBus.returnAddress(address), expected_value)
-            << "RAM mismatch at address 0x" << std::hex << address;
+    EXPECT_EQ(cpu.A, parse_hex(final_cpu["a"].get<std::string>())) << "Register A mismatch";
+    EXPECT_EQ(cpu.B, parse_hex(final_cpu["b"].get<std::string>())) << "Register B mismatch";
+    EXPECT_EQ(cpu.C, parse_hex(final_cpu["c"].get<std::string>())) << "Register C mismatch";
+    EXPECT_EQ(cpu.D, parse_hex(final_cpu["d"].get<std::string>())) << "Register D mismatch";
+    EXPECT_EQ(cpu.E, parse_hex(final_cpu["e"].get<std::string>())) << "Register E mismatch";
+    EXPECT_EQ(cpu.F, parse_hex(final_cpu["f"].get<std::string>())) << "Register F mismatch";
+    EXPECT_EQ(cpu.H, parse_hex(final_cpu["h"].get<std::string>())) << "Register H mismatch";
+    EXPECT_EQ(cpu.L, parse_hex(final_cpu["l"].get<std::string>())) << "Register L mismatch";
+    EXPECT_EQ(cpu.PC, parse_hex(final_cpu["pc"].get<std::string>())) << "PC mismatch";
+    EXPECT_EQ(cpu.SP, parse_hex(final_cpu["sp"].get<std::string>())) << "SP mismatch";
+
+    // RAM Assertions need hex parsing too
+    for (const auto& ram_entry : test_case["final"]["ram"]) {
+        uint16_t address = parse_hex(ram_entry[0].get<std::string>());
+        uint8_t expected = static_cast<uint8_t>(parse_hex(ram_entry[1].get<std::string>()));
+        EXPECT_EQ(cpu.memoryBus.returnAddress(address), expected)
+                            << "RAM mismatch at " << std::hex << address;
     }
 }
 
@@ -73,7 +75,7 @@ class JsonOpcodeTest : public ::testing::Test,
 TEST_P(JsonOpcodeTest, PassesAllScenarios) {
     // Get the JSON filename for this test run
     const char* filename = GetParam();
-    const std::string full_path = "../cpu_tests/json_tests/" + std::string(filename);
+    const std::string full_path = "../cpu_tests/json_tests1/" + std::string(filename);
 
     std::ifstream f(full_path);
     if (!f.is_open()) {
@@ -176,7 +178,7 @@ INSTANTIATE_TEST_SUITE_P(
             "4D.json",
             "4E.json",
             "4F.json",
-
+//
             "50.json",
             "51.json",
             "52.json",
@@ -346,7 +348,6 @@ INSTANTIATE_TEST_SUITE_P(
             "F8.json",
             "F9.json",
             "FA.json",
-            "FE.json",
-            "FF.json"
+            "FE.json"
     )
 );

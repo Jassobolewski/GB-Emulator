@@ -114,11 +114,11 @@ int SM83::instructionExecution() {
         std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x" << std::hex << static_cast<int>(opcode) <<
                 std::endl;
 
-
     return cycles_this_step;
 }
 
 SM83::SM83() {
+
 
     for (int i = 0; i < 256; ++i) {
         instructionSet.push_back(std::make_unique<Unimplemented>());
@@ -664,11 +664,6 @@ SM83::SM83() {
     instructionSetCB[0xFD] = std::make_unique<SET_7_L>();
     instructionSetCB[0xFE] = std::make_unique<SET_7_HL>();
     instructionSetCB[0xFF] = std::make_unique<SET_7_A>();
-
-
-
-
-
 
 }
 
