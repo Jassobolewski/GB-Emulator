@@ -21,7 +21,7 @@ public:
     // to capture all serial output
     std::stringstream serialOutput;
 
-    uint8_t memoryMap[0xFFFF] = {0}; // Initialize to all zeros
+    uint8_t memoryMap[0x10000] = {0}; // Initialize to all zeros
 
     void loadRom(const std::vector<uint8_t>& romData);
     uint8_t returnAddress(uint16_t address) const;//returns address from memory

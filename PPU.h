@@ -15,11 +15,11 @@ public:
 
     std::array<uint8_t, 64> tileDecoder(const std::vector<uint8_t>& tile_data);
 
-    uint8_t writeVram(uint16_t address, uint8_t value);
+    void writeVram(uint16_t address, uint8_t value);
 
-    uint8_t  writeOAM(uint16_t address, uint8_t value);
+    void writeOAM(uint16_t address, uint8_t value);
 
-    uint8_t  writeRegister(uint16_t address, uint8_t value);
+    void writeRegister(uint16_t address, uint8_t value);
 
     uint8_t  readVram(uint16_t address);
 
