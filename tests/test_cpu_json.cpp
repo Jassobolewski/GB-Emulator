@@ -40,7 +40,7 @@ void run_json_test_case(const json& test_case) {
     }
 
     // 2. ACT
-    cpu.instructionExecution();
+    auto cycles_returned = cpu.instructionExecution();
 
     // 3. ASSERT
     const auto& final_cpu = test_case["final"]["cpu"]; // Note: "cpu" nesting here too
@@ -63,6 +63,8 @@ void run_json_test_case(const json& test_case) {
         EXPECT_EQ(cpu.memoryBus.returnAddress(address), expected)
                             << "RAM mismatch at " << std::hex << address;
     }
+
+    EXPECT_EQ(cycles_returned, test_case["cycles"].size() * 4) << "T Cycle Mismatch";
 }
 
 

@@ -6,7 +6,8 @@ add_executable(run_tests test_cpu.cpp
         test_mmu.cpp
         BlarggTest.cpp
         test_cpu_json.cpp
-        )
+        ../Instructions/CycleCounter.h
+)
 
 # Link our main CPU code to the tests so we can test it
 # Using target_sources() is a modern way to do this.

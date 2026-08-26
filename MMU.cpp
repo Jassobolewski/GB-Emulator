@@ -137,9 +137,9 @@ void MMU::setLCDCbit(lcd_bit bit, toggle_on_off state) {
     auto real = static_cast<uint8_t>(bit);
     auto value = LCDC();
     if (toggle_on_off::off == state)
-        value |= real;
-    else if (state == toggle_on_off::on)
         value &= ~real;
+    else if (state == toggle_on_off::on)//flipped?
+        value |= real;
     else if (state == toggle_on_off::toggle)
         value ^= real;
     writeToAddress(0xFF40, value);
