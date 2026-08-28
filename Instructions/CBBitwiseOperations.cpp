@@ -68,7 +68,7 @@ void RLC_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
 
 
 void RLC_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     auto toggleBit = data & (1 << 7);
     cpu.setRegisterFlag(SM83::Flag::H,false);
     cpu.setRegisterFlag(SM83::Flag::N, false );
@@ -76,7 +76,7 @@ void RLC_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     data = (data << 1);
     toggleBit ? data |= (1 << 0) : data &= ~(1 << 0);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RLC_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -156,7 +156,7 @@ void RRC_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
 
 
 void RRC_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     auto toggleBit = data & (1 << 0);
     cpu.setRegisterFlag(SM83::Flag::H,false);
     cpu.setRegisterFlag(SM83::Flag::N, false );
@@ -164,7 +164,7 @@ void RRC_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     data = (data >> 1);
     toggleBit ? data |= (1 << 7) : data &= ~(1 << 7);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RRC_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -249,7 +249,7 @@ void RL_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t op
 
 
 void RL_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     auto toggleBit = data & (1 << 7);
     auto lastFlagVal = cpu.getRegisterFlag(SM83::Flag::C);
     cpu.setRegisterFlag(SM83::Flag::H,false);
@@ -258,7 +258,7 @@ void RL_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
     data = (data << 1);
     lastFlagVal ? data |= (1 << 0) : data &= ~(1 << 0);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RL_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -345,7 +345,7 @@ void RR_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t op
 
 
 void RR_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     auto toggleBit = data & (1 << 0);
     auto lastFlagVal = cpu.getRegisterFlag(SM83::Flag::C);
     cpu.setRegisterFlag(SM83::Flag::H,false);
@@ -354,7 +354,7 @@ void RR_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
     data = (data >> 1);
     lastFlagVal ? data |= (1 << 7) : data &= ~(1 << 7);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RR_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -434,7 +434,7 @@ void SLA_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
 
 
 void SLA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     auto toggleBit = data & (1 << 7);
     cpu.setRegisterFlag(SM83::Flag::H,false);
     cpu.setRegisterFlag(SM83::Flag::N, false );
@@ -442,7 +442,7 @@ void SLA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     data = (data << 1);
     data &= ~(1 << 0);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SLA_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -528,7 +528,7 @@ void SRA_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
 
 
 void SRA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     auto toggleBit = data & (1 << 0);
     auto toggleBit7 = data & (1 << 7);
     cpu.setRegisterFlag(SM83::Flag::H,false);
@@ -537,7 +537,7 @@ void SRA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     data = (data >> 1);
     toggleBit7 ? data |= (1 << 7) : data &= ~(1 << 7);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SRA_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -618,7 +618,7 @@ void SWAP_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 
 
 void SWAP_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     uint8_t upperBits = (data >> 4) & 0x0F;
     uint8_t lowerBits = data & 0x0F;
     cpu.setRegisterFlag(SM83::Flag::H,false);
@@ -626,7 +626,7 @@ void SWAP_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
     cpu.setRegisterFlag(SM83::Flag::C, false);
     data = (lowerBits << 4 | upperBits);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SWAP_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -705,7 +705,7 @@ void SRL_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t o
 
 
 void SRL_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     auto toggleBit = data & (1 << 0);
     cpu.setRegisterFlag(SM83::Flag::H,false);
     cpu.setRegisterFlag(SM83::Flag::N, false );
@@ -713,7 +713,7 @@ void SRL_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
     data = (data >> 1);
     data &= ~(1 << 7);
     cpu.setRegisterFlag(SM83::Flag::Z,data == 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SRL_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -772,7 +772,7 @@ void BIT_0_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_0_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 0)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 0)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -830,7 +830,7 @@ void BIT_1_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_1_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 1)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 1)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -888,7 +888,7 @@ void BIT_2_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_2_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 2)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 2)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -946,7 +946,7 @@ void BIT_3_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_3_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 3)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 3)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -1004,7 +1004,7 @@ void BIT_4_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_4_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 4)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 4)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -1062,7 +1062,7 @@ void BIT_5_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_5_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 5)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 5)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -1121,7 +1121,7 @@ void BIT_6_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_6_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 6)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 6)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -1180,7 +1180,7 @@ void BIT_7_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void BIT_7_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.memoryBus.returnAddress(cpu.getHl()) & (1 << 7)) == 0);
+    cpu.setRegisterFlag(SM83::Flag::Z,(cpu.read(cpu.getHl()) & (1 << 7)) == 0);
     cpu.setRegisterFlag(SM83::Flag::H,true);
     cpu.setRegisterFlag(SM83::Flag::N, false );
     cyclesDuringInstruction = 8;
@@ -1218,9 +1218,9 @@ void RES_0_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_0_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_0_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1251,9 +1251,9 @@ void RES_1_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_1_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 1);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_1_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1284,9 +1284,9 @@ void RES_2_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_2_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 2);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_2_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1317,9 +1317,9 @@ void RES_3_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_3_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 3);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_3_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1351,9 +1351,9 @@ void RES_4_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_4_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 4);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_4_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1384,9 +1384,9 @@ void RES_5_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_5_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 5);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_5_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1418,9 +1418,9 @@ void RES_6_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_6_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 6);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_6_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1451,9 +1451,9 @@ void RES_7_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void RES_7_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data &= ~(1 << 7);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void RES_7_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1484,9 +1484,9 @@ void SET_0_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_0_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 0);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+    cpu.write(cpu.getHl(),data);
 }
 
 void SET_0_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1517,9 +1517,9 @@ void SET_1_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_1_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 1);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SET_1_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1550,9 +1550,9 @@ void SET_2_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_2_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 2);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SET_2_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1583,9 +1583,9 @@ void SET_3_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_3_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 3);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SET_3_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1617,9 +1617,9 @@ void SET_4_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_4_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 4);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+    cpu.write(cpu.getHl(),data);
 }
 
 void SET_4_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1650,9 +1650,9 @@ void SET_5_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_5_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 5);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SET_5_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1684,9 +1684,9 @@ void SET_6_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_6_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 6);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SET_6_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
@@ -1717,9 +1717,9 @@ void SET_7_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 }
 
 void SET_7_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    auto data = cpu.memoryBus.returnAddress(cpu.getHl());
+    auto data = cpu.read(cpu.getHl());
     data |= (1 << 7);
-    cpu.memoryBus.writeToAddress(cpu.getHl(),data);
+   cpu.write(cpu.getHl(),data);
 }
 
 void SET_7_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {

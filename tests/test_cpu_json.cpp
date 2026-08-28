@@ -64,7 +64,22 @@ void run_json_test_case(const json& test_case) {
                             << "RAM mismatch at " << std::hex << address;
     }
 
-    EXPECT_EQ(cycles_returned, test_case["cycles"].size() * 4) << "T Cycle Mismatch";
+    const auto& expected = test_case["cycles"];
+    EXPECT_EQ(cycles_returned % 4, 0)      << "T Cycle total not a multiple of 4";
+
+    size_t logIdx = 0;
+    for (const auto & e : expected) {
+        if (e.is_null()) continue;                         // internal cycle
+        ASSERT_LT(logIdx, cpu.busRecord.size()) << "Fewer bus accesses than expected";
+        uint16_t addr  = parse_hex(e[0].get<std::string>());
+        uint8_t  value = static_cast<uint8_t>(parse_hex(e[1].get<std::string>()));
+        bool isWrite   = e[2].get<std::string>() == "write";
+        EXPECT_EQ(cpu.busRecord[logIdx].address,    addr)    << "Bus access " << logIdx << " address";
+        EXPECT_EQ(cpu.busRecord[logIdx].value,   value)   << "Bus access " << logIdx << " value";
+        EXPECT_EQ(cpu.busRecord[logIdx].written, isWrite) << "Bus access " << logIdx << " direction";
+        ++logIdx;
+    }
+    EXPECT_EQ(logIdx, cpu.busRecord.size()) << "More bus accesses than expected";
 }
 
 

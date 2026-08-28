@@ -6,32 +6,31 @@
 #include "Instructions/Opcode.h"
 #include "Instructions/ControlFlow.h"
 #include "Instructions/CBBitwiseOperations.h"
-
+#include <source_location>
 
 uint16_t SM83::immediate16BitValue(uint8_t& registerMSB, uint8_t& registerLSB)
 {
-    registerLSB = this->memoryBus.returnAddress(PC++);
-    registerMSB = this->memoryBus.returnAddress(PC++);
+    registerLSB = this->read(PC++);
+    registerMSB = this->read(PC++);
     return combinedValue(registerMSB, registerLSB);
 }
 
 uint8_t SM83::immediate8BitValue(uint8_t& currentRegister)
 {
-    currentRegister = this->memoryBus.returnAddress(PC++);
+    currentRegister = this->read(PC++);
     return currentRegister;
 }
 
 
 uint16_t SM83::immediate16BitValueSP() {
-    auto lsb = this->memoryBus.returnAddress(SP++);
-    auto msb = this->memoryBus.returnAddress(SP++);
-
+    auto lsb = this->read(SP++);
+    auto msb = this->read(SP++);
     return combinedValue(msb,lsb);
 }
 
 void SM83::immediate16BitValuePushSP(uint8_t& registerMSB, uint8_t& registerLSB) {
-    this->memoryBus.writeToAddress(--SP,registerMSB);
-    this->memoryBus.writeToAddress(--SP,registerLSB);
+    this->write(--SP,registerMSB);
+    this->write(--SP,registerLSB);
 }
 
 void SM83::setFlag(const uint16_t value, uint8_t& flags) {
@@ -91,22 +90,55 @@ bool SM83::getRegisterFlag(SM83::Flag flag) const {
     return (F & bitmask) != 0;//We check if the flag is on or off
 }
 
+uint8_t SM83::read(uint16_t address) {
+    tick();
+    busRecord.push_back({address, memoryBus.returnAddress(address), false});
+    return memoryBus.returnAddress(address);
+}
+
+void SM83::write(uint16_t address, uint8_t value)
+{
+    tick();
+    memoryBus.writeToAddress(address,value);
+    busRecord.push_back({address, value, true});
+}
+
+uint16_t SM83::read16Bit(uint16_t address) {
+
+    auto low_byte = this->read(address);
+    auto high_byte = this->read(address + 1);
+
+    return (high_byte << 8 | low_byte);
+ //   return memoryBus.returnWord(address);
+}
+
+void SM83::write16Bit(uint16_t address, uint16_t value)
+{
+
+    uint8_t low_byte = value & 0xFF;
+    this->write(address, low_byte);
+    uint8_t high_byte = (value >> 8) & 0xFF;
+    this->write(address + 1, high_byte);
+   // memoryBus.writeWord(address,value);
+}
+
 int SM83::instructionExecution() {
-    const uint8_t opcode = memoryBus.returnAddress(this->PC++);
+    this->cyclesThisInstruction = 0;
+    int temp = 0;
+    const uint8_t opcode = read(this->PC++);
    // this->PC = PC + 1;//increment the PC after instruction is fetched
     /*
      * !important if PC mismatch happens it's because we increment more than necessary
      * */
     const auto instruction = instructionSet[opcode].get();
-    int cycles_this_step = 0;
    if(instruction != nullptr) {
         if(opcode != 0xCB)
-            instruction->execute(*this, memoryBus, cycles_this_step, opcode);
+            instruction->execute(*this, memoryBus, temp, opcode);
         else {
 
-            const uint8_t opcodeCB = memoryBus.returnAddress(this->PC++);
+            const uint8_t opcodeCB = read(this->PC++);
             const auto CBinstruction = instructionSetCB[opcodeCB].get();
-            CBinstruction->execute(*this, memoryBus, cycles_this_step, opcode);
+            CBinstruction->execute(*this, memoryBus, temp, opcode);
 
         }
    }
@@ -114,7 +146,7 @@ int SM83::instructionExecution() {
         std::cerr << "FATAL ERROR: Unimplemented opcode encountered: 0x" << std::hex << static_cast<int>(opcode) <<
                 std::endl;
 
-    return cycles_this_step;
+    return getCycle();
 }
 
 SM83::SM83() {
@@ -682,6 +714,15 @@ uint16_t SM83::getDe() const {
 uint16_t SM83::getHl() const {
     return combinedValue(H,L);
 }
+
+void SM83::tick() {
+    this->cyclesThisInstruction += 4;
+}
+
+int SM83::getCycle() const {
+    return this->cyclesThisInstruction;
+}
+
 
 
 SM83::~SM83() = default;

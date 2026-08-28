@@ -13,19 +13,26 @@
 
 class AbstractInstruction; //forward declaration
 
+struct BusAccess {
+    uint16_t address; uint8_t value; bool written;
+};
+
 class SM83 {
 
+    int cyclesThisInstruction = 0;
     int debugCounter = 0;
     std::stack<uint8_t> debugStack;//Records instructions in the order they happen *for rewinding and debugging later*
     std::vector<std::unique_ptr<AbstractInstruction>> instructionSet;
     std::vector<std::unique_ptr<AbstractInstruction>> instructionSetCB;
 public: //This is temporary
+    std::vector<BusAccess> busRecord;
     MMU memoryBus;
     PPU ppu;
     SM83();
     ~SM83(); // To handle the forward declaration of AbstractInstruction
 
-
+    void tick();
+    int getCycle() const;
     //Accumulators
     uint8_t A{},B{},D{},H{};
     //Flags
@@ -34,9 +41,9 @@ public: //This is temporary
     uint16_t SP{}; //Stack Pointer
     uint16_t PC{}; //Program Counter
 
-    uint8_t low_byte = this->memoryBus.returnAddress((this->PC + 1));  // Gets 0x00
-    uint8_t high_byte =  this->memoryBus.returnAddress((this->PC + 1)); // Gets 0xC0
-    uint16_t immediate_value = (static_cast<uint16_t>(high_byte) << 8) | low_byte;
+//    uint8_t low_byte = this->memoryBus.returnAddress((this->PC + 1));  // Gets 0x00
+//    uint8_t high_byte =  this->memoryBus.returnAddress((this->PC + 1)); // Gets 0xC0
+//    uint16_t immediate_value = (static_cast<uint16_t>(high_byte) << 8) | low_byte;
     //Combined 16 bit registers
     uint16_t AF{}, BC{}, DE{},HL{};
 
@@ -92,6 +99,14 @@ public: //This is temporary
     void immediate16BitValuePushSP(uint8_t &registerMSB, uint8_t &registerLSB);
 
     bool interruptEnabled = false;
+
+    uint8_t read(uint16_t address);
+
+    uint16_t read16Bit(uint16_t address);
+
+    void write(uint16_t address, uint8_t value);
+
+    void write16Bit(uint16_t address, uint16_t value);
 };
 
 

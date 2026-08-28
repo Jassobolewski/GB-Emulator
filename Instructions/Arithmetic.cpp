@@ -50,7 +50,7 @@ void Add_HL_SP::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8
 
 void AddSP_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 16;
-    const auto address = static_cast<uint8_t>(cpu.memoryBus.returnAddress(cpu.PC++));
+    const auto address = static_cast<uint8_t>(cpu.read(cpu.PC++));
     const auto signedAddress = static_cast<int8_t>(address);
     const auto lowerSP = cpu.SP & 0xFF;
     cpu.SP = cpu.SP + signedAddress;
@@ -62,7 +62,6 @@ void AddSP_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
 
 
 void AddA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
     const auto registerValueB = cpu.B;
     cpu.A = cpu.A + cpu.B;
@@ -73,7 +72,6 @@ void AddA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 }
 
 void AddA_C::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
-    cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
     const auto registerValueC = cpu.C;
     cpu.A = cpu.A + cpu.C;
@@ -131,7 +129,7 @@ void AddA_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void AddA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 8;
     const auto registerValueA = cpu.A;
-    const auto registerValue = cpu.memoryBus.returnAddress(cpu.getHl());
+    const auto registerValue = cpu.read(cpu.getHl());
     cpu.A = cpu.A + registerValue;
     cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (registerValue & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
@@ -218,7 +216,7 @@ void AdcA_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void AdcA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto addressValue = cpu.memoryBus.returnAddress(cpu.getHl());
+    const auto addressValue = cpu.read(cpu.getHl());
     cpu.A = registerValueA + addressValue + cpu.getRegisterFlag(SM83::Flag::C);
     cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (addressValue & 0x0F) + (cpu.getRegisterFlag(SM83::Flag::C) & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
@@ -239,7 +237,7 @@ void AdcA_A::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void AdcA_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 8;
     const auto registerValueA = cpu.A;
-    const auto addressValue = cpu.memoryBus.returnAddress(cpu.PC++);
+    const auto addressValue = cpu.read(cpu.PC++);
     cpu.A = registerValueA + addressValue + cpu.getRegisterFlag(SM83::Flag::C);
     cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (addressValue & 0x0F) + (cpu.getRegisterFlag(SM83::Flag::C) & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
@@ -262,7 +260,7 @@ void SubA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void SubA_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto value = cpu.memoryBus.returnAddress(cpu.PC++);
+    const auto value = cpu.read(cpu.PC++);
     cpu.A = registerValueA - value;
     cpu.setRegisterFlag(SM83::Flag::H, (value & 0x0F) > (registerValueA & 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
@@ -340,7 +338,7 @@ void SubA_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void SubA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 8;
     const auto registerValueA = cpu.A;
-    const auto address = cpu.memoryBus.returnAddress(cpu.getHl());
+    const auto address = cpu.read(cpu.getHl());
     cpu.A = registerValueA - address;
     cpu.setRegisterFlag(SM83::Flag::H, (address & 0x0F) > (registerValueA & 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
@@ -363,7 +361,7 @@ void SbcA_B::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void SbcA_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto address = cpu.memoryBus.returnAddress(cpu.PC++);
+    const auto address = cpu.read(cpu.PC++);
     cpu.A = registerValueA - address - cpu.getRegisterFlag(SM83::Flag::C);
     cpu.setRegisterFlag(SM83::Flag::H, ((address & 0x0F) + cpu.getRegisterFlag(SM83::Flag::C)) > (registerValueA & 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
@@ -440,7 +438,7 @@ void SbcA_H::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void SbcA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto address = cpu.memoryBus.returnAddress(cpu.getHl());
+    const auto address = cpu.read(cpu.getHl());
     cpu.A = registerValueA - address - cpu.getRegisterFlag(SM83::Flag::C);
     cpu.setRegisterFlag(SM83::Flag::H, ((address & 0x0F) + cpu.getRegisterFlag(SM83::Flag::C)) > (registerValueA & 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
@@ -451,7 +449,7 @@ void SbcA_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 
 void AND_A_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
-    cpu.A = cpu.A & cpu.memoryBus.returnAddress(cpu.PC++);
+    cpu.A = cpu.A & cpu.read(cpu.PC++);
     cpu.setRegisterFlag(SM83::Flag::H, true);
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
     cpu.setRegisterFlag(SM83::Flag::C, false);
@@ -529,7 +527,7 @@ void AND_A_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 
 void AND_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
-    cpu.A = cpu.A & cpu.memoryBus.returnAddress(cpu.getHl());
+    cpu.A = cpu.A & cpu.read(cpu.getHl());
     cpu.setRegisterFlag(SM83::Flag::H, true);
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
     cpu.setRegisterFlag(SM83::Flag::C, false);
@@ -539,7 +537,7 @@ void AND_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
 //ANd end
 void OR_A_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
-    cpu.A = cpu.A | cpu.memoryBus.returnAddress(cpu.PC++);
+    cpu.A = cpu.A | cpu.read(cpu.PC++);
     cpu.setRegisterFlag(SM83::Flag::H, false);
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
     cpu.setRegisterFlag(SM83::Flag::C, false);
@@ -615,7 +613,7 @@ void OR_A_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 
 void OR_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
-    cpu.A = cpu.A | cpu.memoryBus.returnAddress(cpu.getHl());
+    cpu.A = cpu.A | cpu.read(cpu.getHl());
     cpu.setRegisterFlag(SM83::Flag::H, false);
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
     cpu.setRegisterFlag(SM83::Flag::C, false);
@@ -624,7 +622,7 @@ void OR_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 
 void XOR_A_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
-    cpu.A = cpu.A ^ cpu.memoryBus.returnAddress(cpu.PC++);
+    cpu.A = cpu.A ^ cpu.read(cpu.PC++);
     cpu.setRegisterFlag(SM83::Flag::H, false);
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
     cpu.setRegisterFlag(SM83::Flag::C, false);
@@ -699,7 +697,7 @@ void XOR_A_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 
 void XOR_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
-    cpu.A = cpu.A ^ cpu.memoryBus.returnAddress(cpu.getHl());
+    cpu.A = cpu.A ^ cpu.read(cpu.getHl());
     cpu.setRegisterFlag(SM83::Flag::H, false);
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
     cpu.setRegisterFlag(SM83::Flag::C, false);
@@ -710,7 +708,7 @@ void XOR_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_
 void CP_A_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto address = cpu.memoryBus.returnAddress(cpu.PC++);
+    const auto address = cpu.read(cpu.PC++);
     const auto  result = registerValueA - address;
     cpu.setRegisterFlag(SM83::Flag::H, (address & 0x0F) > (registerValueA & 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,result == 0 );
@@ -801,7 +799,7 @@ void CP_A_L::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t 
 void CP_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto address = cpu.memoryBus.returnAddress(cpu.getHl());
+    const auto address = cpu.read(cpu.getHl());
     const auto  result = registerValueA - address;
     cpu.setRegisterFlag(SM83::Flag::H, (address & 0x0F) > (registerValueA & 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,result == 0 );
@@ -812,7 +810,7 @@ void CP_A_HL::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t
 void AddA_n8::execute(SM83 &cpu, MMU &mmu, int &cyclesDuringInstruction, uint8_t opcode) {
     cyclesDuringInstruction = 4;
     const auto registerValueA = cpu.A;
-    const auto value = cpu.memoryBus.returnAddress(cpu.PC++);
+    const auto value = cpu.read(cpu.PC++);
     cpu.A = cpu.A + value;
     cpu.setRegisterFlag(SM83::Flag::H, (((registerValueA & 0x0F) + (value & 0x0F)) > 0x0F));
     cpu.setRegisterFlag(SM83::Flag::Z,cpu.A == 0 );
